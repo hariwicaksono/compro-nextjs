@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-//import Navbar from './navbar';
+import Navbar from './navbar';
 import { Container } from 'react-bootstrap';
 
 export const siteName = 'Starter App'
@@ -33,11 +33,7 @@ class Layout extends Component {
     </Head>
     <div className={this.state.showMenu ? 'app' : 'app has-compact-menu' } >
       
-    {/*!home ? 
     <Navbar toggleMenu={this.toggleMenu} showMenu={this.state.showMenu} />
-    :
-    <></>
-    */}
     
     {!home ? 
     <main className="app-main">

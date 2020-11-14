@@ -1,15 +1,20 @@
+import React, {Component} from 'react';
 import Head from 'next/head';
 import Layout, {siteName, siteTitle} from '../components/layout';
 
-export default function Home() {
-  return (
-    <Layout home>
+class Index extends Component{
+  
+  render(){
+        
+    return(
+      <Layout home>
       <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Home - {siteTitle}</title>
       </Head>
 
-     
-    </Layout>
-  )
+      </Layout>
+    );
+  }
 }
+
+export default Index;
