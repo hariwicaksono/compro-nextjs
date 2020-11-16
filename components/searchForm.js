@@ -1,10 +1,10 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 //import {Redirect,Link} from 'react-router-dom'
-import API from '../libs/Axios'
-import SearchResult from './searchResult'
+import API from '../libs/axios';
+import SearchResult from './searchResult';
 //import { NotificationManager } from 'react-notifications'
-import { Form, Button, Spinner } from 'react-bootstrap'
-import { MdSearch } from 'react-icons/md'
+import { Form, Button, Spinner } from 'react-bootstrap';
+import { MdSearch } from 'react-icons/md';
 //import Form from 'react-formal'
 //import * as yup from 'yup'
 
