@@ -93,12 +93,32 @@ const POST_FOTO = (path,data,name) => {
     return promise
 }
 
-const PostLogin = (data) => POST('LoginController',data)
-
+const PostLogin = (data) => POST('LoginController',data);
+const GetBlog = () => GET('PostController');
+const GetBlogId = (data) => GET_ID('PostController?id=',data)
+const PostBlog = (data) => POST('PostController',data);
+const PutBlog = (data) => PUT('PostController',data);
+const DeleteBlog = (id) => DELETE('PostController/index_delete?id=',id);
+const GetSetting = () => GET('SettingController');
+const GetUser = () => GET('UserController');
+const GetUserId = (data) => GET_ID('UserController?id=',data)
+const PostUser = (data) => POST('UserController',data);
+const PutUser = (data) => PUT('UserController',data);
+const DeleteUser = (id) => DELETE('UserController/index_delete?id=',id);
 
 const API = {
     PostLogin,
-    
+    GetBlog,
+    GetBlogId,
+    PostBlog,
+    PutBlog,
+    DeleteBlog,
+    GetSetting,
+    GetUser,
+    GetUserId,
+    PostUser,
+    PutUser,
+    DeleteUser 
 }
 
 export default API

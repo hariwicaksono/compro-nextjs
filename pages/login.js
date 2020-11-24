@@ -46,7 +46,7 @@ class Login extends Component {
                     localStorage.setItem('isLogin',JSON.stringify(res.data))
                     toast.success("Login Berhasil", {position: "top-center"}); 
                     setTimeout(()=>{
-                        Router.push('/member')
+                        Router.push('/')
                     },2000)
                 } else if (res.id === "2" ) {
                     localStorage.setItem('isAdmin',JSON.stringify(res.data))
@@ -77,7 +77,7 @@ class Login extends Component {
             {errors.password && touched.password && <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>}
         </Form.Group>
 
-        <Button block size="lg" variant="primary" type="submit" disabled={isSubmitting}>
+        <Button block variant="primary" type="submit" disabled={isSubmitting}>
         {isSubmitting ? (
         <>
         <Spinner as="span" animation="grow" size="sm" role="status" aria-hidden="true" /> Memuat...

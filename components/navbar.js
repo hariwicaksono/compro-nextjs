@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import {Navbar, Nav, NavItem, NavDropdown, Form, FormControl, Button} from 'react-bootstrap';
+import {Container, Navbar, Nav, NavItem, NavDropdown, Form, FormControl, Button} from 'react-bootstrap';
 import API from '../libs/axios';
 import {logout, isLogin, isAdmin} from '../libs/utils';
 import {ImagesUrl} from '../libs/urls';
@@ -13,8 +13,10 @@ class MyNavbar extends Component{
     this.state = {
         login:false,
         id: '',
-        nama: '',
+        name: '',
         foto:'',
+        user: false,
+        admin: false,
         url: ImagesUrl()
     }
   }
@@ -24,21 +26,23 @@ class MyNavbar extends Component{
 componentDidMount = () => {
   if (isLogin()) {
       const data = JSON.parse(localStorage.getItem('isLogin'))
-      const id = data[0].id_peserta
-      API.GetIdPeserta(id).then(res=>{
+      const id = data[0].email
+      API.GetUserId(id).then(res=>{
           this.setState({
-              id : res.data[0].id_peserta,
-              nama: res.data[0].nama_peserta
+              id : res.data[0].id,
+              name: res.data[0].name,
+              user: true
           })
       })
           
   } else if (isAdmin()) {
        const data = JSON.parse(localStorage.getItem('isAdmin'))
-       const id = data[0].usernm
-       API.GetIdPengguna(id).then(res=>{
+       const id = data[0].email
+       API.GetUserId(id).then(res=>{
            this.setState({
-               id : res.data[0].usernm,
-               nama: res.data[0].nm_lengkap
+               id : res.data[0].id,
+               name: res.data[0].name,
+               admin: true
            })
        })
            
@@ -48,17 +52,32 @@ componentDidMount = () => {
           login:true
       })
   }
+  API.GetSetting().then(res=>{
+    this.setState({
+        id : res.data[0].id,
+        company: res.data[0].company
+    })
+})
   }
   render(){
         
     return(
-      <>
-<Navbar bg="dark" variant="dark">
-  <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+     
+<Navbar bg="dark" variant="dark" className="shadow border-bottom" expand="lg" sticky="top">
+<Container>
+  {this.state.admin && (
+    <Button onClick={this.props.toggleMenu} type="button" className="btn btn-primary text-white btn-sm">
+                Go
+            </Button>
+
+  )}
+
+    <Navbar.Brand href="#home">{this.state.company}</Navbar.Brand>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">
-      <Nav.Link href="#home">Home</Nav.Link>
+    <Link href="/" passHref><Nav.Link>Home</Nav.Link></Link>
+      <Link href="/blog" passHref><Nav.Link>Blog</Nav.Link></Link>
       <NavDropdown title="Dropdown" id="basic-nav-dropdown">
         <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
         <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
@@ -98,7 +117,7 @@ componentDidMount = () => {
                     src={this.state.url+'no-avatar.png'} />
                 </>
                 )} id="basic-nav-dropdown" alignRight>
-                <NavDropdown.Item>{this.state.nama}</NavDropdown.Item>
+                <NavDropdown.Item>{this.state.name}</NavDropdown.Item>
                 <NavDropdown.Item>Ganti Password</NavDropdown.Item>
                 <NavDropdown.Item onClick={this.Logout} href=''>Keluar</NavDropdown.Item>
                 </NavDropdown>
@@ -107,8 +126,9 @@ componentDidMount = () => {
                 }
     </Nav>
   </Navbar.Collapse>
+  </Container>
 </Navbar>
-      </>
+     
     );
   }
 }

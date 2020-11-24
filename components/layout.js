@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Navbar from './navbar';
+import Sidebar from './sidebar';
 import { Container } from 'react-bootstrap';
 
 export const siteName = 'Starter App'
@@ -31,25 +32,34 @@ class Layout extends Component {
     <meta name="description" content="" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     </Head>
-    <div className={this.state.showMenu ? 'app' : 'app has-compact-menu' } >
+    <div>
       
-    <Navbar toggleMenu={this.toggleMenu} showMenu={this.state.showMenu} />
-    
-    {!home ? 
-    <main className="app-main">
+    <Navbar toggleMenu={this.toggleMenu} />
     <div className="wrapper">
-      <div className="page">
-        <div className="page-inner">
+    {admin && (
+        <Sidebar showMenu={this.state.showMenu} />
+    )} 
+    {!home && !login && !admin ? 
+
+    
+    <div id="content">
+      <Container>
+    <div className="pt-3">
+    <Link href="/" passHref>
+            <a>← Kembali</a>
+          </Link>
+    </div> 
+    </Container>
       {children}
-        </div>
-      </div>
     </div>
-    </main>
+
+
     :
-    <main>
+    <div id="content">
       {children}
-    </main>
+      </div>
     }
+    </div>
     <p className="mb-0 pt-3 px-3 text-muted text-center"> © 2020 All Rights Reserved.
         </p>
     </div>
