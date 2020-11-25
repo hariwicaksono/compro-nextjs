@@ -32,16 +32,13 @@ class Layout extends Component {
     <meta name="description" content="" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     </Head>
-    <div>
-      
+
     <Navbar toggleMenu={this.toggleMenu} />
     <div className="wrapper">
     {admin && (
         <Sidebar showMenu={this.state.showMenu} />
     )} 
     {!home && !login && !admin ? 
-
-    
     <div id="content">
       <Container>
     <div className="pt-3">
@@ -52,16 +49,11 @@ class Layout extends Component {
     </Container>
       {children}
     </div>
-
-
     :
     <div id="content">
       {children}
-      </div>
-    }
     </div>
-    <p className="mb-0 pt-3 px-3 text-muted text-center"> © 2020 All Rights Reserved.
-        </p>
+    }
     </div>
     </>
   );

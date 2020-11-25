@@ -285,3 +285,5 @@
         margin-bottom: 5px !important;
     }
 }
+svg{margin-bottom: 2px !important;}
+#sidebar svg{margin-bottom: 4px !important;}

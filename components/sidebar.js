@@ -1,6 +1,8 @@
 import React, {Component, useState} from 'react';
 import Link from 'next/link';
 import { Collapse} from 'react-bootstrap';
+import {FaHome, FaFile, FaNewspaper, FaWrench} from 'react-icons/fa';
+import { logout, isLogin } from '../libs/utils';
 
 function SubMenu() {
     const [open1, setOpen1] = useState(false);
@@ -10,34 +12,38 @@ function SubMenu() {
     return (
         <>
         <li>
-            <Link href={'/admin'} title="Petunjuk" alt="Petunjuk">
-              <span>Home</span>
+            <Link href={'/admin'} passHref>
+             <a><FaHome /> <span>Admin</span></a>
             </Link>
         </li>
-      <li>
-        <Link href={'#'} onClick={() => setOpen1(!open1)} data-toggle="collapse" aria-controls="collapseKonten" aria-expanded={open1} className="dropdown-toggle">
-            <span>Konten</span>
-        </Link>
-        <Collapse in={open1} id="collapseKonten">
-        <ul className="list-unstyled">
-            <li>
-            <Link href={'/konten/identitasweb'} title="Identitas Web" alt="Identitas Web">
-            <span>Identitas Web</span>
+        <li>
+            <Link href={'/admin/blog'} passHref>
+             <a><FaNewspaper /> <span>Blog</span></a>
             </Link>
-            </li>
-            <li>
-            <Link href={'/konten/profilweb'} title="Profil Web" alt="Profil Web">
-            <span>Profil Web</span>
+        </li>
+        <li>
+        <a href='#' onClick={() => setOpen1(!open1)} data-toggle="collapse" aria-controls="collapsePengaturan" aria-expanded={open1} className="dropdown-toggle">
+         <FaWrench /> <span>Pengaturan</span></a>
+      <Collapse in={open1}>
+      <ul className="list-unstyled" id="collapsePengaturan">
+          <li>
+          <Link href={'/admin/setting'} passHref>
+          <a title="Pengaturan" alt="Pengaturan"> <span>Pengaturan</span></a>
             </Link>
-            </li>
-            <li>
-            <Link href={'/konten/caradaftar'} title="Profil Web" alt="Profil Web">
-            <span>Cara Daftar</span>
+          </li>
+          <li>
+          <Link href={'/akun/password'} passHref>
+          <a title="Ganti Password" alt="Ganti Password"> <span>Ganti Password</span></a>
             </Link>
-            </li>
-        </ul>
-        </Collapse>
-      </li>
+          </li>
+          <li>
+              <Link onClick={() => {logout()}} href='' passHref>
+              <a alt="Logout"> <span>Logout</span></a>
+              </Link>
+          </li>
+      </ul>
+      </Collapse>
+    </li>
       
     </>
     );

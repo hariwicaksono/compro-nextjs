@@ -6,6 +6,7 @@ import API from '../libs/axios';
 import {logout, isLogin, isAdmin} from '../libs/utils';
 import {ImagesUrl} from '../libs/urls';
 import SearchForm from './searchForm';
+import {FaBars} from 'react-icons/fa';
 
 class MyNavbar extends Component{
   constructor(props) {
@@ -65,14 +66,12 @@ componentDidMount = () => {
      
 <Navbar bg="dark" variant="dark" className="shadow border-bottom" expand="lg" sticky="top">
 <Container>
+  <Link href="/" passHref><Navbar.Brand>{this.state.company}</Navbar.Brand></Link>
   {this.state.admin && (
     <Button onClick={this.props.toggleMenu} type="button" className="btn btn-primary text-white btn-sm">
-                Go
-            </Button>
-
+      <FaBars />
+    </Button>
   )}
-
-    <Navbar.Brand href="#home">{this.state.company}</Navbar.Brand>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">

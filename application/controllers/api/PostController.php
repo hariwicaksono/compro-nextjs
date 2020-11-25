@@ -21,12 +21,12 @@ class PostController extends REST_Controller{
 
 	public function index_get()
 	{
-		$count = $this->Model->count_posts();
+		$count = $this->Model->count_blog();
 		$id = $this->get('id');
 		if ($id == null) {
-			$posts = $this->Model->get_posts();
+			$posts = $this->Model->get_blog();
 		} else {
-			$posts = $this->Model->get_posts($id);
+			$posts = $this->Model->get_blog($id);
 		}
 
 		if ($posts) {

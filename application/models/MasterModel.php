@@ -64,7 +64,7 @@ class MasterModel extends CI_Model {
 		}
 	}	
 	
-	public function count_post()
+	public function count_blog()
 	{
 		return $this->db->count_all('posts');
 	}
@@ -90,6 +90,12 @@ class MasterModel extends CI_Model {
     public function get_setting($id)
 	{ 
 		return $this->db->get_where('settings',['id'=>$id])->result_array();
+	}
+
+	public function put_setting($id,$data)
+	{
+		$this->db->update('settings',$data,['id'=>$id]);
+		return $this->db->affected_rows();
 	}
 
 }

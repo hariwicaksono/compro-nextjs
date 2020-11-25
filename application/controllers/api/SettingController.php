@@ -45,14 +45,13 @@ class SettingController extends REST_Controller{
 	{
 		$id = $this->put('id');
 		$data = [
-			'nama_produk' => $this->put('nama'),
-			'kategori_produk' => $this->put('kategori'),
-			'harga_produk' => $this->put('harga'),
-			'desk_produk' => $this->put('desk'),
-			'foto_produk' => $this->put('foto')
+			'company' => $this->put('company'),
+			'website' => $this->put('website'),
+			'phone' => $this->put('phone'),
+			'email' => $this->put('email'),
 		];
 
-		if ($this->Model->put_produk($id,$data) > 0) {
+		if ($this->Model->put_setting($id,$data) > 0) {
 			$this->response([
 				'status' => 1,
 				'data' => 'Succes Update data'

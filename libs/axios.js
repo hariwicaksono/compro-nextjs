@@ -100,6 +100,7 @@ const PostBlog = (data) => POST('PostController',data);
 const PutBlog = (data) => PUT('PostController',data);
 const DeleteBlog = (id) => DELETE('PostController/index_delete?id=',id);
 const GetSetting = () => GET('SettingController');
+const PutSetting = (data) => PUT('SettingController',data);
 const GetUser = () => GET('UserController');
 const GetUserId = (data) => GET_ID('UserController?id=',data)
 const PostUser = (data) => POST('UserController',data);
@@ -114,6 +115,7 @@ const API = {
     PutBlog,
     DeleteBlog,
     GetSetting,
+    PutSetting,
     GetUser,
     GetUserId,
     PostUser,
