@@ -42,6 +42,12 @@ class MasterModel extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
+	public function put_userpass($id,$data)
+	{
+		$this->db->update('users',$data,['email'=>$id]);
+		return $this->db->affected_rows();
+	}
+
     public function get_blog($id = null)
 	{
 		if ($id == null) {
@@ -96,6 +102,16 @@ class MasterModel extends CI_Model {
 	{
 		$this->db->update('settings',$data,['id'=>$id]);
 		return $this->db->affected_rows();
+	}
+
+	public function get_slideshow()
+	{
+		return $this->db->get_where('slideshow')->result_array();
+	}
+
+	public function get_category()
+	{
+		return $this->db->get_where('categories')->result_array();
 	}
 
 }

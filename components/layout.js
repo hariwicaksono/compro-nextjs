@@ -4,6 +4,7 @@ import Link from 'next/link';
 import Navbar from './navbar';
 import Sidebar from './sidebar';
 import { Container } from 'react-bootstrap';
+import {isLogin, isAdmin} from '../libs/utils';
 
 export const siteName = 'Starter App'
 export const siteTitle = 'Starter App Next.js'
@@ -12,7 +13,8 @@ class Layout extends Component {
   constructor(props) {
     super(props)
     this.state = {
-        showMenu: true
+        showMenu: true,
+        login : false
     }
     this.toggleMenu = this.toggleMenu.bind(this)
   }
@@ -20,6 +22,19 @@ class Layout extends Component {
   toggleMenu = function() {
     this.setState({ showMenu: !this.state.showMenu });
   }
+  componentDidMount = () => {
+    if(localStorage.getItem('isAdmin')){
+      //console.log('ADMIN')
+      this.setState({
+        login : true
+    })
+    } else {
+        this.setState({
+            login : false
+        })
+    }
+}
+
   render() {
     const { children, home, login, admin, member } = this.props;
 
@@ -35,7 +50,7 @@ class Layout extends Component {
 
     <Navbar toggleMenu={this.toggleMenu} />
     <div className="wrapper">
-    {admin && (
+    {this.state.login == true && (
         <Sidebar showMenu={this.state.showMenu} />
     )} 
     {!home && !login && !admin ? 

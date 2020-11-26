@@ -10,14 +10,14 @@ class MyApp extends Component {
     super(props)
     this.state = {
         
+        }
     }
-}
 
 
 
-componentDidMount = () => {
+  componentDidMount = () => {
     
-}
+  }
 
   render() {
     const { Component, pageProps } = this.props;

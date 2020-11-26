@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Head from 'next/head';
+import Router from 'next/router';
 import Link from 'next/link';
 import {Container, Navbar, Nav, NavItem, NavDropdown, Form, FormControl, Button} from 'react-bootstrap';
 import API from '../libs/axios';
@@ -78,11 +79,11 @@ componentDidMount = () => {
     <Link href="/" passHref><Nav.Link>Home</Nav.Link></Link>
       <Link href="/blog" passHref><Nav.Link>Blog</Nav.Link></Link>
       <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-        <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-        <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
+        <Link href="#" passHref><NavDropdown.Item>Action</NavDropdown.Item></Link>
+        <Link href="#" passHref><NavDropdown.Item>Another action</NavDropdown.Item></Link>
+        <Link href="#" passHref><NavDropdown.Item>Something</NavDropdown.Item></Link>
         <NavDropdown.Divider />
-        <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
+        <Link href="#" passHref><NavDropdown.Item>Separated link</NavDropdown.Item></Link>
       </NavDropdown>
     </Nav>
     <SearchForm/>

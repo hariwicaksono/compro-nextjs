@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
+import Router from 'next/router';
+import {isLogin, isAdmin} from '../../libs/utils';
 import Layout, {siteName, siteTitle} from '../../components/layout';
 import API from '../../libs/axios';
 import {toast} from 'react-toastify';
@@ -29,6 +31,9 @@ class Setting extends Component {
     }
 
     componentDidMount = () => {
+    if (!isAdmin()) {
+        return( Router.push('/login') )
+        }
     API.GetSetting().then(res=>{
         setTimeout(() => this.setState({
             company: res.data[0].company,

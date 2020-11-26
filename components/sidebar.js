@@ -1,7 +1,7 @@
 import React, {Component, useState} from 'react';
 import Link from 'next/link';
 import { Collapse} from 'react-bootstrap';
-import {FaHome, FaFile, FaNewspaper, FaWrench} from 'react-icons/fa';
+import {FaHome, FaFile, FaNewspaper, FaWrench, FaSlidersH, FaSignOutAlt, FaKey} from 'react-icons/fa';
 import { logout, isLogin } from '../libs/utils';
 
 function SubMenu() {
@@ -23,22 +23,22 @@ function SubMenu() {
         </li>
         <li>
         <a href='#' onClick={() => setOpen1(!open1)} data-toggle="collapse" aria-controls="collapsePengaturan" aria-expanded={open1} className="dropdown-toggle">
-         <FaWrench /> <span>Pengaturan</span></a>
+         <FaSlidersH /> <span>Pengaturan</span></a>
       <Collapse in={open1}>
       <ul className="list-unstyled" id="collapsePengaturan">
           <li>
           <Link href={'/admin/setting'} passHref>
-          <a title="Pengaturan" alt="Pengaturan"> <span>Pengaturan</span></a>
+          <a title="Pengaturan" alt="Pengaturan"><FaWrench /> <span>Pengaturan</span></a>
             </Link>
           </li>
           <li>
-          <Link href={'/akun/password'} passHref>
-          <a title="Ganti Password" alt="Ganti Password"> <span>Ganti Password</span></a>
+          <Link href={'/admin/password'} passHref>
+          <a title="Ganti Password" alt="Ganti Password"><FaKey /> <span>Ganti Password</span></a>
             </Link>
           </li>
           <li>
               <Link onClick={() => {logout()}} href='' passHref>
-              <a alt="Logout"> <span>Logout</span></a>
+              <a title="Logout" alt="Logout"><FaSignOutAlt /> <span>Logout</span></a>
               </Link>
           </li>
       </ul>

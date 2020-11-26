@@ -24,18 +24,16 @@ class Posts extends Component {
        
                 const slice = this.props.data.slice(this.state.offset, this.state.offset + this.state.perPage)
                 const ListPost = slice.map((post, key) => (
-                    <Row className="mb-3" key={post.id}>
-                        <Col md={4}>
-                        <img src={this.state.url+post.post_image} alt={post.title} className="img-fluid" />
-                        </Col>
-                    <Col md={6} >
-                    Posted on: {post.created_at} in {post.category}
-                    <h3 className="mb-0"><Link href={"/blog/posts/"+post.id} passHref>{post.title}</Link></h3>
-                    {parse(post.summary, { trim: true })}
-                  
-
+                <Row className="mb-3" key={post.id}>
+                    <Col md={4}>
+                    <img src={this.state.url+post.post_image} alt={post.title} className="img-fluid" />
                     </Col>
-                    </Row>
+                <Col md={6} >
+                <small class="text-muted">Posted on: {post.created_at} in {post.category}</small>
+                <h3 className="mb-2"><Link href={"/blog/posts/"+post.id} passHref>{post.title}</Link></h3>
+                {parse(post.summary, { trim: true })}
+                </Col>
+                </Row>
                 ))
 
                 this.setState({

@@ -105,7 +105,14 @@ const GetUser = () => GET('UserController');
 const GetUserId = (data) => GET_ID('UserController?id=',data)
 const PostUser = (data) => POST('UserController',data);
 const PutUser = (data) => PUT('UserController',data);
+const PutUserPass = (data) => PUT('UserPassController',data);
 const DeleteUser = (id) => DELETE('UserController/index_delete?id=',id);
+const GetSlideshow = () => GET('SlideshowController');
+const PutSlideshow = (data) => PUT('SlideshowController',data);
+const GetCategory = () => GET('CategoryController');
+const PostCategory = (data) => POST('CategoryController',data);
+const PutCategory = (data) => PUT('CategoryController',data);
+const DeleteCategory = (id) => DELETE('CategoryController/index_delete?id=',id);
 
 const API = {
     PostLogin,
@@ -120,7 +127,14 @@ const API = {
     GetUserId,
     PostUser,
     PutUser,
-    DeleteUser 
+    PutUserPass,
+    DeleteUser,
+    GetSlideshow,
+    PutSlideshow,
+    GetCategory,
+    PostCategory,
+    PutCategory,
+    DeleteCategory
 }
 
 export default API
