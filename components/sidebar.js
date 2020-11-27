@@ -1,7 +1,7 @@
 import React, {Component, useState} from 'react';
 import Link from 'next/link';
 import { Collapse} from 'react-bootstrap';
-import {FaHome, FaFile, FaNewspaper, FaWrench, FaSlidersH, FaSignOutAlt, FaKey} from 'react-icons/fa';
+import {FaHome, FaFile, FaFileAlt, FaWrench, FaSlidersH, FaSignOutAlt, FaKey} from 'react-icons/fa';
 import { logout, isLogin } from '../libs/utils';
 
 function SubMenu() {
@@ -17,24 +17,39 @@ function SubMenu() {
             </Link>
         </li>
         <li>
+        <a href='#' onClick={() => setOpen1(!open1)} data-toggle="collapse" aria-controls="collapseBlog" aria-expanded={open1} className="dropdown-toggle">
+        <FaFileAlt size="1.4rem"/> <span>Blog</span></a>
+      <Collapse in={open1}>
+      <ul className="list-unstyled" id="collapseBlog">
+      <li>
             <Link href={'/admin/blog'} passHref>
-             <a><FaNewspaper size="1.4rem"/> <span>Blog Post</span></a>
+             <a><FaFileAlt size="1.4rem"/> <span>Daftar Blog</span></a>
+            </Link>
+        </li>
+        <li>
+            <Link href={'/admin/blog/create'} passHref>
+             <a><FaFileAlt size="1.4rem"/> <span>Tambah</span></a>
             </Link>
         </li>
         <li>
             <Link href={'/admin/blog/category'} passHref>
-             <a><FaNewspaper size="1.4rem"/> <span>Blog Kategori</span></a>
+             <a><FaFileAlt size="1.4rem"/> <span>Kategori</span></a>
             </Link>
         </li>
+         
+      </ul>
+      </Collapse>
+    </li>
+        
         <li>
           <Link href={'/admin/setting'} passHref>
           <a title="Pengaturan" alt="Pengaturan"><FaWrench size="1.4rem"/> <span>Pengaturan</span></a>
             </Link>
         </li>
         <li>
-        <a href='#' onClick={() => setOpen1(!open1)} data-toggle="collapse" aria-controls="collapsePengaturan" aria-expanded={open1} className="dropdown-toggle">
+        <a href='#' onClick={() => setOpen2(!open2)} data-toggle="collapse" aria-controls="collapsePengaturan" aria-expanded={open2} className="dropdown-toggle">
          <FaSlidersH size="1.4rem"/> <span>Profil</span></a>
-      <Collapse in={open1}>
+      <Collapse in={open2}>
       <ul className="list-unstyled" id="collapsePengaturan">
         <li>
           <Link href={'/admin/setting'} passHref>

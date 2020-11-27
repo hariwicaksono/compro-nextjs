@@ -114,6 +114,7 @@ const GetCategory = () => GET('CategoryController');
 const PostCategory = (data) => POST('CategoryController',data);
 const PutCategory = (data) => PUT('CategoryController',data);
 const DeleteCategory = (id) => DELETE('CategoryController/index_delete?id=',id);
+const PostFoto = (data,name) => POST_FOTO('ImageUpload',data,name);
 
 const API = {
     PostLogin,
@@ -136,7 +137,8 @@ const API = {
     GetCategory,
     PostCategory,
     PutCategory,
-    DeleteCategory
+    DeleteCategory,
+    PostFoto
 }
 
 export default API

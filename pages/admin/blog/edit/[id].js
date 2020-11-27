@@ -8,7 +8,7 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import {} from 'react-icons/md';
 import parse from 'html-react-parser';
 
-class Detail extends Component {
+class Edit extends Component {
   constructor(props){
     super(props)
     this.state = {
@@ -77,4 +77,4 @@ static async getInitialProps ({ query }) {
 }
 
 
-export default Detail
+export default Edit;
