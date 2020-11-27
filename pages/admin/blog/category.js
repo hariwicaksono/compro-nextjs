@@ -2,10 +2,10 @@ import React, { Component, useState, useMemo } from 'react'
 import Head from 'next/head';
 import Router from 'next/router';
 import Link from 'next/link';
-import {isLogin, isAdmin} from '../../libs/utils';
-import {ImagesUrl} from '../../libs/urls';
-import Layout, {siteName, siteTitle} from '../../components/layout';
-import API from '../../libs/axios';
+import {isLogin, isAdmin} from '../../../libs/utils';
+import {ImagesUrl} from '../../../libs/urls';
+import Layout, {siteName, siteTitle} from '../../../components/layout';
+import API from '../../../libs/axios';
 import {toast} from 'react-toastify';
 import {Container, Breadcrumb, Card, Row, Col, Button, Form} from 'react-bootstrap';
 import { FaTrash, FaPencilAlt} from 'react-icons/fa';
@@ -17,11 +17,10 @@ import styled from 'styled-components';
 import Dialog from 'react-bootstrap-dialog';
 
 var options = {lines: 13,length: 20,width: 10,radius: 30,scale: 0.35,corners: 1,color: '#fff',opacity: 0.25,rotate: 0,direction: 1,speed: 1,trail: 60,fps: 20,zIndex: 2e9,top: '50%',left: '50%',shadow: false,hwaccel: false,position: 'absolute'};
-class Blog extends Component {
+class Category extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            Blog: [],
             Category: [],
             url: ImagesUrl(),
             loading: true 
@@ -30,10 +29,10 @@ class Blog extends Component {
     }
 
     componentDidMount = () => {
-        API.GetBlog().then(res => {
+        API.GetCategory().then(res => {
           if (res.data.length > 0) {
             setTimeout(() => this.setState({
-                Blog: res.data,
+                Category: res.data,
                 loading: false
             }), 100);
           } else {
@@ -45,12 +44,6 @@ class Blog extends Component {
         }).catch(err => {
           console.log(err.response)
       })
-      API.GetCategory().then(res => {
-        this.setState({
-            Category: res.data,
-            loading: false
-        })
-    })
 
     }  
     
@@ -61,123 +54,10 @@ class Blog extends Component {
           selector: 'id',
           sortable: true
         },
-        ,
-        {
-          name: '',
-          sortable: true,
-          cell: row => <>
-          <img src={this.state.url+row.post_image} width="60" alt=""/>
-          </>,
-        },
-        {
-          name: 'Judul Blog',
-          selector: 'title',
-          sortable: true
-        },
-        {/*
-          name: 'Aktif',
-          sortable: true,
-          cell: row => <>
-          <Formik
-                            initialValues={{ 
-                                id: row.id_seminar, 
-                                aktif_seminar: ''
-                            }}
-                            onSubmit={(values, actions) => {
-                                alert('Apakah anda yakin akan mengubah data ini?');
-                                API.PutStatusSeminar(values).then(res=>{
-                                  //console.log(res)
-                                  if (res.status === 1 ) {
-                                      toast.success("Data berhasil disimpan", {position: "top-center"});
-                                  } 
-                                  
-                              }).catch(err => {
-                                  console.log(err.response)
-                                  toast.warn("Tidak ada data yang diubah", {position: "top-center"});
-
-                              })
-                                
-                                setTimeout(() => {
-                                actions.setSubmitting(false);
-                                }, 1000);
-                            }}
-                            >
-                            {({
-                                handleSubmit,
-                                handleChange,
-                                handleBlur,
-                                values,
-                                touched,
-                                errors,
-                                isSubmitting
-                            }) => (
-                        <Form onChange={handleSubmit}>
-                            <Form.Control as="select" name="aktif_seminar" onChange={handleChange} defaultValue={row.aktif_seminar} onBlur={handleBlur} size="sm" custom>
-                            <option value="Y" >{isSubmitting ? 
-                           "loading..." : "Aktif"}
-                           </option>
-                            <option value='N' >{isSubmitting ? 
-                             "loading..." : "Tidak Aktif"}
-                             </option>
- 
-                            </Form.Control>
-       
-                     </Form>
-                     )}
-                    </Formik>
-          </>,
-        */},
         {
           name: 'Kategori',
-          sortable: true,
-          cell: row => <>
-          <Formik
-                            initialValues={{ 
-                                id: row.id, 
-                                category_id: '',
-                                
-                            }}
-                            onSubmit={(values, actions) => {
-                                alert('Apakah anda yakin akan mengubah data ini?');
-                                API.PutBlogCategory(values).then(res=>{
-                                  //console.log(res)
-                                  if (res.status === 1 ) {
-                                    toast.success("Data berhasil disimpan", {position: "top-center"});
-                                  } 
-                                  
-                              }).catch(err => {
-                                  console.log(err.response)
-                                  toast.warn("Tidak ada data yang diubah", {position: "top-center"});
-
-                              })
-                                
-                                setTimeout(() => {
-                                actions.setSubmitting(false);
-                                }, 1000);
-                            }}
-                            
-                            >
-                            {({
-                                handleSubmit,
-                                handleChange,
-                                handleBlur,
-                                values,
-                                touched,
-                                errors,
-                                isSubmitting
-                            }) => (
-                        <Form onChange={handleSubmit}>
-                            <Form.Control as="select" name="category_id" onChange={handleChange} defaultValue={row.category_id} onBlur={handleBlur} size="sm" custom>
-                            <option value="">Choose Category</option>
-                            {this.state.Category.map((b, i) => (<option value={b.id} key={i}>{isSubmitting ? 
-                           "loading..." : b.name}</option>))}
- 
-                            </Form.Control>
-                           
-                     </Form>
-                     )}
-                    </Formik>
-          </>,
+          selector: 'name',
+          sortable: true
         },
         {
           name: 'Aksi',
@@ -288,7 +168,7 @@ class Blog extends Component {
     const BasicTable = () => {
       const [filterText, setFilterText] = useState('');
       const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-      const filteredItems = this.state.Blog.filter(item => item.title && item.title.toLowerCase().includes(filterText.toLowerCase()) 
+      const filteredItems = this.state.Category.filter(item => item.name && item.name.toLowerCase().includes(filterText.toLowerCase()) 
        );
     
       const subHeaderComponentMemo = useMemo(() => {
@@ -305,7 +185,7 @@ class Blog extends Component {
     
       return (
         <DataTable
-          title="Semua Blog Post"
+          title="Kategori Blog"
           columns={columns}
           data={filteredItems}
           pagination
@@ -360,4 +240,4 @@ class Blog extends Component {
 
 
 
-export default Blog;
+export default Category;

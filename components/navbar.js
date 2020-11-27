@@ -7,7 +7,7 @@ import API from '../libs/axios';
 import {logout, isLogin, isAdmin} from '../libs/utils';
 import {ImagesUrl} from '../libs/urls';
 import SearchForm from './searchForm';
-import {FaBars} from 'react-icons/fa';
+import {FaBars, FaSignOutAlt, FaKey} from 'react-icons/fa';
 
 class MyNavbar extends Component{
   constructor(props) {
@@ -33,6 +33,7 @@ componentDidMount = () => {
           this.setState({
               id : res.data[0].id,
               name: res.data[0].name,
+              email: res.data[0].email,
               user: true
           })
       })
@@ -44,6 +45,7 @@ componentDidMount = () => {
            this.setState({
                id : res.data[0].id,
                name: res.data[0].name,
+               email: res.data[0].email,
                admin: true
            })
        })
@@ -117,9 +119,9 @@ componentDidMount = () => {
                     src={this.state.url+'no-avatar.png'} />
                 </>
                 )} id="basic-nav-dropdown" alignRight>
-                <NavDropdown.Item>{this.state.name}</NavDropdown.Item>
-                <NavDropdown.Item>Ganti Password</NavDropdown.Item>
-                <NavDropdown.Item onClick={this.Logout} href=''>Keluar</NavDropdown.Item>
+                <NavDropdown.Item>{this.state.email}</NavDropdown.Item>
+                <Link href="/admin/password" passHref><NavDropdown.Item><FaKey/> Ganti Password</NavDropdown.Item></Link>
+                <NavDropdown.Item onClick={this.Logout} href=''><FaSignOutAlt/> Logout</NavDropdown.Item>
                 </NavDropdown>
                 </NavItem>
                 </>

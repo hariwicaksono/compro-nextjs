@@ -94,11 +94,12 @@ const POST_FOTO = (path,data,name) => {
 }
 
 const PostLogin = (data) => POST('LoginController',data);
-const GetBlog = () => GET('PostController');
-const GetBlogId = (data) => GET_ID('PostController?id=',data)
-const PostBlog = (data) => POST('PostController',data);
-const PutBlog = (data) => PUT('PostController',data);
-const DeleteBlog = (id) => DELETE('PostController/index_delete?id=',id);
+const GetBlog = () => GET('BlogController');
+const GetBlogId = (data) => GET_ID('BlogController?id=',data)
+const PostBlog = (data) => POST('BlogController',data);
+const PutBlog = (data) => PUT('BlogController',data);
+const PutBlogCategory = (data) => PUT('BlogCategoryController',data);
+const DeleteBlog = (id) => DELETE('BlogController/index_delete?id=',id);
 const GetSetting = () => GET('SettingController');
 const PutSetting = (data) => PUT('SettingController',data);
 const GetUser = () => GET('UserController');
@@ -120,6 +121,7 @@ const API = {
     GetBlogId,
     PostBlog,
     PutBlog,
+    PutBlogCategory,
     DeleteBlog,
     GetSetting,
     PutSetting,

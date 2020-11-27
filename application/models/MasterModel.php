@@ -81,17 +81,17 @@ class MasterModel extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
+	public function put_blog($id,$data)
+	{
+		$this->db->update('posts',$data,['id'=>$id]);
+		return $this->db->affected_rows();
+	}
+
 	public function delete_blog($id = null)
 	{
 		$this->db->delete('posts',['id' => $id]);
 		return $this->db->affected_rows();
 	}
-
-	public function put_blog($id,$data)
-	{
-		$this->db->update('posts',$data,['id'=>$id]);
-		return $this->db->affected_rows();
-    }
     
     public function get_setting($id)
 	{ 

@@ -4,7 +4,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
-class PostController extends REST_Controller{
+class BlogController extends REST_Controller{
 
 	public function __construct($config = 'rest')
     {

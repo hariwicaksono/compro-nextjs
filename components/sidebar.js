@@ -13,32 +13,42 @@ function SubMenu() {
         <>
         <li>
             <Link href={'/admin'} passHref>
-             <a><FaHome /> <span>Admin</span></a>
+             <a><FaHome size="1.4rem"/> <span>Admin</span></a>
             </Link>
         </li>
         <li>
             <Link href={'/admin/blog'} passHref>
-             <a><FaNewspaper /> <span>Blog</span></a>
+             <a><FaNewspaper size="1.4rem"/> <span>Blog Post</span></a>
+            </Link>
+        </li>
+        <li>
+            <Link href={'/admin/blog/category'} passHref>
+             <a><FaNewspaper size="1.4rem"/> <span>Blog Kategori</span></a>
+            </Link>
+        </li>
+        <li>
+          <Link href={'/admin/setting'} passHref>
+          <a title="Pengaturan" alt="Pengaturan"><FaWrench size="1.4rem"/> <span>Pengaturan</span></a>
             </Link>
         </li>
         <li>
         <a href='#' onClick={() => setOpen1(!open1)} data-toggle="collapse" aria-controls="collapsePengaturan" aria-expanded={open1} className="dropdown-toggle">
-         <FaSlidersH /> <span>Pengaturan</span></a>
+         <FaSlidersH size="1.4rem"/> <span>Profil</span></a>
       <Collapse in={open1}>
       <ul className="list-unstyled" id="collapsePengaturan">
-          <li>
+        <li>
           <Link href={'/admin/setting'} passHref>
-          <a title="Pengaturan" alt="Pengaturan"><FaWrench /> <span>Pengaturan</span></a>
+          <a title="Pengaturan" alt="Pengaturan"><FaWrench size="1.4rem"/> <span>Profil Saya</span></a>
             </Link>
-          </li>
+        </li>
           <li>
           <Link href={'/admin/password'} passHref>
-          <a title="Ganti Password" alt="Ganti Password"><FaKey /> <span>Ganti Password</span></a>
+          <a title="Ganti Password" alt="Ganti Password"><FaKey size="1.4rem"/> <span>Ganti Password</span></a>
             </Link>
           </li>
           <li>
               <Link onClick={() => {logout()}} href='' passHref>
-              <a title="Logout" alt="Logout"><FaSignOutAlt /> <span>Logout</span></a>
+              <a title="Logout" alt="Logout"><FaSignOutAlt size="1.4rem"/> <span>Logout</span></a>
               </Link>
           </li>
       </ul>

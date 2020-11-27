@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Head from 'next/head';
 import Layout, {siteName, siteTitle} from '../components/layout';
 import API from '../libs/axios';
-import {Container, Card, Row, Col, Spinner, Button, Form} from 'react-bootstrap';
+import {Container, Jumbotron, Card, Row, Col, Spinner, Button, Form} from 'react-bootstrap';
 import Slideshow from '../components/slideshow';
 import Loader from 'react-loader';
 
@@ -42,8 +42,9 @@ class Index extends Component{
         :
         <Slideshow data={this.state.Slideshow} /> 
       }
-
-        <h2>Welcome to the Next.js application - IT Shop Pwt</h2>
+        <Jumbotron className="text-center">
+        <h1>Welcome to the Next.js App - IT Shop Pwt</h1>
+        </Jumbotron>
         </Container>
       </main>
       </Layout>

@@ -51,9 +51,9 @@ class LoginForm extends Component {
            
                 <Form className="mx-1 my-auto w-100" onSubmit={this.handlerSubmit}>
                 <div className="input-group">
-                    <Form.Control className="border py-2" type="text" name="query" placeholder="Cari Seminar..." onChange={this.handlerChange} required/>
+                    <Form.Control className="border py-3" type="text" name="query" placeholder="Cari Seminar..." onChange={this.handlerChange} required/>
                     <span className="input-group-append">
-                    <Button className="border text-secondary" type="submit" variant="light">
+                    <Button className="border text-secondary py-1" type="submit" variant="light">
                     {
                         this.state.loading
                         ?
