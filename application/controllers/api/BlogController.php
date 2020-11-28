@@ -48,14 +48,18 @@ class BlogController extends REST_Controller{
 	public function index_post()
 	{
 		$data = [
-			'nama_produk' => $this->post('nama'),
-			'kategori_produk' => $this->post('kategori'),
-			'harga_produk' => $this->post('harga'),
-			'desk_produk' => $this->post('desk'),
-			'foto_produk' => $this->post('foto')
+			'category_id' => $this->post('category_id'),
+			'user_id' => $this->post('user_id'),
+			'title' => $this->post('title'),
+			'summary' => $this->post('summary'),
+			'body' => $this->post('body'),
+			'post_image' => $this->post('foto'),
+			'date' => $this->post('date'),
+			'time' => $this->post('time'),
+			'created_at' => date("Y-m-d H:i:s")
 		];
 
-		if ($this->Model->post_produk($data) > 0 ) {
+		if ($this->Model->post_blog($data) > 0 ) {
 			$this->response([
 				'status' => 1,
 				'data' => 'Succes Post data'
@@ -68,6 +72,31 @@ class BlogController extends REST_Controller{
 		}
 	}
 
+	public function index_put()
+	{
+		$id = $this->put('id');
+		$data = [
+			'title' => $this->put('title'),
+			'summary' => $this->put('summary'),
+			'body' => $this->put('body'),
+			'date' => $this->put('date'),
+			'time' => $this->put('time'),
+			'updated_at' => date("Y-m-d H:i:s")
+		];
+
+		if ($this->Model->put_blog($id,$data) > 0) {
+			$this->response([
+				'status' => 1,
+				'data' => 'Succes Update data'
+			],REST_Controller::HTTP_OK);
+		} else {
+			$this->response([
+				'status' => 0,
+				'data' => 'Failed Update Data'
+			],REST_Controller::HTTP_NOT_FOUND);
+		}
+
+	}
 
 	public function index_delete()
 	{
@@ -90,32 +119,6 @@ class BlogController extends REST_Controller{
 				],REST_Controller::HTTP_NOT_FOUND);
 			}
 		} 
-	}
-
-
-	public function index_put()
-	{
-		$id = $this->put('id');
-		$data = [
-			'nama_produk' => $this->put('nama'),
-			'kategori_produk' => $this->put('kategori'),
-			'harga_produk' => $this->put('harga'),
-			'desk_produk' => $this->put('desk'),
-			'foto_produk' => $this->put('foto')
-		];
-
-		if ($this->Model->put_produk($id,$data) > 0) {
-			$this->response([
-				'status' => 1,
-				'data' => 'Succes Update data'
-			],REST_Controller::HTTP_OK);
-		} else {
-			$this->response([
-				'status' => 0,
-				'data' => 'Failed Update Data'
-			],REST_Controller::HTTP_NOT_FOUND);
-		}
-
 	}
 
 }

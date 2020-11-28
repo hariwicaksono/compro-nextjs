@@ -2,10 +2,10 @@ import React, { Component, useState, useMemo } from 'react'
 import Head from 'next/head';
 import Router from 'next/router';
 import Link from 'next/link';
-import {isLogin, isAdmin} from '../../libs/utils';
-import {ImagesUrl} from '../../libs/urls';
-import Layout, {siteName, siteTitle} from '../../components/layout';
-import API from '../../libs/axios';
+import {isLogin, isAdmin} from '../../../libs/utils';
+import {ImagesUrl} from '../../../libs/urls';
+import Layout, {siteName, siteTitle} from '../../../components/layout';
+import API from '../../../libs/axios';
 import {toast} from 'react-toastify';
 import {Container, Breadcrumb, Card, Row, Col, Button, Form} from 'react-bootstrap';
 import { FaTrash, FaPencilAlt} from 'react-icons/fa';
@@ -63,10 +63,35 @@ class Blog extends Component {
         },
         ,
         {
-          name: '',
+          name: 'Gambar',
           sortable: true,
           cell: row => <>
-          <img src={this.state.url+row.post_image} width="60" alt=""/>
+          <img src={this.state.url+row.post_image} width="60" alt="" onClick={() => {
+                this.dialog.show({
+                  title: 'Konfirmasi',
+                  body: 'Apakah anda yakin akan menghapus data ini?',
+                  bsSize: 'lg',
+                  actions: [
+                    Dialog.CancelAction(() => {
+                      console.log('Cancel was clicked!')
+                    }),
+                    Dialog.OKAction(() => {
+                      API.DeleteBlog(row.id).then(res => {
+                        if (res.status === 1) {
+                            window.location.href = '/admin/blog';
+                            toast.success("Hapus data berhasil", {position: "top-center"});
+                        } else {
+                            console.log('gagal')
+                        }
+                      })
+                    })
+                  ],
+                  onHide: (dialog) => {
+                    dialog.hide()
+                    console.log('closed by clicking background.')
+                  }
+                })
+              }} />
           </>,
         },
         {
@@ -182,7 +207,7 @@ class Blog extends Component {
         {
           name: 'Aksi',
           sortable: false,
-          cell: row => <><Button href={'/admin/blog/edit/'+row.id} size="sm" title="Edit" alt="Edit"><FaPencilAlt/></Button>&nbsp;
+          cell: row => <><Link href={'/admin/blog/edit/'+row.id} passHref><Button size="sm" title="Edit" alt="Edit"><FaPencilAlt/></Button></Link>&nbsp;
           <Button onClick={() => {
                 this.dialog.show({
                   title: 'Konfirmasi',
@@ -279,7 +304,7 @@ class Blog extends Component {
 
     const FilterComponent = ({ filterText, onFilter, onClear }) => (
       <>
-      <Button href="/admin/blog/create" variant="primary" style={{ position: 'absolute', left: '0', marginLeft: '15px'}}>Tambah Blog</Button>
+      <Link href="/admin/blog/create" passHref><Button variant="primary" style={{ position: 'absolute', left: '0', marginLeft: '15px'}}>Tambah Blog</Button></Link>
         <TextField id="search" type="text" placeholder="Filter By Judul" aria-label="Search Input" value={filterText} onChange={onFilter} />
         <ClearButton variant="secondary" type="button" onClick={onClear}>X</ClearButton>
       </>

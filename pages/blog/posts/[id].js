@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
+import Image from 'next/image'
 import Layout, { siteTitle } from '../../../components/layout';
 import API from '../../../libs/axios';
 import { ImagesUrl } from '../../../libs/urls';
@@ -39,7 +40,7 @@ static async getInitialProps ({ query }) {
                 id: res.data[0].id,
                 title : res.data[0].title,
                 body: res.data[0].body,
-                images: res.data[0].post_image,
+                image: res.data[0].post_image,
                 date: res.data[0].created_at,
                 category: res.data[0].category,
                 user: res.data[0].user
@@ -47,7 +48,7 @@ static async getInitialProps ({ query }) {
         })
 }
   render() {
-  const {title,body,images,date,category,user,url} = this.state;
+  const {title,body,image,date,category,user,url} = this.state;
   return (
     <Layout>
       <Head>
@@ -64,7 +65,7 @@ static async getInitialProps ({ query }) {
         <h1>{title}</h1>
         Posted date: {date} - Category: {category} - By: {user}
         <hr/>
-        <img src={url+images} className="mb-3" alt={'gambar_'+title} />
+        {image && <img src={url+image} className="mb-3 img-fluid" alt={'gambar_'+title} />}
         {parse(body)}           
         </Col>
       </Row>
