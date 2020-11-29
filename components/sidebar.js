@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react';
-import Link from 'next/link';
+import Link from '../libs/link';
 import { Collapse} from 'react-bootstrap';
 import {FaHome, FaFile, FaFileAlt, FaWrench, FaSlidersH, FaSignOutAlt, FaKey} from 'react-icons/fa';
 import { logout, isLogin } from '../libs/utils';
@@ -12,7 +12,7 @@ function SubMenu() {
     return (
         <>
         <li>
-            <Link href={'/admin'} passHref>
+            <Link href={'/admin'} activeClassName="active" passHref>
              <a><FaHome size="1.4rem"/> <span>Admin</span></a>
             </Link>
         </li>
@@ -22,17 +22,17 @@ function SubMenu() {
       <Collapse in={open1}>
       <ul className="list-unstyled" id="collapseBlog">
       <li>
-            <Link href={'/admin/blog'} passHref>
+            <Link href={'/admin/blog'} activeClassName="active" passHref>
              <a><FaFileAlt size="1.4rem"/> <span>Daftar Blog</span></a>
             </Link>
         </li>
         <li>
-            <Link href={'/admin/blog/create'} passHref>
+            <Link href={'/admin/blog/create'} activeClassName="active" passHref>
              <a><FaFileAlt size="1.4rem"/> <span>Tambah</span></a>
             </Link>
         </li>
         <li>
-            <Link href={'/admin/blog/category'} passHref>
+            <Link href={'/admin/blog/category'} activeClassName="active" passHref>
              <a><FaFileAlt size="1.4rem"/> <span>Kategori</span></a>
             </Link>
         </li>
@@ -42,7 +42,7 @@ function SubMenu() {
     </li>
         
         <li>
-          <Link href={'/admin/setting'} passHref>
+          <Link href={'/admin/setting'} activeClassName="active" passHref>
           <a title="Pengaturan" alt="Pengaturan"><FaWrench size="1.4rem"/> <span>Pengaturan</span></a>
             </Link>
         </li>
@@ -52,12 +52,12 @@ function SubMenu() {
       <Collapse in={open2}>
       <ul className="list-unstyled" id="collapsePengaturan">
         <li>
-          <Link href={'/admin/setting'} passHref>
+          <Link href={'/admin/setting'} activeClassName="active" passHref>
           <a title="Pengaturan" alt="Pengaturan"><FaWrench size="1.4rem"/> <span>Profil Saya</span></a>
             </Link>
         </li>
           <li>
-          <Link href={'/admin/password'} passHref>
+          <Link href={'/admin/password'} activeClassName="active" passHref>
           <a title="Ganti Password" alt="Ganti Password"><FaKey size="1.4rem"/> <span>Ganti Password</span></a>
             </Link>
           </li>

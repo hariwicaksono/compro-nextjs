@@ -10,9 +10,11 @@ import {toast} from 'react-toastify';
 import Skeleton from 'react-loading-skeleton';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import Dialog from 'react-bootstrap-dialog';
 
 const validationSchema = yup.object({
   title: yup.string().required(),
+  category: yup.string().required(),
   date: yup.string().required(),
   time: yup.string().required(),
   summary: yup.string().required(),
@@ -49,7 +51,7 @@ static async getInitialProps ({ query }) {
           console.log(res)
             this.setState({
                 id: res.data[0].id,
-                category_id: res.data[0].category,
+                category_id: res.data[0].category_id,
                 title : res.data[0].title,
                 summary: res.data[0].summary,
                 body: res.data[0].body,
@@ -88,14 +90,15 @@ static async getInitialProps ({ query }) {
                         <Breadcrumb className="my-3">
                         <Link href="/admin" passHref><Breadcrumb.Item >Home</Breadcrumb.Item></Link>
                         <Link href="/admin/blog" passHref><Breadcrumb.Item >Daftar Blog</Breadcrumb.Item></Link>
-                        <Breadcrumb.Item active>Tambah</Breadcrumb.Item>
+                        <Breadcrumb.Item active>Edit</Breadcrumb.Item>
                         </Breadcrumb>
                         
                         <Card className="mb-2" body>
-                            <h5 className="mb-3" style={{fontWeight: '400'}}>Tambah Blog</h5>
+                            <h5 className="mb-3" style={{fontWeight: '400'}}>Edit Blog</h5>
                             <Formik
                             initialValues={{ 
                                 id: this.state.id,
+                                category: this.state.category_id,
                                 title: this.state.title,
                                 summary: this.state.summary,
                                 body: this.state.body,
@@ -110,7 +113,7 @@ static async getInitialProps ({ query }) {
                                       if (res.status === 1 ) {
                                         toast.success("Data berhasil disimpan", {position: "top-center"}); 
                                       } 
-                                      
+                                       
                                   }).catch(err => {
                                       console.log(err.response)
                                       toast.warn("Tidak ada data yang diubah", {position: "top-center"}); 
@@ -134,7 +137,10 @@ static async getInitialProps ({ query }) {
                                 isSubmitting
                             }) => (
                         <Form noValidate onSubmit={handleSubmit}>
-                             
+                          <Form.Group>
+                          <Form.Label>Gambar</Form.Label><br/>
+                             <img src={this.state.url+this.state.image} width="200" alt="" />
+                          </Form.Group>
                             <Form.Group>
                                 <Form.Label>Judul Blog</Form.Label>
                                 <Form.Control name="title" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.title} isInvalid={!!errors.title && touched.title} />
@@ -142,8 +148,12 @@ static async getInitialProps ({ query }) {
                             </Form.Group>
 
                             <Form.Group>
-                                <Form.Label>Kategori</Form.Label>
-                                <Form.Control className="form-control" value={this.state.category_id} disabled />
+                            <Form.Label>Kategori</Form.Label><br/>
+                                <Form.Control as="select" name="category" onChange={handleChange} defaultValue={values.category} onBlur={handleBlur} isInvalid={!!errors.category && touched.category}>
+                              <option value="">Pilih Kategori</option>
+                              {this.state.category.map(b => <option value={b.id}>{b.name}</option>)}
+                            </Form.Control>
+                            {errors.category && touched.category && <Form.Control.Feedback type="invalid">{errors.category}</Form.Control.Feedback>}
                             </Form.Group>
 
                             <Form.Group>
