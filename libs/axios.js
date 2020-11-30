@@ -100,6 +100,7 @@ const PostBlog = (data) => POST('BlogController',data);
 const PutBlog = (data) => PUT('BlogController',data);
 const PutBlogCategory = (data) => PUT('BlogCategoryController',data);
 const DeleteBlog = (id) => DELETE('BlogController/index_delete?id=',id);
+const PutBlogImage = (data) => PUT('BlogImageController',data);
 const GetSetting = () => GET('SettingController');
 const PutSetting = (data) => PUT('SettingController',data);
 const GetUser = () => GET('UserController');
@@ -111,11 +112,13 @@ const DeleteUser = (id) => DELETE('UserController/index_delete?id=',id);
 const GetSlideshow = () => GET('SlideshowController');
 const PutSlideshow = (data) => PUT('SlideshowController',data);
 const GetCategory = () => GET('CategoryController');
+const GetCategoryId = (data) => GET_ID('CategoryController?id=',data)
 const PostCategory = (data) => POST('CategoryController',data);
 const PutCategory = (data) => PUT('CategoryController',data);
 const DeleteCategory = (id) => DELETE('CategoryController/index_delete?id=',id);
 const PostFoto = (data,name) => POST_FOTO('ImageUpload',data,name);
 const CountBlog = () => GET('CountBlogController');
+const CountCategory = () => GET('CountCategoryController');
 
 const API = {
     PostLogin,
@@ -125,6 +128,7 @@ const API = {
     PutBlog,
     PutBlogCategory,
     DeleteBlog,
+    PutBlogImage,
     GetSetting,
     PutSetting,
     GetUser,
@@ -136,11 +140,13 @@ const API = {
     GetSlideshow,
     PutSlideshow,
     GetCategory,
+    GetCategoryId,
     PostCategory,
     PutCategory,
     DeleteCategory,
     PostFoto,
-    CountBlog
+    CountBlog,
+    CountCategory
 }
 
 export default API

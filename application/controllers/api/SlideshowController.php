@@ -22,8 +22,11 @@ class SlideshowController extends REST_Controller{
 	public function index_get()
 	{
 		$id = $this->get('id');
-
-		$slide = $this->Model->get_slideshow($id);
+		if ($id == null) {
+			$slide = $this->Model->get_slideshow();
+		} else {
+			$slide = $this->Model->get_slideshow($id);
+		}
 
 		if ($slide) {
 			$this->response([

@@ -1,7 +1,7 @@
 import React, {Component, useState} from 'react';
 import Link from '../libs/link';
 import { Collapse} from 'react-bootstrap';
-import {FaHome, FaFile, FaFileAlt, FaWrench, FaSlidersH, FaSignOutAlt, FaKey} from 'react-icons/fa';
+import {FaHome, FaFile, FaImages, FaFileAlt, FaWrench, FaSlidersH, FaSignOutAlt, FaKey} from 'react-icons/fa';
 import { logout, isLogin } from '../libs/utils';
 
 function SubMenu() {
@@ -44,6 +44,11 @@ function SubMenu() {
         <li>
           <Link href={'/admin/setting'} activeClassName="active" passHref>
           <a title="Pengaturan" alt="Pengaturan"><FaWrench size="1.4rem"/> <span>Pengaturan</span></a>
+            </Link>
+        </li>
+        <li>
+          <Link href={'/admin/slideshow'} activeClassName="active" passHref>
+          <a title="Slideshow" alt="Slideshow"><FaImages size="1.4rem"/> <span>Slideshow</span></a>
             </Link>
         </li>
         <li>

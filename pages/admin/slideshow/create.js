@@ -16,12 +16,7 @@ import { Formik } from 'formik'
 import * as yup from 'yup'
 
 const validationSchema = yup.object({
-    title: yup.string().required(),
-    category_id: yup.string().required(),
-    date: yup.string().required(),
-    time: yup.string().required(),
-    summary: yup.string().required(),
-    body: yup.string().required(),
+    text_slide: yup.string().required(),
     foto: yup.mixed().required()
   }); 
 
@@ -29,9 +24,7 @@ class Create extends Component {
     constructor(props){
         super(props)
         this.state = {
-            category_id: '',
-            user_id: '',
-            category: [],
+            text_slide: '',
             foto: '',
             file: {
                 foto: ''
@@ -42,29 +35,15 @@ class Create extends Component {
     }
  
     componentDidMount = () => {
-        const datas = JSON.parse(localStorage.getItem('isAdmin'))
-        const id = datas[0].id
-        this.setState({
-            id: id,
-            loading: false
-        })
 
-        API.GetCategory().then(res => {
-            this.setState({
-                category: res.data,
-                loading: false
-            })
-        })
     }
 
     render() {
-        const ListCategory= this.state.category.map((b, i) => (
-            <option value={b.id} key={i}>{b.name}</option>      
-        ))
+
         return (
             <Layout admin>
             <Head>
-                <title>Tambah Blog - {siteTitle}</title>
+                <title>Tambah Slideshow - {siteTitle}</title>
             </Head>
                 <Container fluid>
                     
@@ -78,43 +57,25 @@ class Create extends Component {
                       
                         <Breadcrumb className="my-3">
                         <Link href="/admin" passHref><Breadcrumb.Item >Home</Breadcrumb.Item></Link>
-                        <Link href="/admin/blog" passHref><Breadcrumb.Item >Blog</Breadcrumb.Item></Link>
+                        <Link href="/admin/slideshow" passHref><Breadcrumb.Item >Slideshow</Breadcrumb.Item></Link>
                         <Breadcrumb.Item active>Tambah</Breadcrumb.Item>
                         </Breadcrumb>
                         
                         <Card className="mb-2" body>
-                            <h5 className="mb-3" style={{fontWeight: '400'}}>Tambah Blog</h5>
+                            <h5 className="mb-3" style={{fontWeight: '400'}}>Tambah Slide</h5>
                             <Formik
                             initialValues={{ 
-                                category_id: '',
-                                user_id: this.state.id,
-                                title: '',
-                                summary: '',
-                                body: '',
-                                date: '',
-                                time: '',
+                                text_slide: '',
                                 foto: null,
                             }}
                             onSubmit={(values, actions) => {
                                 alert(JSON.stringify({
-                                    category_id: values.category_id,
-                                    user_id: this.state.id,
-                                    title: values.title,
-                                    summary: values.summary,
-                                    body: values.body,
-                                    date: values.date,
-                                    time: values.time,
+                                    text_slide: values.text_slide,
                                     foto: values.foto.name}));
                                 
                                 API.PostBlog(
                                     { 
-                                        category_id: values.category_id,
-                                        user_id: this.state.id,
-                                        title: values.title,
-                                        summary: values.summary,
-                                        body: values.body,
-                                        date: values.date,
-                                        time: values.time,
+                                        text_slide: values.text_slide,
                                         foto: values.foto.name
                                     }
                                   ).then(res=>{
@@ -153,9 +114,9 @@ class Create extends Component {
                         <Form noValidate onSubmit={handleSubmit}>
                              
                             <Form.Group>
-                                <Form.Label>Judul Blog</Form.Label>
-                                <Form.Control name="title" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.title} isInvalid={!!errors.title && touched.title} />
-                                {errors.title && touched.title && <Form.Control.Feedback type="invalid">{errors.title}</Form.Control.Feedback>}
+                                <Form.Label>Judul Slide</Form.Label>
+                                <Form.Control name="text_slide" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.text_slide} isInvalid={!!errors.text_slide && touched.text_slide} />
+                                {errors.text_slide && touched.text_slide && <Form.Control.Feedback type="invalid">{errors.text_slide}</Form.Control.Feedback>}
                             </Form.Group>
 
                             <Form.Group>
@@ -170,43 +131,6 @@ class Create extends Component {
                                 } onBlur={handleBlur} isInvalid={!!errors.foto && touched.foto} />
                             {errors.foto && touched.foto && <div className="error">{errors.foto}</div>}
                             {this.state.fotoPreviewUrl ? <img src={this.state.fotoPreviewUrl} width="200" alt="" className="mt-2 img-fluid" /> : ""}
-                            </Form.Group>
-
-                            <Form.Group>
-                            <Form.Label>Kategori</Form.Label>
-                            <Form.Control as="select" name="category_id" onChange={handleChange} onBlur={handleBlur} value={values.category_id} isInvalid={!!errors.category_id && touched.category_id}>
-                            <option value="">Pilih Kategori</option>
-                            {ListCategory}
-                            </Form.Control>
-                            {errors.category_id && touched.category_id && <Form.Control.Feedback type="invalid">{errors.category_id}</Form.Control.Feedback>}
-                            </Form.Group>
-
-                            <Form.Group>
-                            <Row>
-                            <Col>
-                                <Form.Label>Tanggal</Form.Label>
-                                <Form.Control type="date" name="tanggal" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.tanggal} isInvalid={!!errors.tanggal && touched.tanggal} />
-                                {errors.tanggal && touched.tanggal && <Form.Control.Feedback type="invalid">{errors.tanggal}</Form.Control.Feedback>}
-                            </Col>
-                            <Col>
-                            <Form.Label>Jam</Form.Label>
-                                <Form.Control type="time" name="jam" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.jam} isInvalid={!!errors.jam && touched.jam} />
-                                {errors.jam && touched.jam && <Form.Control.Feedback type="invalid">{errors.jam}</Form.Control.Feedback>}
-                            </Col>
-                            </Row>
-                            </Form.Group>
-
-                            <Form.Group>
-                                <Form.Label>Ringkasan</Form.Label>
-                                <Form.Control as="textarea" rows="2" name="summary" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.summary} isInvalid={!!errors.summary && touched.summary} />
-                                {errors.summary && touched.summary && <Form.Control.Feedback type="invalid">{errors.summary}</Form.Control.Feedback>}
-                            </Form.Group>
-
-
-                            <Form.Group>
-                                <Form.Label>Isi Blog</Form.Label>
-                                <Form.Control as="textarea" rows="6" name="body" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.body} isInvalid={!!errors.body && touched.body} />
-                                {errors.body && touched.body && <Form.Control.Feedback type="invalid">{errors.body}</Form.Control.Feedback>}
                             </Form.Group>
                            
                             <Button variant="primary" type="submit" disabled={isSubmitting}>{isSubmitting ? (

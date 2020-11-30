@@ -11,6 +11,7 @@ class Index extends Component{
     super(props)
     this.state = {
         JumlahBlog: '',
+        JumlahKategori: '',
         loading: true
     }
 }
@@ -24,7 +25,12 @@ class Index extends Component{
           JumlahBlog: res.data,
           loading: false
         }), 100);
-  })
+    })
+    API.CountCategory().then(res=>{
+      this.setState({
+          JumlahKategori: res.data
+      })
+    })
   }
   render(){
         
@@ -49,7 +55,8 @@ class Index extends Component{
   </Col>
   <Col>
   <Card bg="success" text="light" body>
-        <h4>Test</h4>
+        <h5>Jumlah Kategori</h5>
+        <h1>{this.state.JumlahKategori}</h1>
       </Card>
   </Col>
   <Col>

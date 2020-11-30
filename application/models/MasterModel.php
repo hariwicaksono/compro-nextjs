@@ -104,14 +104,45 @@ class MasterModel extends CI_Model {
 		return $this->db->affected_rows();
 	}
 
-	public function get_slideshow()
+	public function get_slideshow($id = null)
 	{
-		return $this->db->get_where('slideshow')->result_array();
+		if ($id == null) {
+			return $this->db->get('slideshow')->result_array();
+		} else { 
+			return $this->db->get_where('slideshow',['id'=>$id])->result_array();
+		}
 	}
 
-	public function get_category()
+	public function get_category($id = null)
 	{
-		return $this->db->get_where('categories')->result_array();
+		if ($id == null) {
+			return $this->db->get('categories')->result_array();
+		} else { 
+			return $this->db->get_where('categories',['id'=>$id])->result_array();
+		}
+	}
+
+	public function count_category()
+	{
+		return $this->db->count_all('categories');
+	}
+
+	public function post_category($data)
+	{
+		$this->db->insert('categories',$data);
+		return $this->db->affected_rows();
+	}
+
+	public function put_category($id,$data)
+	{
+		$this->db->update('categories',$data,['id'=>$id]);
+		return $this->db->affected_rows();
+	}
+
+	public function delete_category($id = null)
+	{
+		$this->db->delete('categories',['id' => $id]);
+		return $this->db->affected_rows();
 	}
 
 }

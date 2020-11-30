@@ -47,15 +47,12 @@ class CategoryController extends REST_Controller{
 	public function index_post()
 	{
 		$data = [
-			'nama_user' => $this->post('nama'),
-			'alamat_user' => $this->post('alamat'),
-			'no_hp_user' => $this->post('nohp'),
-			'email_user' => $this->post('email'),
-			'password_user' => $this->post('password'),
-			'photo_user' =>$this->post('foto'),
+			'user_id' => $this->post('user_id'),
+			'name' => $this->post('name'),
+			'created_at' => date("Y-m-d H:i:s")
 		];
 
-		if ($this->Model->post_user($data) > 0) {
+		if ($this->Model->post_category($data) > 0) {
 			$this->response([
 				'status' => 1,
 				'data' => 'Success Post Data'
@@ -68,44 +65,14 @@ class CategoryController extends REST_Controller{
 		}
 	}
 
-	public function index_delete()
-	{
-		$id = $_GET['id'];
-		if ($id == null) {
-			$this->response([
-				'status' => 0,
-				'data' => 'Id Null'
-			],REST_Controller::HTTP_BAD_REQUEST);
-		} else {
-			if ($this->Model->delete_user($id)) {
-				$this->response([
-					'status' => 1,
-					'data' => 'Success Delete'
-				],REST_Controller::HTTP_OK);
-			} else {
-				$this->response([
-					'status' => 0,
-					'data' => 'Failed DELETE'
-				],REST_Controller::HTTP_NOT_FOUND);
-			}
-		}
-	}
-
 	public function index_put()
 	{
 		$id = $this->put('id');
 		$data = [
-			'nama_user' => $this->put('nama'),
-			'alamat_user' => $this->put('alamat'),
-			'no_hp_user' => $this->put('hp'),
-			'email_user' => $this->put('email'),
-			'password_user' => $this->put('password'),
-			'photo_user' => $this->put('foto')
+			'name' => $this->put('name'),
 		];
 
-		
-
-		if ($this->Model->put_user($id,$data) > 0 ) {
+		if ($this->Model->put_category($id,$data) > 0 ) {
 			$this->response([
 				'status' => 1,
 				'data' => 'Success Update Data'
@@ -119,5 +86,28 @@ class CategoryController extends REST_Controller{
 
 	}
 
+
+	public function index_delete()
+	{
+		$id = $_GET['id'];
+		if ($id == null) {
+			$this->response([
+				'status' => 0,
+				'data' => 'Id Null'
+			],REST_Controller::HTTP_BAD_REQUEST);
+		} else {
+			if ($this->Model->delete_category($id)) {
+				$this->response([
+					'status' => 1,
+					'data' => 'Success Delete'
+				],REST_Controller::HTTP_OK);
+			} else {
+				$this->response([
+					'status' => 0,
+					'data' => 'Failed DELETE'
+				],REST_Controller::HTTP_NOT_FOUND);
+			}
+		}
+	}
 
 }

@@ -21,17 +21,11 @@ const validationSchema = yup.object({
   foto: yup.mixed().required()
 }); 
 
-class Blog extends Component {
+class Slideshow extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            Blog: [],
-            Category: [],
-            foto: '',
-            file: {
-                foto: ''
-            },
-            fotoPreviewUrl: '',
+            Slideshow: [],
             url: ImagesUrl(),
             loading: true 
         }
@@ -39,10 +33,10 @@ class Blog extends Component {
     }
 
     componentDidMount = () => {
-        API.GetBlog().then(res => {
+        API.GetSlideshow().then(res => {
           if (res.data.length > 0) {
             setTimeout(() => this.setState({
-                Blog: res.data,
+                Slideshow: res.data,
                 loading: false
             }), 100);
           } else {
@@ -54,13 +48,6 @@ class Blog extends Component {
         }).catch(err => {
           console.log(err.response)
       })
-      API.GetCategory().then(res => {
-        this.setState({
-            Category: res.data,
-            loading: false
-        })
-    })
-
     }  
     
     render() {
@@ -72,10 +59,10 @@ class Blog extends Component {
         },
         ,
         {
-          name: 'Gambar',
+          name: 'Slide',
           sortable: true,
           cell: row => <>
-          <img src={this.state.url+row.post_image} width="60" alt="" onClick={() => {
+          <img src={this.state.url+row.img_slide} width="60" alt="" onClick={() => {
                 this.dialog.show({
                   title: 'Ganti Gambar Post',
                   body: [<Formik key={row.id}
@@ -120,7 +107,7 @@ class Blog extends Component {
                      
                      <Form.Group>
                      <Form.Label>Gambar Post</Form.Label><br/>
-                    <img src={this.state.url+row.post_image} className="img-fluid" width="200"/>
+                    <img src={this.state.url+row.img_slide} className="img-fluid" width="200"/>
                     </Form.Group>
 
                     <Form.Group>
@@ -158,70 +145,17 @@ class Blog extends Component {
           </>,
         },
         {
-          name: 'Judul Blog',
-          selector: 'title',
+          name: 'Teks',
+          selector: 'text_slide',
           sortable: true,
           cell: row => <>
-         {row.title}
-          
+            {row.text_slide}
           </>
-        },
-        {
-          name: 'Kategori',
-          sortable: true,
-          cell: row => <>
-          <Formik
-                            initialValues={{ 
-                                id: row.id, 
-                                category_id: '',
-                                
-                            }}
-                            onSubmit={(values, actions) => {
-                                alert('Apakah anda yakin akan mengubah data ini?');
-                                API.PutBlogCategory(values).then(res=>{
-                                  //console.log(res)
-                                  if (res.status === 1 ) {
-                                    toast.success("Data berhasil disimpan", {position: "top-center"});
-                                  } 
-                                  
-                              }).catch(err => {
-                                  console.log(err.response)
-                                  toast.warn("Tidak ada data yang diubah", {position: "top-center"});
-
-                              })
-                                
-                                setTimeout(() => {
-                                actions.setSubmitting(false);
-                                }, 1000);
-                            }}
-                            
-                            >
-                            {({
-                                handleSubmit,
-                                handleChange,
-                                handleBlur,
-                                values,
-                                touched,
-                                errors,
-                                isSubmitting
-                            }) => (
-                        <Form onChange={handleSubmit}>
-                            <Form.Control as="select" name="category_id" onChange={handleChange} defaultValue={row.category_id} onBlur={handleBlur} size="sm" custom>
-                            <option value="">Choose Category</option>
-                            {this.state.Category.map((b, i) => (<option value={b.id} key={i}>{isSubmitting ? 
-                           "loading..." : b.name}</option>))}
- 
-                            </Form.Control>
-                           
-                     </Form>
-                     )}
-                    </Formik>
-          </>,
         },
         {
           name: 'Aksi',
           sortable: false,
-          cell: row => <><Link href={'/admin/blog/edit/'+row.id} passHref><Button size="sm" title="Edit" alt="Edit"><FaPencilAlt/></Button></Link>&nbsp;
+          cell: row => <><Link href={'/admin/slideshow/edit/'+row.id} passHref><Button size="sm" title="Edit" alt="Edit"><FaPencilAlt/></Button></Link>&nbsp;
           <Button onClick={() => {
                 this.dialog.show({
                   title: 'Konfirmasi',
@@ -232,9 +166,9 @@ class Blog extends Component {
                       console.log('Cancel was clicked!')
                     }),
                     Dialog.OKAction(() => {
-                      API.DeleteBlog(row.id).then(res => {
+                      API.DeleteSlideshow(row.id).then(res => {
                         if (res.status === 1) {
-                            window.location.href = '/admin/blog';
+                            window.location.href = '/admin/slideshow';
                             toast.success("Hapus data berhasil", {position: "top-center"});
                         } else {
                             console.log('gagal')
@@ -318,7 +252,7 @@ class Blog extends Component {
 
     const FilterComponent = ({ filterText, onFilter, onClear }) => (
       <>
-      <Link href="/admin/blog/create" passHref><Button variant="primary" style={{ position: 'absolute', left: '0', marginLeft: '15px'}}>Tambah Blog</Button></Link>
+      <Link href="/admin/slideshow/create" passHref><Button variant="primary" style={{ position: 'absolute', left: '0', marginLeft: '15px'}}>Tambah Slideshow</Button></Link>
         <TextField id="search" type="text" placeholder="Filter By Judul" aria-label="Search Input" value={filterText} onChange={onFilter} />
         <ClearButton variant="secondary" type="button" onClick={onClear}>X</ClearButton>
       </>
@@ -327,7 +261,7 @@ class Blog extends Component {
     const BasicTable = () => {
       const [filterText, setFilterText] = useState('');
       const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-      const filteredItems = this.state.Blog.filter(item => item.title && item.title.toLowerCase().includes(filterText.toLowerCase()) 
+      const filteredItems = this.state.Slideshow.filter(item => item.text_slide && item.text_slide.toLowerCase().includes(filterText.toLowerCase()) 
        );
     
       const subHeaderComponentMemo = useMemo(() => {
@@ -344,7 +278,7 @@ class Blog extends Component {
     
       return (
         <DataTable
-          title="Semua Blog Post"
+          title="Semua Slideshow"
           columns={columns}
           data={filteredItems}
           pagination
@@ -366,12 +300,12 @@ class Blog extends Component {
           
             <Layout admin>
                 <Head>
-                    <title>Blog - {siteTitle}</title>
+                    <title>Slideshow - {siteTitle}</title>
                 </Head>
                 <Container fluid>
                 <Breadcrumb className="my-3">
                 <Breadcrumb.Item>Home</Breadcrumb.Item>
-                <Breadcrumb.Item active>Blog</Breadcrumb.Item>
+                <Breadcrumb.Item active>Slideshow</Breadcrumb.Item>
                 </Breadcrumb>
                     <Row>
                   
@@ -383,7 +317,6 @@ class Blog extends Component {
                         
                         :
                         <>
-                           
                            <BasicTable />
                            <Dialog ref={(component) => { this.dialog = component }} />
                         </>
@@ -399,4 +332,4 @@ class Blog extends Component {
 
 
 
-export default Blog;
+export default Slideshow;
