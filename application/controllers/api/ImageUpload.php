@@ -47,7 +47,7 @@ class ImageUpload extends REST_Controller{
                 $config['maintain_ratio']= FALSE;
                 $config['quality']= '80%';
                 $config['width']= 1200;
-                $config['height']= 600;
+                $config['height']= 500;
                 $config['new_image']= './public/images/'.$gbr['file_name'];
                 $this->load->library('image_lib', $config);
                 $this->image_lib->resize();

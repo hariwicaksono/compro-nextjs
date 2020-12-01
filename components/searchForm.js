@@ -4,7 +4,7 @@ import API from '../libs/axios';
 import SearchResult from './searchResult';
 //import { NotificationManager } from 'react-notifications'
 import { Form, Button, Spinner } from 'react-bootstrap';
-import { MdSearch } from 'react-icons/md';
+import { FaSearch } from 'react-icons/fa';
 //import Form from 'react-formal'
 //import * as yup from 'yup'
 
@@ -12,7 +12,7 @@ import { MdSearch } from 'react-icons/md';
     //query: yup.string().required(),
   //}); 
 
-class LoginForm extends Component {
+class SearchForm extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -35,7 +35,7 @@ class LoginForm extends Component {
         e.preventDefault();
         this.setState({ loading: true });
         const query=this.state.query;
-        API.CariSeminar(query).then(res=>{
+        API.SearchBlog(query).then(res=>{
             //console.log(res)
             setTimeout(() => this.setState({
               results: res.data,
@@ -51,7 +51,7 @@ class LoginForm extends Component {
            
                 <Form className="mx-1 my-auto w-100" onSubmit={this.handlerSubmit}>
                 <div className="input-group">
-                    <Form.Control className="border py-3" type="text" name="query" placeholder="Cari Seminar..." onChange={this.handlerChange} required/>
+                    <Form.Control className="border py-3" type="text" name="query" placeholder="Cari Blog..." onChange={this.handlerChange} required/>
                     <span className="input-group-append">
                     <Button className="border text-secondary py-1" type="submit" variant="light">
                     {
@@ -59,7 +59,7 @@ class LoginForm extends Component {
                         ?
                         <><Spinner as="span" animation="grow" size="sm"  role="status" aria-hidden="true" /></>
                         :   
-                    <><MdSearch size="1.2em" /></>}
+                    <><FaSearch size="1.2em" /></>}
                     </Button>
                 </span>
 
@@ -78,4 +78,4 @@ class LoginForm extends Component {
 
 }
 
-export default LoginForm
+export default SearchForm;

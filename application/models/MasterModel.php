@@ -113,6 +113,24 @@ class MasterModel extends CI_Model {
 		}
 	}
 
+	public function post_slideshow($data)
+	{
+		$this->db->insert('slideshow',$data);
+		return $this->db->affected_rows();
+	}
+
+	public function put_slideshow($id,$data)
+	{
+		$this->db->update('slideshow',$data,['id'=>$id]);
+		return $this->db->affected_rows();
+	}
+
+	public function delete_slideshow($id = null)
+	{
+		$this->db->delete('slideshow',['id' => $id]);
+		return $this->db->affected_rows();
+	}
+
 	public function get_category($id = null)
 	{
 		if ($id == null) {
@@ -142,6 +160,32 @@ class MasterModel extends CI_Model {
 	public function delete_category($id = null)
 	{
 		$this->db->delete('categories',['id' => $id]);
+		return $this->db->affected_rows();
+	}
+
+	public function search_blog($id='')
+	{
+		if ($id === '') {
+			
+		} else {
+			$this->db->select('*');
+			$this->db->from('posts');
+			$this->db->like('title', $id);
+			$this->db->or_like('summary', $id);
+			$this->db->or_like('body', $id);
+			$query = $this->db->get();
+			return $query->result_array();
+		}
+	}
+
+	public function get_comment($id){
+		$query = $this->db->get_where('comments', array('post_id' => $id));
+		return $query->result_array();
+	}
+
+	public function post_comment($data)
+	{
+		$this->db->insert('comments',$data);
 		return $this->db->affected_rows();
 	}
 

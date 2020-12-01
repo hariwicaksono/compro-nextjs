@@ -69,12 +69,12 @@ componentDidMount = () => {
      
 <Navbar bg="dark" variant="dark" className="shadow border-bottom" expand="lg" sticky="top">
 <Container>
-  <Link href="/" passHref><Navbar.Brand>{this.state.company}</Navbar.Brand></Link>
-  {this.state.admin && (
-    <Button onClick={this.props.toggleMenu} type="button" className="btn btn-primary text-white btn-sm">
+{this.state.admin && (
+    <Button onClick={this.props.toggleMenu} type="button" className="btn btn-primary text-white btn-sm mr-2">
       <FaBars />
     </Button>
   )}
+  <Link href="/" passHref><Navbar.Brand>{this.state.company}</Navbar.Brand></Link>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">

@@ -62,16 +62,17 @@ class Slideshow extends Component {
           name: 'Slide',
           sortable: true,
           cell: row => <>
+          {row.img_slide != null ?
           <img src={this.state.url+row.img_slide} width="60" alt="" onClick={() => {
                 this.dialog.show({
-                  title: 'Ganti Gambar Post',
+                  title: 'Ganti Gambar Slide',
                   body: [<Formik key={row.id}
                     initialValues={{ 
                         id: row.id, 
-                        foto: row.post_image,
+                        foto: row.img_slide,
                     }}
                     onSubmit={(values, actions) => {
-                        API.PutBlogImage(
+                        API.PutSlideshowImage(
                             { 
                                 id: values.id, 
                                 foto: values.foto.name
@@ -79,7 +80,7 @@ class Slideshow extends Component {
                         ).then(res=>{
                             if (res.status === 1 ) {
                                toast.success("Data berhasil disimpan", {position: "top-center"}); 
-                               window.location.href = '/admin/blog';
+                               window.location.href = '/admin/slideshow';
                             }  
                         })
                         API.PostFoto(values.foto, values.foto.name).then(res => {
@@ -106,7 +107,7 @@ class Slideshow extends Component {
                 <Form noValidate onSubmit={handleSubmit}>
                      
                      <Form.Group>
-                     <Form.Label>Gambar Post</Form.Label><br/>
+                     <Form.Label>Gambar Slide</Form.Label><br/>
                     <img src={this.state.url+row.img_slide} className="img-fluid" width="200"/>
                     </Form.Group>
 
@@ -142,6 +143,90 @@ class Slideshow extends Component {
                   }
                 })
               }} />
+              :
+              <img src="/images/no-image.png" width="60" alt="" onClick={() => {
+                this.dialog.show({
+                  title: 'Ganti Gambar Slide',
+                  body: [<Formik key={row.id}
+                    initialValues={{ 
+                        id: row.id, 
+                        foto: row.img_slide,
+                    }}
+                    onSubmit={(values, actions) => {
+                        API.PutSlideshowImage(
+                            { 
+                                id: values.id, 
+                                foto: values.foto.name
+                            }
+                        ).then(res=>{
+                            if (res.status === 1 ) {
+                               toast.success("Data berhasil disimpan", {position: "top-center"}); 
+                               setTimeout(() => {
+                               window.location.href = '/admin/slideshow';
+                              }, 2000);
+                            }  
+                        })
+                        API.PostFoto(values.foto, values.foto.name).then(res => {
+                          console.log('img_ok')
+                          //toast.success("Gambar berhasil disimpan", {position: "top-center"}); 
+                        })
+                        
+                        setTimeout(() => {
+                        actions.setSubmitting(true);
+                        }, 1000);
+                    }}
+                    validationSchema={validationSchema}
+                    >
+                    {({
+                        handleSubmit,
+                        handleChange,
+                        handleBlur,
+                        setFieldValue,
+                        values,
+                        touched,
+                        errors,
+                        isSubmitting
+                    }) => (
+                <Form noValidate onSubmit={handleSubmit}>
+                     
+                     <Form.Group>
+                     <Form.Label>Gambar Slide</Form.Label><br/>
+                    <img src="/images/no-image.png" className="img-fluid" width="200"/>
+                    </Form.Group>
+
+                    <Form.Group>
+                    <Form.Label htmlFor="foto">Upload Gambar</Form.Label>
+                    
+                    <Form.File className="form-control" name="foto" id="foto" onChange={(event) => 
+                        {
+                        setFieldValue("foto", event.currentTarget.files[0]); 
+                        this.setState({
+                            fotoPreviewUrl: URL.createObjectURL(event.currentTarget.files[0])
+                        })
+                        }
+                        } onBlur={handleBlur} isInvalid={!!errors.foto && touched.foto} />
+                    {errors.foto && touched.foto && <div className="error">{errors.foto}</div>}
+                    {this.state.fotoPreviewUrl ? <img src={this.state.fotoPreviewUrl} width="200" alt="" className="mt-2 img-fluid" /> : ""}
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit" disabled={isSubmitting}><FaUpload/> Upload</Button>
+
+             </Form>
+             )}
+            </Formik>],
+                  bsSize: 'lg',
+                  actions: [
+                    Dialog.CancelAction(() => {
+                      console.log('Cancel was clicked!')
+                    })
+                  ],
+                  onHide: (dialog) => {
+                    dialog.hide()
+                    console.log('closed by clicking background.')
+                  }
+                })
+              }} />
+            }
           </>,
         },
         {

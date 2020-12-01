@@ -75,6 +75,7 @@ class Blog extends Component {
           name: 'Gambar',
           sortable: true,
           cell: row => <>
+          {row.post_image != null ? 
           <img src={this.state.url+row.post_image} width="60" alt="" onClick={() => {
                 this.dialog.show({
                   title: 'Ganti Gambar Post',
@@ -125,7 +126,6 @@ class Blog extends Component {
 
                     <Form.Group>
                     <Form.Label htmlFor="foto">Upload Gambar</Form.Label>
-                    
                     <Form.File className="form-control" name="foto" id="foto" onChange={(event) => 
                         {
                         setFieldValue("foto", event.currentTarget.files[0]); 
@@ -155,6 +155,89 @@ class Blog extends Component {
                   }
                 })
               }} />
+              :
+              <><img src="/images/no-image.png" width="60" alt="" onClick={() => {
+                this.dialog.show({
+                  title: 'Ganti Gambar Post',
+                  body: [<Formik key={row.id}
+                    initialValues={{ 
+                        id: row.id, 
+                        foto: row.post_image,
+                    }}
+                    onSubmit={(values, actions) => {
+                        API.PutBlogImage(
+                            { 
+                                id: values.id, 
+                                foto: values.foto.name
+                            }
+                        ).then(res=>{
+                            if (res.status === 1 ) {
+                               toast.success("Data berhasil disimpan", {position: "top-center"}); 
+                               setTimeout(() => {
+                                window.location.href = '/admin/blog';
+                               }, 2000);
+                            }  
+                        })
+                        API.PostFoto(values.foto, values.foto.name).then(res => {
+                          console.log('img_ok')
+                          //toast.success("Gambar berhasil disimpan", {position: "top-center"}); 
+                        })
+                        
+                        setTimeout(() => {
+                        actions.setSubmitting(true);
+                        }, 1000);
+                    }}
+                    validationSchema={validationSchema}
+                    >
+                    {({
+                        handleSubmit,
+                        handleChange,
+                        handleBlur,
+                        setFieldValue,
+                        values,
+                        touched,
+                        errors,
+                        isSubmitting
+                    }) => (
+                <Form noValidate onSubmit={handleSubmit}>
+                     
+                     <Form.Group>
+                     <Form.Label>Gambar Post</Form.Label><br/>
+                    <img src="/images/no-image.png" className="img-fluid" width="200"/>
+                    </Form.Group>
+
+                    <Form.Group>
+                    <Form.Label htmlFor="foto">Upload Gambar</Form.Label>
+                    <Form.File className="form-control" name="foto" id="foto" onChange={(event) => 
+                        {
+                        setFieldValue("foto", event.currentTarget.files[0]); 
+                        this.setState({
+                            fotoPreviewUrl: URL.createObjectURL(event.currentTarget.files[0])
+                        })
+                        }
+                        } onBlur={handleBlur} isInvalid={!!errors.foto && touched.foto} />
+                    {errors.foto && touched.foto && <div className="error">{errors.foto}</div>}
+                    {this.state.fotoPreviewUrl ? <img src={this.state.fotoPreviewUrl} width="200" alt="" className="mt-2 img-fluid" /> : ""}
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit" disabled={isSubmitting}><FaUpload/> Upload</Button>
+
+             </Form>
+             )}
+            </Formik>],
+                  bsSize: 'lg',
+                  actions: [
+                    Dialog.CancelAction(() => {
+                      console.log('Cancel was clicked!')
+                    })
+                  ],
+                  onHide: (dialog) => {
+                    dialog.hide()
+                    console.log('closed by clicking background.')
+                  }
+                })
+              }} /></>
+            }
           </>,
         },
         {

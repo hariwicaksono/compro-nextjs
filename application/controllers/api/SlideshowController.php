@@ -45,14 +45,11 @@ class SlideshowController extends REST_Controller{
 	public function index_post()
 	{
 		$data = [
-			'nama_produk' => $this->post('nama'),
-			'kategori_produk' => $this->post('kategori'),
-			'harga_produk' => $this->post('harga'),
-			'desk_produk' => $this->post('desk'),
-			'foto_produk' => $this->post('foto')
+			'img_slide' => $this->post('foto'),
+			'text_slide' => $this->post('text_slide')
 		];
 
-		if ($this->Model->post_produk($data) > 0 ) {
+		if ($this->Model->post_slideshow($data) > 0 ) {
 			$this->response([
 				'status' => 1,
 				'data' => 'Succes Post data'
@@ -94,14 +91,10 @@ class SlideshowController extends REST_Controller{
 	{
 		$id = $this->put('id');
 		$data = [
-			'nama_produk' => $this->put('nama'),
-			'kategori_produk' => $this->put('kategori'),
-			'harga_produk' => $this->put('harga'),
-			'desk_produk' => $this->put('desk'),
-			'foto_produk' => $this->put('foto')
+			'text_slide' => $this->put('text_slide')
 		];
 
-		if ($this->Model->put_produk($id,$data) > 0) {
+		if ($this->Model->put_slideshow($id,$data) > 0) {
 			$this->response([
 				'status' => 1,
 				'data' => 'Succes Update data'

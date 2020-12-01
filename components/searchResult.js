@@ -5,8 +5,8 @@ import Link from 'next/link';
 const SearchResults = (props) => {
   
   const options = props.data.map(r => (
-  <div className="text-dark" key={r.id_seminar}>
-    <h6><Link to={"/detail/"+r.id_seminar}>{r.nm_seminar}</Link> - <small>{r.tgl_seminar}</small></h6>
+  <div className="text-dark" key={r.id}>
+    <h6><Link href={"/blog/posts/"+r.id} passHref><a alt="">{r.title}</a></Link></h6>
   </div>
    
   ))
@@ -15,8 +15,7 @@ const SearchResults = (props) => {
 
   if (show) {
     return (
-      <div id="searchResult" className="col-md-5" style={{paddingLeft:0}}  onClick={() => setShow(false) + window.location.reload(true)}>
-        
+      <div id="searchResult" className="col-md-5" style={{paddingLeft:0}}>
       <div className="card card-body" style={{maxHeight:'250px',overflowY: 'auto'}} >
       <div className="d-flex justify-content-end">
           <a href="#/" className="text-dark" >

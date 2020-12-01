@@ -29,8 +29,7 @@ class Create extends Component {
             file: {
                 foto: ''
             },
-            fotoPreviewUrl: '',
-            loading: true
+            fotoPreviewUrl: ''
         }
     }
  
@@ -46,15 +45,7 @@ class Create extends Component {
                 <title>Tambah Slideshow - {siteTitle}</title>
             </Head>
                 <Container fluid>
-                    
-                { this.state.loading ?
-                <>
-                         <Skeleton count={4} height={40} className="mb-1" />
-                         <Skeleton width={100} height={40} />
-                        </>
-                        :
-                        <>
-                      
+     
                         <Breadcrumb className="my-3">
                         <Link href="/admin" passHref><Breadcrumb.Item >Home</Breadcrumb.Item></Link>
                         <Link href="/admin/slideshow" passHref><Breadcrumb.Item >Slideshow</Breadcrumb.Item></Link>
@@ -73,7 +64,7 @@ class Create extends Component {
                                     text_slide: values.text_slide,
                                     foto: values.foto.name}));
                                 
-                                API.PostBlog(
+                                API.PostSlideshow(
                                     { 
                                         text_slide: values.text_slide,
                                         foto: values.foto.name
@@ -83,7 +74,7 @@ class Create extends Component {
                                     if (res.status === 1 ) {
                                         toast.success("Data berhasil disimpan", {position: "top-center"}); 
                                         setTimeout(() => { 
-                                            Router.push('/admin/blog');
+                                            Router.push('/admin/slideshow');
                                         }, 2000);
                                     } else {
                                         toast.warn("Gagal, periksa kembali", {position: "top-center"}); 
@@ -149,11 +140,7 @@ class Create extends Component {
                      )}
                     </Formik>
 
-                        </Card>
-                       
-                        </>
-                }
-                    
+                        </Card>        
                    
                 </Container>
             </Layout>

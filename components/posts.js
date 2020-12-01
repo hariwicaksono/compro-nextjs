@@ -29,7 +29,7 @@ class Posts extends Component {
                     <img src={this.state.url+post.post_image} alt={post.title} className="img-fluid" />
                     </Col>
                 <Col md={6} >
-                <small class="text-muted">Posted on: {post.created_at} in {post.category}</small>
+                <small className="text-muted">Posted on: {post.created_at} in {post.category}</small>
                 <h3 className="mb-2"><Link href={"/blog/posts/"+post.id} passHref>{post.title}</Link></h3>
                 {parse(post.summary, { trim: true })}
                 </Col>

@@ -285,6 +285,26 @@
         margin-bottom: 5px !important;
     }
 }
+.error {
+    color: #DF3B50;
+    margin-top: 4px;
+    font-size: 80%;
+    display: block;
+}
+input.error {
+    border: 1px solid #DF3B50;
+    color: #DF3B50;
+}
+.error span {
+    color: #DF3B50;
+    margin-top: 4px;
+    font-size: 80%;
+    display: block;
+}
 svg{margin: 0 auto !important;}
 .btn svg{margin-bottom: 3px !important;}
 #sidebar svg{margin-bottom: 3px !important;}
+#searchResult{
+    position: absolute;
+    z-index: 9999
+}

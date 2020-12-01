@@ -61,7 +61,8 @@ class Index extends Component{
   </Col>
   <Col>
   <Card bg="danger" text="light" body>
-        <h4>Test</h4>
+        <h5>Test</h5>
+        <h1>123</h1>
       </Card>
   </Col>
 </Row>

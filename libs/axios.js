@@ -110,7 +110,11 @@ const PutUser = (data) => PUT('UserController',data);
 const PutUserPass = (data) => PUT('UserPassController',data);
 const DeleteUser = (id) => DELETE('UserController/index_delete?id=',id);
 const GetSlideshow = () => GET('SlideshowController');
+const GetSlideshowId = (data) => GET_ID('SlideshowController?id=',data)
+const PostSlideshow = (data) => POST('SlideshowController',data);
 const PutSlideshow = (data) => PUT('SlideshowController',data);
+const DeleteSlideshow = (id) => DELETE('SlideshowController/index_delete?id=',id);
+const PutSlideshowImage = (data) => PUT('SlideshowImageController',data);
 const GetCategory = () => GET('CategoryController');
 const GetCategoryId = (data) => GET_ID('CategoryController?id=',data)
 const PostCategory = (data) => POST('CategoryController',data);
@@ -119,6 +123,9 @@ const DeleteCategory = (id) => DELETE('CategoryController/index_delete?id=',id);
 const PostFoto = (data,name) => POST_FOTO('ImageUpload',data,name);
 const CountBlog = () => GET('CountBlogController');
 const CountCategory = () => GET('CountCategoryController');
+const SearchBlog = (data) => SEARCH('SearchController?id=',data);
+const GetCommentId = (data) => GET_ID('CommentController?id=',data)
+const PostComment = (data) => POST('CommentController',data);
 
 const API = {
     PostLogin,
@@ -138,7 +145,11 @@ const API = {
     PutUserPass,
     DeleteUser,
     GetSlideshow,
+    GetSlideshowId,
+    PostSlideshow,
     PutSlideshow,
+    DeleteSlideshow,
+    PutSlideshowImage,
     GetCategory,
     GetCategoryId,
     PostCategory,
@@ -146,7 +157,10 @@ const API = {
     DeleteCategory,
     PostFoto,
     CountBlog,
-    CountCategory
+    CountCategory,
+    SearchBlog,
+    GetCommentId,
+    PostComment
 }
 
 export default API
