@@ -77,7 +77,7 @@ static async getInitialProps ({ query }) {
                                 text_slide: this.state.text_slide,
                             }}
                             onSubmit={(values, actions) => {
-                                alert(JSON.stringify(values));
+                                //alert(JSON.stringify(values));
                                 
                                     API.PutSlideshow(values).then(res=>{
                                       //console.log(res)

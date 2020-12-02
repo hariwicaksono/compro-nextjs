@@ -67,7 +67,7 @@ componentDidMount = () => {
         
     return(
      
-<Navbar bg="dark" variant="dark" className="shadow border-bottom" expand="lg" sticky="top">
+<Navbar bg="primary" variant="dark" className="shadow border-bottom py-2" expand="lg" sticky="top">
 <Container>
 {this.state.admin && (
     <Button onClick={this.props.toggleMenu} type="button" className="btn btn-primary text-white btn-sm mr-2">
@@ -94,7 +94,7 @@ componentDidMount = () => {
                 <>
                 <Form inline className="my-2 my-lg-0 pl-1">
                 <Link href="/login" passHref>
-                <Button variant="info" activeClassName="active">Masuk</Button>
+                <Button variant="light">Masuk</Button>
                 </Link>
                 </Form>
                 </>

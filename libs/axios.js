@@ -124,8 +124,10 @@ const PostFoto = (data,name) => POST_FOTO('ImageUpload',data,name);
 const CountBlog = () => GET('CountBlogController');
 const CountCategory = () => GET('CountCategoryController');
 const SearchBlog = (data) => SEARCH('SearchController?id=',data);
+const GetComment = () => GET('CommentController');
 const GetCommentId = (data) => GET_ID('CommentController?id=',data)
 const PostComment = (data) => POST('CommentController',data);
+const PutComment = (data) => PUT('CommentController',data);
 
 const API = {
     PostLogin,
@@ -159,8 +161,10 @@ const API = {
     CountBlog,
     CountCategory,
     SearchBlog,
+    GetComment,
     GetCommentId,
-    PostComment
+    PostComment,
+    PutComment
 }
 
 export default API

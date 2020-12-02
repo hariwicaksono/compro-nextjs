@@ -7,13 +7,14 @@ import {isLogin, isAdmin} from '../../../libs/utils';
 import Layout, {siteName, siteTitle} from '../../../components/layout';
 import API from '../../../libs/axios';
 import {toast} from 'react-toastify';
-import {Container, Breadcrumb, Card, Row, Col, Spinner, Button, Form} from 'react-bootstrap'
+import {Container, Breadcrumb, Card, Row, Col, Spinner, Button, Form} from 'react-bootstrap';
 import { FaSave} from 'react-icons/fa';
 import Skeleton from 'react-loading-skeleton';
 //import moment from 'moment'
 //import 'moment/locale/id'
-import { Formik } from 'formik'
-import * as yup from 'yup'
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import { Editor } from "@tinymce/tinymce-react";
 
 const validationSchema = yup.object({
     title: yup.string().required(),
@@ -96,15 +97,15 @@ class Create extends Component {
                                 foto: null,
                             }}
                             onSubmit={(values, actions) => {
-                                alert(JSON.stringify({
-                                    category_id: values.category_id,
-                                    user_id: this.state.id,
-                                    title: values.title,
-                                    summary: values.summary,
-                                    body: values.body,
-                                    date: values.date,
-                                    time: values.time,
-                                    foto: values.foto.name}));
+                                //alert(JSON.stringify({
+                                    //category_id: values.category_id,
+                                    //user_id: this.state.id,
+                                    //title: values.title,
+                                    //summary: values.summary,
+                                    //body: values.body,
+                                    //date: values.date,
+                                    //time: values.time,
+                                    //foto: values.foto.name}));
                                 
                                 API.PostBlog(
                                     { 
@@ -198,14 +199,26 @@ class Create extends Component {
 
                             <Form.Group>
                                 <Form.Label>Ringkasan</Form.Label>
-                                <Form.Control as="textarea" rows="2" name="summary" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.summary} isInvalid={!!errors.summary && touched.summary} />
+                                <Editor 
+                                apiKey="vffx7rg47lbz69xfs80qajyt04jjsxtihahl5gp1rsek0vnt" 
+                                init={{
+                                  height: 150,
+                                  menubar: false
+                                }}
+                                onEditorChange={handleChange} rows="2" name="summary" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.summary} isInvalid={!!errors.summary && touched.summary} />
                                 {errors.summary && touched.summary && <Form.Control.Feedback type="invalid">{errors.summary}</Form.Control.Feedback>}
                             </Form.Group>
 
 
                             <Form.Group>
                                 <Form.Label>Isi Blog</Form.Label>
-                                <Form.Control as="textarea" rows="6" name="body" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.body} isInvalid={!!errors.body && touched.body} />
+                                <Editor 
+                                apiKey="vffx7rg47lbz69xfs80qajyt04jjsxtihahl5gp1rsek0vnt" 
+                                init={{
+                                  height: 250,
+                                  menubar: false
+                                }}
+                                onEditorChange={handleChange} rows="4" name="body" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.body} isInvalid={!!errors.body && touched.body} />
                                 {errors.body && touched.body && <Form.Control.Feedback type="invalid">{errors.body}</Form.Control.Feedback>}
                             </Form.Group>
                            

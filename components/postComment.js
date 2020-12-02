@@ -3,50 +3,42 @@ import Head from 'next/head';
 import Router from 'next/router';
 import Link from 'next/link';
 import Image from 'next/image';
-import {isLogin, isAdmin} from '../../../../libs/utils';
-import Layout, {siteName, siteTitle} from '../../../../components/layout';
-import API from '../../../../libs/axios';
+import API from '../libs/axios';
 import {toast} from 'react-toastify';
-import {Container, Breadcrumb, Card, Row, Col, Spinner, Button, Form} from 'react-bootstrap'
+import {Container, Breadcrumb, Card, Row, Col, Spinner, Button, Form} from 'react-bootstrap';
 import { FaSave} from 'react-icons/fa';
 import Skeleton from 'react-loading-skeleton';
 //import moment from 'moment'
 //import 'moment/locale/id'
-import { Formik } from 'formik'
-import * as yup from 'yup'
+import { Formik } from 'formik';
+import * as yup from 'yup';
 
 const validationSchema = yup.object({
     name: yup.string().required(),
+    email: yup.string().email().required(),
+    body: yup.string().required()
   }); 
 
-class Create extends Component {
+class FormComment extends Component {
     constructor(props){
         super(props)
         this.state = {
-            user_id: '',
-            name: '',
+            post_id: '',
             loading: true
         }
     }
- 
+
     componentDidMount = () => {
-        const datas = JSON.parse(localStorage.getItem('isAdmin'))
-        const id = datas[0].id
+        const id = this.props.postID
         this.setState({
-            id: id,
+            post_id: id,
             loading: false
         })
     }
 
     render() {
-
         return (
-            <Layout admin>
-            <Head>
-                <title>Tambah Kategori - {siteTitle}</title>
-            </Head>
-                <Container fluid>
-                    
+                <>
                 { this.state.loading ?
                 <>
                          <Skeleton count={4} height={40} className="mb-1" />
@@ -55,29 +47,24 @@ class Create extends Component {
                         :
                         <>
                       
-                        <Breadcrumb className="my-3">
-                        <Link href="/admin" passHref><Breadcrumb.Item >Home</Breadcrumb.Item></Link>
-                        <Link href="/admin/blog" passHref><Breadcrumb.Item >Blog</Breadcrumb.Item></Link>
-                        <Link href="/admin/blog/category" passHref><Breadcrumb.Item >Kategori</Breadcrumb.Item></Link>
-                        <Breadcrumb.Item active>Tambah</Breadcrumb.Item>
-                        </Breadcrumb>
-                        
                         <Card className="mb-2" body>
-                            <h5 className="mb-3" style={{fontWeight: '400'}}>Tambah Kategori</h5>
+                            <h5 className="mb-3" style={{fontWeight: '400'}}>Tambah Komentar</h5>
                             <Formik
                             initialValues={{ 
-                                user_id: this.state.id,
-                                name: ''
+                                post_id: this.state.post_id,
+                                name: '',
+                                email: '',
+                                body: ''
                             }}
                             onSubmit={(values, actions) => {
-                                //alert(JSON.stringify(values));
+                                alert(JSON.stringify(values));
                                 
-                                API.PostCategory(values).then(res=>{
+                                API.PostComment(values).then(res=>{
                                     //console.log(res)
                                     if (res.status === 1 ) {
-                                        toast.success("Data berhasil disimpan", {position: "top-center"}); 
+                                        toast.success("Komentar berhasil disimpan", {position: "top-center"}); 
                                         setTimeout(() => { 
-                                            Router.push('/admin/blog/category');
+                                            Router.reload();
                                         }, 2000);
                                     } else {
                                         toast.warn("Gagal, periksa kembali", {position: "top-center"}); 
@@ -89,7 +76,6 @@ class Create extends Component {
                                 }, 1000);
                             }}
                             validationSchema={validationSchema}
-                            enableReinitialize={true}
                             >
                             {({
                                 handleSubmit,
@@ -105,8 +91,20 @@ class Create extends Component {
                              
                             <Form.Group>
                                 <Form.Label>Nama</Form.Label>
-                                <Form.Control name="name" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.name} isInvalid={!!errors.name && touched.name} />
+                                <Form.Control name="name" placeholder="Nama Anda" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.name} isInvalid={!!errors.name && touched.name} />
                                 {errors.name && touched.name && <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>}
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control type="text" name="email" placeholder="Email" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.email} isInvalid={!!errors.email && touched.email} />
+                                {errors.email && touched.email && <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>}
+                            </Form.Group>
+
+                            <Form.Group>
+                                <Form.Label>Komentar</Form.Label>
+                                <Form.Control as="textarea" rows="6" name="body" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.body} isInvalid={!!errors.body && touched.body} />
+                                {errors.body && touched.body && <Form.Control.Feedback type="invalid">{errors.body}</Form.Control.Feedback>}
                             </Form.Group>
                            
                             <Button variant="primary" type="submit" disabled={isSubmitting}>{isSubmitting ? (
@@ -129,12 +127,9 @@ class Create extends Component {
                        
                         </>
                 }
-                    
-                   
-                </Container>
-            </Layout>
+            </>
         )
     }
 }
 
-export default Create;
+export default FormComment;

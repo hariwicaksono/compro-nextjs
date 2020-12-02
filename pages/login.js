@@ -28,13 +28,12 @@ class Login extends Component {
       </Head>
 
       <main className="auth">
-
       <header className="auth-header" style={{backgroundImage: 'url(/images/photo-1485761954900-f9a29f3185671.jpg)'}}>
         <h2>
         <span>{siteName}</span>
         </h2>
-        <p>Belum punya akun? <a href="auth-signup.html">Daftar</a>
-        </p>
+        {/*<p>Belum punya akun? <a href="auth-signup.html">Daftar</a>
+        </p>*/}
       </header>
       
         <Formik
@@ -65,7 +64,7 @@ class Login extends Component {
         validationSchema={validationSchema}
         >
         {({handleSubmit,handleChange,handleBlur,values,touched,errors,isSubmitting}) => (
-    <Form noValidate onSubmit={handleSubmit} className="auth-form">
+    <Form noValidate onSubmit={handleSubmit} className="auth-form pb-4">
         <Form.Group>
             <Form.Label className="text-left">Email</Form.Label>
             <Form.Control type="text" name="username" placeholder="your@email.com" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.username} isInvalid={!!errors.username && touched.username} />
@@ -86,9 +85,9 @@ class Login extends Component {
         <>Masuk</>
         )}
         </Button>
-        <div className="text-center pt-3 pb-4">
+        {/*<div className="text-center pt-3 pb-4">
           <a href="auth-recovery-username.html" className="link">Daftar akun</a> <span className="mx-2">·</span> <a href="auth-recovery-password.html" className="link">Lupa Password?</a>
-        </div>
+        </div>*/}
     </Form>
 
     )}

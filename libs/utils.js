@@ -1,4 +1,5 @@
 import { toast } from 'react-toastify';
+import Router from 'next/router';
 
 const TOKEN_KEY1 = 'isLogin';
 const TOKEN_KEY2 = 'isAdmin';
@@ -11,7 +12,7 @@ export const logout = () => {
     (localStorage.removeItem(TOKEN_KEY1) || localStorage.removeItem(TOKEN_KEY2));
     toast.warn("Berhasil keluar sistem", {position: "top-center"}); 
     setTimeout(()=>{
-        window.location.reload();
+        Router.reload();
       },2000);
 }
 

@@ -74,7 +74,7 @@ static async getInitialProps ({ query }) {
                                 name: this.state.name,
                             }}
                             onSubmit={(values, actions) => {
-                                alert(JSON.stringify(values));
+                                //alert(JSON.stringify(values));
                                 
                                     API.PutCategory(values).then(res=>{
                                       //console.log(res)

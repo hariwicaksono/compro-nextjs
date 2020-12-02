@@ -60,9 +60,9 @@ class Create extends Component {
                                 foto: null,
                             }}
                             onSubmit={(values, actions) => {
-                                alert(JSON.stringify({
-                                    text_slide: values.text_slide,
-                                    foto: values.foto.name}));
+                                //alert(JSON.stringify({
+                                    //text_slide: values.text_slide,
+                                    //foto: values.foto.name}));
                                 
                                 API.PostSlideshow(
                                     { 

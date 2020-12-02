@@ -178,14 +178,25 @@ class MasterModel extends CI_Model {
 		}
 	}
 
-	public function get_comment($id){
-		$query = $this->db->get_where('comments', array('post_id' => $id));
-		return $query->result_array();
+	public function get_comment($id = null){
+		if ($id == null) {
+			return $this->db->get('comments')->result_array();
+		} else { 
+			$query = $this->db->get_where('comments', array('post_id' => $id, 'active' => '1'));
+			return $query->result_array();
+		}
+		
 	}
 
 	public function post_comment($data)
 	{
 		$this->db->insert('comments',$data);
+		return $this->db->affected_rows();
+	}
+
+	public function put_comment($id,$data)
+	{
+		$this->db->update('comments',$data,['id'=>$id]);
 		return $this->db->affected_rows();
 	}
 

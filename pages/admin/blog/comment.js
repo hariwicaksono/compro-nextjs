@@ -2,13 +2,13 @@ import React, { Component, useState, useMemo } from 'react'
 import Head from 'next/head';
 import Router from 'next/router';
 import Link from 'next/link';
-import {isLogin, isAdmin} from '../../../../libs/utils';
-import {ImagesUrl} from '../../../../libs/urls';
-import Layout, {siteName, siteTitle} from '../../../../components/layout';
-import API from '../../../../libs/axios';
+import {isLogin, isAdmin} from '../../../libs/utils';
+import {ImagesUrl} from '../../../libs/urls';
+import Layout, {siteName, siteTitle} from '../../../components/layout';
+import API from '../../../libs/axios';
 import {toast} from 'react-toastify';
-import {Container, Breadcrumb, Card, Row, Col, Button, Form} from 'react-bootstrap';
-import { FaTrash, FaPencilAlt} from 'react-icons/fa';
+import {Container, Breadcrumb, Card, Row, Col, Spinner, Button, Form} from 'react-bootstrap';
+import { FaTrash, FaPencilAlt, FaUpload} from 'react-icons/fa';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import Loader from 'react-loader';
@@ -17,11 +17,12 @@ import styled from 'styled-components';
 import Dialog from 'react-bootstrap-dialog';
 
 var options = {lines: 13,length: 20,width: 10,radius: 30,scale: 0.35,corners: 1,color: '#fff',opacity: 0.25,rotate: 0,direction: 1,speed: 1,trail: 60,fps: 20,zIndex: 2e9,top: '50%',left: '50%',shadow: false,hwaccel: false,position: 'absolute'};
-class Category extends Component {
+
+class Comment extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            Category: [],
+            Comment: [],
             url: ImagesUrl(),
             loading: true 
         }
@@ -29,17 +30,17 @@ class Category extends Component {
     }
 
     componentDidMount = () => {
-        API.GetCategory().then(res => {
+        API.GetComment().then(res => {
           if (res.data.length > 0) {
             setTimeout(() => this.setState({
-                Category: res.data,
+                Comment: res.data,
                 loading: false
             }), 100);
           } else {
-            this.setState({
+            setTimeout(() => this.setState({
                 error: "No Data Found",
                 loading: false
-            })
+            }), 100);
         }
         }).catch(err => {
           console.log(err.response)
@@ -50,48 +51,69 @@ class Category extends Component {
     render() {
       const columns = [
         {
-          name: 'ID',
-          selector: 'id',
-          sortable: true
+          name: 'Nama',
+          sortable: true,
+          cell: row => <>{row.name} - {row.email}</>,
         },
         {
-          name: 'Kategori',
-          selector: 'name',
-          sortable: true
+            name: 'Body',
+            selector: 'body',
+            sortable: true
         },
         {
-          name: 'Aksi',
-          sortable: false,
-          cell: row => <><Link href={'/admin/blog/category/edit/'+row.id} passHref><Button size="sm" title="Edit" alt="Edit"><FaPencilAlt/></Button></Link>&nbsp;
-          <Button onClick={() => {
-                this.dialog.show({
-                  title: 'Konfirmasi',
-                  body: 'Apakah anda yakin akan menghapus data ini?',
-                  bsSize: 'lg',
-                  actions: [
-                    Dialog.CancelAction(() => {
-                      console.log('Cancel was clicked!')
-                    }),
-                    Dialog.OKAction(() => {
-                      API.DeleteCategory(row.id).then(res => {
-                        if (res.status === 1) {
-                            toast.success("Hapus data berhasil", {position: "top-center"});
-                            setTimeout(() => {
-                            Router.push('/admin/blog/category');
-                            }, 2000);
-                        } else {
-                            console.log('gagal')
-                        }
-                      })
-                    })
-                  ],
-                  onHide: (dialog) => {
-                    dialog.hide()
-                    console.log('closed by clicking background.')
-                  }
-                })
-              }} variant="danger" size="sm" title="Hapus" alt="Hapus"><FaTrash/></Button></>,
-        },
+          name: 'Aktif',
+          sortable: true,
+          cell: row => <>
+          <Formik
+                            initialValues={{ 
+                                id: row.id, 
+                                active: '',
+                                
+                            }}
+                            onSubmit={(values, actions) => {
+                                alert('Apakah anda yakin akan mengubah data ini?');
+                                API.PutComment(values).then(res=>{
+                                  //console.log(res)
+                                  if (res.status === 1 ) {
+                                    toast.success("Data berhasil disimpan", {position: "top-center"});
+                                  } 
+                                  
+                              }).catch(err => {
+                                  console.log(err.response)
+                                  toast.warn("Tidak ada data yang diubah", {position: "top-center"});
+
+                              })
+                                
+                                setTimeout(() => {
+                                actions.setSubmitting(false);
+                                }, 1000);
+                            }}
+                            >
+                            {({
+                                handleSubmit,
+                                handleChange,
+                                handleBlur,
+                                values,
+                                touched,
+                                errors,
+                                isSubmitting
+                            }) => (
+                        <Form onChange={handleSubmit}>
+                            <Form.Control as="select" name="active" onChange={handleChange} defaultValue={row.active} onBlur={handleBlur} size="sm">
+                            <option value="1" >{isSubmitting ? 
+                           "menunggu.." : "Active"}
+                           </option>
+                            <option value='0' >{isSubmitting ? 
+                             "menunggu.." : "Not Active"}
+                             </option>
+ 
+                            </Form.Control>
+        
+                     </Form>
+                     )}
+                    </Formik>
+          </>,
+        }
       ];
 
       const customStyles = {
@@ -161,8 +183,7 @@ class Category extends Component {
 
     const FilterComponent = ({ filterText, onFilter, onClear }) => (
       <>
-      <Link href="/admin/blog/category/create" passHref><Button variant="primary" style={{ position: 'absolute', left: '0', marginLeft: '15px'}}>Tambah Kategori</Button></Link>
-        <TextField id="search" type="text" placeholder="Filter By Judul" aria-label="Search Input" value={filterText} onChange={onFilter} />
+        <TextField id="search" type="text" placeholder="Filter By Body" aria-label="Search Input" value={filterText} onChange={onFilter} />
         <ClearButton variant="secondary" type="button" onClick={onClear}>X</ClearButton>
       </>
     );
@@ -170,7 +191,7 @@ class Category extends Component {
     const BasicTable = () => {
       const [filterText, setFilterText] = useState('');
       const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-      const filteredItems = this.state.Category.filter(item => item.name && item.name.toLowerCase().includes(filterText.toLowerCase()) 
+      const filteredItems = this.state.Comment.filter(item => item.body && item.body.toLowerCase().includes(filterText.toLowerCase()) 
        );
     
       const subHeaderComponentMemo = useMemo(() => {
@@ -187,7 +208,7 @@ class Category extends Component {
     
       return (
         <DataTable
-          title="Kategori Blog"
+          title="Semua Komentar"
           columns={columns}
           data={filteredItems}
           pagination
@@ -209,25 +230,20 @@ class Category extends Component {
           
             <Layout admin>
                 <Head>
-                    <title>Kategori Blog - {siteTitle}</title>
+                    <title>Komentar Blog - {siteTitle}</title>
                 </Head>
                 <Container fluid>
                 <Breadcrumb className="my-3">
-                <Link href="/admin" passHref><Breadcrumb.Item >Home</Breadcrumb.Item></Link>
-                <Link href="/admin/blog" passHref><Breadcrumb.Item >Blog</Breadcrumb.Item></Link>
-                <Breadcrumb.Item active>Kategori</Breadcrumb.Item>
+                <Breadcrumb.Item>Home</Breadcrumb.Item>
+                <Breadcrumb.Item active>Komentar</Breadcrumb.Item>
                 </Breadcrumb>
                     <Row>
-                  
                     <Col>
-
                         <Card body> 
                         { this.state.loading ?
                         <Loader options={options} className="spinner" />
-                        
                         :
-                        <>
-                           
+                        <> 
                            <BasicTable />
                            <Dialog ref={(component) => { this.dialog = component }} />
                         </>
@@ -243,4 +259,4 @@ class Category extends Component {
 
 
 
-export default Category;
+export default Comment;

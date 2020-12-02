@@ -47,12 +47,13 @@ class UserController extends REST_Controller{
 	public function index_post()
 	{
 		$data = [
-			'nama_user' => $this->post('nama'),
-			'alamat_user' => $this->post('alamat'),
-			'no_hp_user' => $this->post('nohp'),
-			'email_user' => $this->post('email'),
-			'password_user' => $this->post('password'),
-			'photo_user' =>$this->post('foto'),
+			'email' => $this->post('email'),
+			'username' => $this->post('username'),
+			'password' => $this->post('password'),
+			'name' => $this->post('name'),
+			'status_user' => $this->post('status_user'),
+			'status_active' =>$this->post('status_active'),
+			'created_at' =>date("Y-m-d H:i:s")
 		];
 
 		if ($this->Model->post_user($data) > 0) {
@@ -95,12 +96,9 @@ class UserController extends REST_Controller{
 	{
 		$id = $this->put('id');
 		$data = [
-			'nama_user' => $this->put('nama'),
-			'alamat_user' => $this->put('alamat'),
-			'no_hp_user' => $this->put('hp'),
-			'email_user' => $this->put('email'),
-			'password_user' => $this->put('password'),
-			'photo_user' => $this->put('foto')
+			'email' => $this->put('email'),
+			'name' => $this->put('name'),
+			'updated_at' => date("Y-m-d H:i:s")
 		];
 
 		

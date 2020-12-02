@@ -6,7 +6,7 @@ import {Container, Card, Row, Col, Spinner, Button, Form} from 'react-bootstrap'
 import Loader from 'react-loader';
 import API from '../../libs/axios';
 import Posts from '../../components/posts';
-
+ 
 var options = {lines: 13,length: 20,width: 10,radius: 30,scale: 0.35,corners: 1,color: '#fff',opacity: 0.25,rotate: 0,direction: 1,speed: 1,trail: 60,fps: 20,zIndex: 2e9,top: '50%',left: '50%',shadow: false,hwaccel: false,position: 'absolute'};
 
 class Index extends Component{
@@ -36,21 +36,18 @@ class Index extends Component{
         <title>Blog - {siteTitle}</title>
       </Head>
 
-      
-        <Container>
-    <main className="py-3">
-{
-              this.state.loading ?
-              <Loader options={options} className="spinner" />
-              :
-              <>
-              <h1>All Blog Posts</h1>
-                 <Posts data={this.state.Posts} />
-              </>
-              
-          }
-</main>
-</Container>
+      <Container>
+        <main className="py-3">
+        { this.state.loading ?
+          <Loader options={options} className="spinner" />
+          :
+          <>
+          <h1>Semua Blog Post</h1>
+          <Posts data={this.state.Posts} />
+          </>    
+        }
+        </main>
+      </Container>
   
       </Layout>
     );

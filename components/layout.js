@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import Navbar from './navbar';
 import Sidebar from './sidebar';
+import Footer from './footer';
 import { Container } from 'react-bootstrap';
 import {isLogin, isAdmin} from '../libs/utils';
 
@@ -70,6 +71,7 @@ class Layout extends Component {
     </div>
     }
     </div>
+    <Footer/>
     </>
   );
   }

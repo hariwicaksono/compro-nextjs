@@ -81,7 +81,7 @@ class Password extends Component {
                                     if (res.status === 1 ) {
                                         toast.success("Data berhasil disimpan", {position: "top-center"});
                                         setTimeout(() => {
-                                            window.location.reload(); 
+                                            Router.reload(); 
                                         }, 1000);
                                     } 
                                     

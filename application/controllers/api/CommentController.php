@@ -17,12 +17,16 @@ class CommentController extends REST_Controller{
         if($method == "OPTIONS") {
             die();
         }
-    }
+    } 
 
 	public function index_get()
 	{
 		$id = $this->get('id');
-		$comment = $this->Model->get_comment($id);
+		if ($id == null) {
+			$comment = $this->Model->get_comment();
+		} else {
+			$comment = $this->Model->get_comment($id);
+		}
 
 		if ($comment) {
 			$this->response([
@@ -46,7 +50,8 @@ class CommentController extends REST_Controller{
 			'name' => $this->post('name'),
 			'email' => $this->post('email'),
 			'body' => $this->post('body'),
-			'created_at' => date("Y-m-d H:i:s")
+			'created_at' => date("Y-m-d H:i:s"),
+			'active' => '0'
 		];
 
 		if ($this->Model->post_comment($data) > 0 ) {
@@ -60,6 +65,28 @@ class CommentController extends REST_Controller{
 				'data' => 'Failed Post Data'
 			],REST_Controller::HTTP_NOT_FOUND);
 		}
+	}
+
+	public function index_put()
+	{
+		$id = $this->put('id');
+		$data = [
+			'active' => $this->put('active'),
+			'updated_at' => date("Y-m-d H:i:s")
+		];
+
+		if ($this->Model->put_comment($id,$data) > 0) {
+			$this->response([
+				'status' => 1,
+				'data' => 'Success Update data'
+			],REST_Controller::HTTP_OK);
+		} else {
+			$this->response([
+				'status' => 0,
+				'data' => 'Failed Update Data'
+			],REST_Controller::HTTP_NOT_FOUND);
+		}
+
 	}
 
 }

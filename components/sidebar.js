@@ -1,7 +1,7 @@
 import React, {Component, useState} from 'react';
 import Link from '../libs/link';
 import { Collapse} from 'react-bootstrap';
-import {FaHome, FaFile, FaImages, FaFileAlt, FaWrench, FaSlidersH, FaSignOutAlt, FaKey} from 'react-icons/fa';
+import {FaHome, FaFile, FaComment, FaUser, FaImages, FaFileAlt, FaWrench, FaSlidersH, FaSignOutAlt, FaKey} from 'react-icons/fa';
 import { logout, isLogin } from '../libs/utils';
 
 function SubMenu() {
@@ -40,6 +40,11 @@ function SubMenu() {
       </ul>
       </Collapse>
     </li>
+    <li>
+          <Link href={'/admin/blog/comment'} activeClassName="active" passHref>
+          <a title="Komentar" alt="Komentar"><FaComment size="1.4rem"/> <span>Komentar</span></a>
+            </Link>
+        </li>
         
         <li>
           <Link href={'/admin/setting'} activeClassName="active" passHref>
@@ -57,8 +62,8 @@ function SubMenu() {
       <Collapse in={open2}>
       <ul className="list-unstyled" id="collapsePengaturan">
         <li>
-          <Link href={'/admin/setting'} activeClassName="active" passHref>
-          <a title="Pengaturan" alt="Pengaturan"><FaWrench size="1.4rem"/> <span>Profil Saya</span></a>
+          <Link href={'/admin/myprofile'} activeClassName="active" passHref>
+          <a title="Profil Saya" alt="Profil Saya"><FaUser size="1.4rem"/> <span>Profil Saya</span></a>
             </Link>
         </li>
           <li>
@@ -67,8 +72,8 @@ function SubMenu() {
             </Link>
           </li>
           <li>
-              <Link onClick={() => {logout()}} href='' passHref>
-              <a title="Logout" alt="Logout"><FaSignOutAlt size="1.4rem"/> <span>Logout</span></a>
+              <Link href='' passHref>
+              <a onClick={() => {logout()}} title="Logout" alt="Logout"><FaSignOutAlt size="1.4rem"/> <span>Logout</span></a>
               </Link>
           </li>
       </ul>

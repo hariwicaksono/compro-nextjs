@@ -93,7 +93,7 @@ static async getInitialProps ({ query }) {
                                 time: this.state.time
                             }}
                             onSubmit={(values, actions) => {
-                                alert(JSON.stringify(values));
+                                //alert(JSON.stringify(values));
                                 
                                     API.PutBlog(values).then(res=>{
                                       //console.log(res)

@@ -46,10 +46,10 @@ class Blog extends Component {
                 loading: false
             }), 100);
           } else {
-            this.setState({
+            setTimeout(() => this.setState({
                 error: "No Data Found",
                 loading: false
-            })
+            }), 100);
         }
         }).catch(err => {
           console.log(err.response)
@@ -70,7 +70,6 @@ class Blog extends Component {
           selector: 'id',
           sortable: true
         },
-        ,
         {
           name: 'Gambar',
           sortable: true,
@@ -289,10 +288,10 @@ class Blog extends Component {
                                 isSubmitting
                             }) => (
                         <Form onChange={handleSubmit}>
-                            <Form.Control as="select" name="category_id" onChange={handleChange} defaultValue={row.category_id} onBlur={handleBlur} size="sm" custom>
+                            <Form.Control as="select" name="category_id" onChange={handleChange} defaultValue={row.category_id} onBlur={handleBlur} size="sm">
                             <option value="">Choose Category</option>
                             {this.state.Category.map((b, i) => (<option value={b.id} key={i}>{isSubmitting ? 
-                           "loading..." : b.name}</option>))}
+                           "menunggu.." : b.name}</option>))}
  
                             </Form.Control>
                            
@@ -317,8 +316,10 @@ class Blog extends Component {
                     Dialog.OKAction(() => {
                       API.DeleteBlog(row.id).then(res => {
                         if (res.status === 1) {
-                            window.location.href = '/admin/blog';
                             toast.success("Hapus data berhasil", {position: "top-center"});
+                            setTimeout(() => {
+                              Router.push('/admin/blog');
+                              }, 2000);
                         } else {
                             console.log('gagal')
                         }
@@ -393,8 +394,8 @@ class Blog extends Component {
     const ExpandedComponent = ({ data }) => (
       <ExpandedStyle>
         <p>
-          Date Created: {data.created_at}<br/>
-          Date Updated: {data.updated_at}<br/>
+          Tanggal dibuat: {data.created_at ? data.created_at : '-'}<br/>
+          Tanggal diubah: {data.updated_at ? data.updated_at : '-'}<br/>
         </p>
       </ExpandedStyle>
     );
