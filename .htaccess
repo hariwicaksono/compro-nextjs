@@ -1,4 +1,4 @@
-<IfModule mod_rewrite.c>	
+<IfModule mod_rewrite.c>
     RewriteEngine On
 
     #Removes access to the system folder by users.
@@ -21,6 +21,7 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php?/$1 [L]
+    
 </IfModule>
 
 <IfModule !mod_rewrite.c>

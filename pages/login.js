@@ -28,7 +28,7 @@ class Login extends Component {
       </Head>
 
       <main className="auth">
-      <header className="auth-header" style={{backgroundImage: 'url(/images/photo-1485761954900-f9a29f3185671.jpg)'}}>
+      <header className="auth-header" style={{backgroundImage: 'url(./images/photo-1485761954900-f9a29f3185671.jpg)'}}>
         <h2>
         <span>{siteName}</span>
         </h2>
