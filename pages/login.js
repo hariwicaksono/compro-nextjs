@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Layout, {siteName, siteTitle} from '../components/layout';
 import {Container, Card, Row, Col, Spinner, Button, Form} from 'react-bootstrap';
 import API from '../libs/axios';
+import {ImagesUrl} from '../libs/urls';
 import { toast } from 'react-toastify';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -28,7 +29,7 @@ class Login extends Component {
       </Head>
 
       <main className="auth">
-      <header className="auth-header" style={{backgroundImage: 'url(./images/photo-1485761954900-f9a29f3185671.jpg)'}}>
+      <header className="auth-header">
         <h2>
         <span>{siteName}</span>
         </h2>

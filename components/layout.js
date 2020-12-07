@@ -6,6 +6,7 @@ import Sidebar from './sidebar';
 import Footer from './footer';
 import { Container } from 'react-bootstrap';
 import {isLogin, isAdmin} from '../libs/utils';
+import {SiteUrl} from '../libs/urls';
 
 export const siteName = 'Starter App'
 export const siteTitle = 'Starter App Next.js'
@@ -15,7 +16,8 @@ class Layout extends Component {
     super(props)
     this.state = {
         showMenu: true,
-        login : false
+        login : false,
+        siteUrl: SiteUrl()
     }
     this.toggleMenu = this.toggleMenu.bind(this)
   }
@@ -42,7 +44,7 @@ class Layout extends Component {
   return (
     <>
     <Head>  
-    <meta charSet="utf-8" />
+    <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet" />
     <meta name="description" content="" />
