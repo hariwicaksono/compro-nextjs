@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-const RootPath = "http://localhost/blogapp-nextjs/api/"
+const RootPath = "http://localhost/blogapp-server/api/"
 
 const GET = (path) => {
     const promise = new Promise((resolve,reject) => {
