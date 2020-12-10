@@ -57,12 +57,12 @@ class FormComment extends Component {
                                 body: ''
                             }}
                             onSubmit={(values, actions) => {
-                                alert(JSON.stringify(values));
+                                //alert(JSON.stringify(values));
                                 
                                 API.PostComment(values).then(res=>{
                                     //console.log(res)
                                     if (res.status === 1 ) {
-                                        toast.success("Komentar berhasil disimpan", {position: "top-center"}); 
+                                        toast.success("Komentar berhasil disimpan, menunggu persetujuan admin untuk ditampilkan", {position: "top-center"}); 
                                         setTimeout(() => { 
                                             Router.reload();
                                         }, 2000);

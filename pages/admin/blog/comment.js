@@ -67,12 +67,15 @@ class Comment extends Component {
           <Formik
                             initialValues={{ 
                                 id: row.id, 
-                                active: '',
+                                active: row.active,
                                 
                             }}
                             onSubmit={(values, actions) => {
                                 alert('Apakah anda yakin akan mengubah data ini?');
-                                API.PutComment(values).then(res=>{
+                                //alert(JSON.stringify({
+                                  //active: values.active,
+                                  //}));
+                                API.PutComment({id: values.id, active: values.active ? 'true':''}).then(res=>{
                                   //console.log(res)
                                   if (res.status === 1 ) {
                                     toast.success("Data berhasil disimpan", {position: "top-center"});
@@ -86,20 +89,26 @@ class Comment extends Component {
                                 
                                 setTimeout(() => {
                                 actions.setSubmitting(false);
+                                
                                 }, 1000);
                             }}
+
                             >
                             {({
                                 handleSubmit,
                                 handleChange,
                                 handleBlur,
+                                setFieldValue,
                                 values,
                                 touched,
                                 errors,
                                 isSubmitting
                             }) => (
                         <Form onChange={handleSubmit}>
-                            <Form.Control as="select" name="active" onChange={handleChange} defaultValue={row.active} onBlur={handleBlur} size="sm">
+                          <Form.Group>
+                          <Form.Check type="switch" id={"custom-switch"+row.id} name="active" value={values.active} label="Aktifkan?" defaultChecked={row.active} onChange={handleChange} onBlur={handleBlur} checked={values.active} />
+                          </Form.Group>
+                            {/*<Form.Control as="select" name="active" onChange={handleChange} defaultValue={row.active} onBlur={handleBlur} size="sm">
                             <option value="1" >{isSubmitting ? 
                            "menunggu.." : "Active"}
                            </option>
@@ -107,7 +116,7 @@ class Comment extends Component {
                              "menunggu.." : "Not Active"}
                              </option>
  
-                            </Form.Control>
+                            </Form.Control>*/}
         
                      </Form>
                      )}

@@ -128,6 +128,7 @@ const GetComment = () => GET('CommentController');
 const GetCommentId = (data) => GET_ID('CommentController?id=',data)
 const PostComment = (data) => POST('CommentController',data);
 const PutComment = (data) => PUT('CommentController',data);
+const CountComment = () => GET('CountCommentController');
 
 const API = {
     PostLogin,
@@ -164,7 +165,8 @@ const API = {
     GetComment,
     GetCommentId,
     PostComment,
-    PutComment
+    PutComment,
+    CountComment
 }
 
 export default API
