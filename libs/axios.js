@@ -1,16 +1,21 @@
 import Axios from 'axios'
 
 const RootPath = "http://localhost/blogapp-server/api/"
-const username = 'admin'
-const password = '1234'
 
-const token = Buffer.from(`${username}:${password}`, 'utf8').toString('base64')
+// Authorization
+//const username = 'admin'
+//const password = '1234'
+//const token = Buffer.from(`${username}:${password}`, 'utf8').toString('base64')
+
+var key = new Buffer.from('YmxvZzEyMw==', 'base64')
+const ApiKey = key.toString();
 
 const GET = (path) => {
     const promise = new Promise((resolve,reject) => {
         Axios.get(RootPath+path, {
             headers: {
-           'Authorization': `Basic ${token}`
+           //'Authorization': `basic ${token}`,
+           'X-API-KEY': `${ApiKey}`
           },
           }).then(res => {
             resolve(res.data)
@@ -23,7 +28,12 @@ const GET = (path) => {
 
 const GET_ID = (path,id) => {
     const promise = new Promise((resolve,reject) => {
-        Axios.get(RootPath+path+id).then(res => {
+        Axios.get(RootPath+path+id, {
+            headers: {
+           //'Authorization': `basic ${token}`,
+           'X-API-KEY': `${ApiKey}`
+          },
+          }).then(res => {
             resolve(res.data)
         }).catch(err => {
             reject(err)
@@ -34,7 +44,12 @@ const GET_ID = (path,id) => {
 
 const GET_BY_ID = (path,data) =>{
     const promise = new Promise((resolve,reject)=>{
-         Axios.get(RootPath+path+data).then(res=>{
+         Axios.get(RootPath+path+data, {
+            headers: {
+           //'Authorization': `basic ${token}`,
+           'X-API-KEY': `${ApiKey}`
+          },
+          }).then(res=>{
              resolve(res.data)
          },err=>{
             console.log(err.response); 
@@ -46,7 +61,12 @@ const GET_BY_ID = (path,data) =>{
 
 const POST = (path,data) => {
     const promise = new Promise((resolve,reject) => {
-        Axios.post(RootPath+path,data).then(res => {
+        Axios.post(RootPath+path,data, {
+            headers: {
+           //'Authorization': `basic ${token}`,
+           'X-API-KEY': `${ApiKey}`
+          },
+          }).then(res => {
             resolve(res.data)
         }).catch(err => {
             reject(err)
@@ -57,7 +77,12 @@ const POST = (path,data) => {
 
 const PUT = (path,data) => {
     const promise = new Promise((resolve,reject) => {
-        Axios.put(RootPath+path,data).then(res => {
+        Axios.put(RootPath+path,data, {
+            headers: {
+           //'Authorization': `basic ${token}`,
+           'X-API-KEY': `${ApiKey}`
+          },
+          }).then(res => {
             resolve(res.data)
         }).catch(err => {
             reject(err)
@@ -68,7 +93,12 @@ const PUT = (path,data) => {
 
 const DELETE = (path,data) => {
     const promise = new Promise((resolve,reject) => {
-        Axios.delete(RootPath+path+data).then(res => {
+        Axios.delete(RootPath+path+data, {
+            headers: {
+           //'Authorization': `basic ${token}`,
+           'X-API-KEY': `${ApiKey}`
+          },
+          }).then(res => {
             resolve(res.data)
         }).catch(err => {
             reject(err)
@@ -79,7 +109,12 @@ const DELETE = (path,data) => {
 
 const SEARCH = (path,data) => {
     const promise = new Promise((resolve,reject) => {
-        Axios.get(RootPath+path+data).then(res => {
+        Axios.get(RootPath+path+data, {
+            headers: {
+           //'Authorization': `basic ${token}`,
+           'X-API-KEY': `${ApiKey}`
+          },
+          }).then(res => {
             resolve(res.data)
         }).catch(er => {
             reject(er)
@@ -92,7 +127,12 @@ const POST_FOTO = (path,data,name) => {
     const promise = new Promise((resolve,reject)=>{
         const formdata = new FormData()
         formdata.append('foto',data,name)
-        Axios.post(RootPath+path,formdata).then(res=>{
+        Axios.post(RootPath+path,formdata, {
+            headers: {
+           //'Authorization': `basic ${token}`,
+           'X-API-KEY': `${ApiKey}`
+          },
+          }).then(res=>{
            resolve(res.data.status)
        },(err)=>{
            reject(err)
