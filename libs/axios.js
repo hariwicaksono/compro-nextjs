@@ -1,10 +1,18 @@
 import Axios from 'axios'
 
 const RootPath = "http://localhost/blogapp-server/api/"
+const username = 'admin'
+const password = '1234'
+
+const token = Buffer.from(`${username}:${password}`, 'utf8').toString('base64')
 
 const GET = (path) => {
     const promise = new Promise((resolve,reject) => {
-        Axios.get(RootPath+path).then(res => {
+        Axios.get(RootPath+path, {
+            headers: {
+           'Authorization': `Basic ${token}`
+          },
+          }).then(res => {
             resolve(res.data)
         }).catch(err => {
             reject(err)
