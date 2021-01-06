@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Head from 'next/head';
 import Router from 'next/router';
 import Link from 'next/link';
-import Image from 'next/image';
 import {isLogin, isAdmin} from '../../../libs/utils';
 import Layout, {siteName, siteTitle} from '../../../components/layout';
 import API from '../../../libs/axios';

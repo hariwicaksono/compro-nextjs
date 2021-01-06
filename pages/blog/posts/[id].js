@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
-import Image from 'next/image'
 import Layout, { siteTitle } from '../../../components/layout';
 import API from '../../../libs/axios';
 import { ImagesUrl } from '../../../libs/urls';

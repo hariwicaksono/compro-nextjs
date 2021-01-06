@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import Head from 'next/head';
 import Router from 'next/router';
 import Link from 'next/link';
-import Image from 'next/image';
 import API from '../libs/axios';
 import {toast} from 'react-toastify';
 import {Container, Breadcrumb, Card, Row, Col, Spinner, Button, Form} from 'react-bootstrap';

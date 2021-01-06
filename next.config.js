@@ -3,7 +3,7 @@ const isProd = process.env.NODE_ENV === 'production'
 
 module.exports = {
     basePath: isProd ? '/blogapp' : '',
-    exportTrailingSlash: isProd ? true : false,
+    trailingSlash: isProd ? true : false,
     images: {
       domains: ['localhost'],
     },

@@ -3,10 +3,8 @@ import Axios from 'axios'
 const RootPath = "http://localhost/blogapp-server/api/"
 
 // Authorization
-//const username = 'admin'
-//const password = '1234'
-//const token = Buffer.from(`${username}:${password}`, 'utf8').toString('base64')
-
+// key = blog123
+// Gunakan https://www.base64decode.org untuk melakukan encode key diatas menjadi format base64
 var key = new Buffer.from('YmxvZzEyMw==', 'base64')
 const ApiKey = key.toString();
 
@@ -14,7 +12,6 @@ const GET = (path) => {
     const promise = new Promise((resolve,reject) => {
         Axios.get(RootPath+path, {
             headers: {
-           //'Authorization': `basic ${token}`,
            'X-API-KEY': `${ApiKey}`
           },
           }).then(res => {
@@ -30,7 +27,6 @@ const GET_ID = (path,id) => {
     const promise = new Promise((resolve,reject) => {
         Axios.get(RootPath+path+id, {
             headers: {
-           //'Authorization': `basic ${token}`,
            'X-API-KEY': `${ApiKey}`
           },
           }).then(res => {
@@ -46,7 +42,6 @@ const GET_BY_ID = (path,data) =>{
     const promise = new Promise((resolve,reject)=>{
          Axios.get(RootPath+path+data, {
             headers: {
-           //'Authorization': `basic ${token}`,
            'X-API-KEY': `${ApiKey}`
           },
           }).then(res=>{
@@ -63,7 +58,6 @@ const POST = (path,data) => {
     const promise = new Promise((resolve,reject) => {
         Axios.post(RootPath+path,data, {
             headers: {
-           //'Authorization': `basic ${token}`,
            'X-API-KEY': `${ApiKey}`
           },
           }).then(res => {
@@ -79,7 +73,6 @@ const PUT = (path,data) => {
     const promise = new Promise((resolve,reject) => {
         Axios.put(RootPath+path,data, {
             headers: {
-           //'Authorization': `basic ${token}`,
            'X-API-KEY': `${ApiKey}`
           },
           }).then(res => {
@@ -95,7 +88,6 @@ const DELETE = (path,data) => {
     const promise = new Promise((resolve,reject) => {
         Axios.delete(RootPath+path+data, {
             headers: {
-           //'Authorization': `basic ${token}`,
            'X-API-KEY': `${ApiKey}`
           },
           }).then(res => {
@@ -111,7 +103,6 @@ const SEARCH = (path,data) => {
     const promise = new Promise((resolve,reject) => {
         Axios.get(RootPath+path+data, {
             headers: {
-           //'Authorization': `basic ${token}`,
            'X-API-KEY': `${ApiKey}`
           },
           }).then(res => {
@@ -129,7 +120,6 @@ const POST_FOTO = (path,data,name) => {
         formdata.append('foto',data,name)
         Axios.post(RootPath+path,formdata, {
             headers: {
-           //'Authorization': `basic ${token}`,
            'X-API-KEY': `${ApiKey}`
           },
           }).then(res=>{
