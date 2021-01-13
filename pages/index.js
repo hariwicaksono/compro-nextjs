@@ -6,6 +6,7 @@ import {Container, Alert, Card, Row, Col, Spinner, Button, Form} from 'react-boo
 import Slideshow from '../components/slideshow';
 import Loader from 'react-loader';
 import Blog from '../components/posts';
+import {FaExclamationTriangle} from 'react-icons/fa';
 
 var options = {lines: 13,length: 20,width: 10,radius: 30,scale: 0.35,corners: 1,color: '#fff',opacity: 0.25,rotate: 0,direction: 1,speed: 1,trail: 60,fps: 20,zIndex: 2e9,top: '50%',left: '50%',shadow: false,hwaccel: false,position: 'absolute'};
 
@@ -31,7 +32,7 @@ class Index extends Component{
           loading: false
       }), 100);
   })
-  }
+  } 
   render(){
         
     return(
@@ -42,8 +43,8 @@ class Index extends Component{
 
       <main className="py-3">
         <Container>
-        <Alert variant="info">
-          Selamat Datang di <strong>React Next.js App</strong> - IT Shop Purwokerto
+        <Alert variant="success">
+          <small><h1 className="h5"><FaExclamationTriangle/> Informasi</h1>Selamat Datang di <strong>React Next.js App</strong> {this.props.setting.company}. Informasi lebih lanjut hubungi Telp/WA di {this.props.setting.phone} atau {this.props.setting.email}</small>
           </Alert>
         <Slideshow data={this.state.Slideshow} /> 
         

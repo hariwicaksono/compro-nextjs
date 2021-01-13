@@ -96,7 +96,7 @@ static async getInitialProps ({ query }) {
         :
         <>
         <h1>{title}</h1>
-        Posted date: {date} - Category: {category} - By: {user}
+        Posted date: {date} - Category: <Link href={"/tag/"+category} passHref>{category}</Link> - By: {user}
         <hr/>
         {image && <img src={url+image} className="mb-3 img-fluid" alt={'gambar_'+title} />}
         {parse(body)}

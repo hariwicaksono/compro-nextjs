@@ -6,16 +6,18 @@ import Sidebar from './sidebar';
 import Footer from './footer';
 import { Container } from 'react-bootstrap';
 import {isLogin, isAdmin} from '../libs/utils';
+import API from '../libs/axios';
 
-export const siteName = 'Starter App'
-export const siteTitle = 'Starter App Next.js'
+export const siteName = 'Blog App'
+export const siteTitle = 'Blog App Dengan Next.js'
 
 class Layout extends Component {
   constructor(props) {
     super(props)
     this.state = {
         showMenu: true,
-        login : false
+        login : false,
+        Pengaturan: []
     }
     this.toggleMenu = this.toggleMenu.bind(this)
   }
@@ -35,7 +37,13 @@ class Layout extends Component {
             login : false
         })
     }
-}
+
+    API.GetSetting().then(res=>{
+      this.setState({
+          Pengaturan: res.data[0]
+      })
+    })
+  }
 
   render() {
     const { children, home, login, admin, member } = this.props;
@@ -50,7 +58,8 @@ class Layout extends Component {
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     </Head>
 
-    <Navbar toggleMenu={this.toggleMenu} />
+    <Navbar toggleMenu={this.toggleMenu} setting={this.state.Pengaturan} />
+
     <div className="wrapper">
     {this.state.login == true && (
         <Sidebar showMenu={this.state.showMenu} />
@@ -73,7 +82,7 @@ class Layout extends Component {
     }
     </div>
 
-    <Footer/>
+    <Footer setting={this.state.Pengaturan}/>
     </>
   );
   }

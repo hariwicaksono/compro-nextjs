@@ -42,7 +42,7 @@ class Index extends Component{
           <Loader options={options} className="spinner" />
           :
           <>
-          <h1>Semua Blog Post</h1>
+          <h1 className="h2">Semua Blog Post</h1><hr/>
           <Posts data={this.state.Posts} />
           </>    
         }

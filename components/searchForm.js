@@ -49,7 +49,7 @@ class SearchForm extends Component {
 
         return (
            
-                <Form className="mx-1 my-auto w-100" onSubmit={this.handlerSubmit}>
+                <Form className="mr-3 my-auto w-75" onSubmit={this.handlerSubmit}>
                 <div className="input-group">
                     <Form.Control className="border py-3" type="text" name="query" placeholder="Cari Blog..." onChange={this.handlerChange} required/>
                     <span className="input-group-append">

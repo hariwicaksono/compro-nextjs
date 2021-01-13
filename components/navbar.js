@@ -7,7 +7,8 @@ import API from '../libs/axios';
 import {logout, isLogin, isAdmin} from '../libs/utils';
 import {ImagesUrl} from '../libs/urls';
 import SearchForm from './searchForm';
-import {FaBars, FaSignOutAlt, FaKey} from 'react-icons/fa';
+import {FaBars, FaSignInAlt, FaSignOutAlt, FaKey} from 'react-icons/fa';
+import Skeleton from 'react-loading-skeleton';
 
 class MyNavbar extends Component{
   constructor(props) {
@@ -19,7 +20,8 @@ class MyNavbar extends Component{
         foto:'',
         user: false,
         admin: false,
-        url: ImagesUrl()
+        url: ImagesUrl(),
+        loading: true
     }
   }
   Logout = () => {
@@ -52,54 +54,61 @@ componentDidMount = () => {
            
    }
   else {
-      this.setState({
-          login:true
-      })
+    setTimeout(() => this.setState({
+          login: true,
+          loading: false
+      }), 100);
   }
-  API.GetSetting().then(res=>{
-    this.setState({
-        id : res.data[0].id,
-        company: res.data[0].company
-    })
-})
+  
   }
   render(){
         
     return(
      
-<Navbar bg="primary" variant="dark" className="shadow border-bottom py-2" expand="lg" sticky="top">
+<Navbar bg="primary" variant="dark" className="shadow border-bottom py-3" expand="lg" sticky="top">
 <Container>
 {this.state.admin && (
     <Button onClick={this.props.toggleMenu} type="button" className="btn btn-primary text-white btn-sm mr-2">
       <FaBars />
     </Button>
   )}
-  <Link href="/" passHref><Navbar.Brand>{this.state.company}</Navbar.Brand></Link>
+  <Link href="/" passHref><Navbar.Brand>
+    { this.state.loading ?
+          <>
+            <Skeleton width={180} height={25} />
+          </>
+        :
+        <>
+        {this.props.setting.company}
+        </>
+        }</Navbar.Brand></Link>
   <Navbar.Toggle aria-controls="basic-navbar-nav" />
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">
     <Link href="/" passHref><Nav.Link>Home</Nav.Link></Link>
       <Link href="/blog" passHref><Nav.Link>Blog</Nav.Link></Link>
-      <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+      {/*<NavDropdown title="Dropdown" id="basic-nav-dropdown">
         <Link href="#" passHref><NavDropdown.Item>Action</NavDropdown.Item></Link>
         <Link href="#" passHref><NavDropdown.Item>Another action</NavDropdown.Item></Link>
         <Link href="#" passHref><NavDropdown.Item>Something</NavDropdown.Item></Link>
         <NavDropdown.Divider />
         <Link href="#" passHref><NavDropdown.Item>Separated link</NavDropdown.Item></Link>
-      </NavDropdown>
+      </NavDropdown>*/}
     </Nav>
     <SearchForm/>
-    <Nav>
+
     {this.state.login ?
                 <>
-                <Form inline className="my-2 my-lg-0 pl-1">
+                <Form inline>
                 <Link href="/login" passHref>
-                <Button variant="light">Masuk</Button>
-                </Link>
+                  <Button className="text-light" variant="link"><FaSignInAlt/> Login</Button>
+                  </Link>
                 </Form>
+               
                 </>
                :
                <>
+               <Nav>
                <NavItem>
                <NavDropdown title=
                {this.state.foto ? (
@@ -124,9 +133,10 @@ componentDidMount = () => {
                 <NavDropdown.Item onClick={this.Logout} href=''><FaSignOutAlt/> Logout</NavDropdown.Item>
                 </NavDropdown>
                 </NavItem>
+                </Nav>
                 </>
                 }
-    </Nav>
+    
   </Navbar.Collapse>
   </Container>
 </Navbar>

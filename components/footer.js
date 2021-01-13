@@ -17,7 +17,7 @@ class Footer extends Component{
 
             </Row>
            
-            <div className="text-white mt-3">© {(new Date().getFullYear())} IT Shop Purwokerto. Blog App Dengan React Next.js dan CodeIgniter</div>
+            <div className="text-white mt-3">© {(new Date().getFullYear())} {this.props.setting.company}. Blog App Dengan React Next.js dan CodeIgniter 3</div>
             </Container>
             </div>
 
