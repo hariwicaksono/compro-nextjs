@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
+import Router from 'next/router';
 import Link from 'next/link';
 import Layout, { siteTitle } from '../../../../components/layout';
 import API from '../../../../libs/axios';
@@ -83,6 +84,9 @@ static async getInitialProps ({ query }) {
                                       //console.log(res)
                                       if (res.status === 1 ) {
                                         toast.success("Data berhasil disimpan", {position: "top-center"}); 
+                                        setTimeout(() => { 
+                                          Router.reload();
+                                      }, 2000);
                                       } 
                                        
                                   }).catch(err => {

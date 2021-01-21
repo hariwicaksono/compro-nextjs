@@ -7,6 +7,7 @@ const RootPath = "http://localhost/blogapp-server/api/"
 // Gunakan https://www.base64decode.org untuk melakukan encode key diatas menjadi format base64
 var key = new Buffer.from('YmxvZzEyMw==', 'base64')
 const ApiKey = key.toString();
+const config = { headers: { 'X-API-KEY': `${ApiKey}` } };
 
 const GET = (path) => {
     const promise = new Promise((resolve,reject) => {
@@ -118,11 +119,8 @@ const POST_FOTO = (path,data,name) => {
     const promise = new Promise((resolve,reject)=>{
         const formdata = new FormData()
         formdata.append('foto',data,name)
-        Axios.post(RootPath+path,formdata, {
-            headers: {
-           'X-API-KEY': `${ApiKey}`
-          }
-          }).then(res=>{
+        Axios.post(RootPath+path, formdata, { headers: {'X-API-KEY': `${ApiKey}`} }
+        ).then(res=>{
            resolve(res.data.status)
        },(err)=>{
            reject(err)

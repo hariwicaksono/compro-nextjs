@@ -63,7 +63,7 @@ class Slideshow extends Component {
           sortable: true,
           cell: row => <>
           {row.img_slide != null ?
-          <img src={'../images/'+row.img_slide} width="60" alt="" onClick={() => {
+          <img src={this.state.url+row.img_slide} width="60" alt="" onClick={() => {
                 this.dialog.show({
                   title: 'Ganti Gambar Slide',
                   body: [<Formik key={row.id}
@@ -193,7 +193,7 @@ class Slideshow extends Component {
                      
                      <Form.Group>
                      <Form.Label>Gambar Slide</Form.Label><br/>
-                    <img src="/images/no-image.png" className="img-fluid" width="200"/>
+                    <img src="../images/no-image.png" className="img-fluid" width="200"/>
                     </Form.Group>
 
                     <Form.Group>

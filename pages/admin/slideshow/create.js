@@ -62,7 +62,7 @@ class Create extends Component {
                                 //alert(JSON.stringify({
                                     //text_slide: values.text_slide,
                                     //foto: values.foto.name}));
-                                
+                                    
                                 API.PostSlideshow(
                                     { 
                                         text_slide: values.text_slide,

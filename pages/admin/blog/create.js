@@ -32,6 +32,8 @@ class Create extends Component {
             category_id: '',
             user_id: '',
             category: [],
+            date: '',
+            time: '',
             foto: '',
             file: {
                 foto: ''
@@ -138,7 +140,7 @@ class Create extends Component {
                                 }, 1000);
                             }}
                             validationSchema={validationSchema}
-                            enableReinitialize={true}
+                            //enableReinitialize={true}
                             >
                             {({
                                 handleSubmit,
@@ -185,13 +187,13 @@ class Create extends Component {
                             <Row>
                             <Col>
                                 <Form.Label>Tanggal</Form.Label>
-                                <Form.Control type="date" name="tanggal" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.tanggal} isInvalid={!!errors.tanggal && touched.tanggal} />
-                                {errors.tanggal && touched.tanggal && <Form.Control.Feedback type="invalid">{errors.tanggal}</Form.Control.Feedback>}
+                                <Form.Control type="date" name="date" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.date} isInvalid={!!errors.date && touched.date} />
+                                {errors.date && touched.date && <Form.Control.Feedback type="invalid">{errors.date}</Form.Control.Feedback>}
                             </Col>
                             <Col>
                             <Form.Label>Jam</Form.Label>
-                                <Form.Control type="time" name="jam" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.jam} isInvalid={!!errors.jam && touched.jam} />
-                                {errors.jam && touched.jam && <Form.Control.Feedback type="invalid">{errors.jam}</Form.Control.Feedback>}
+                                <Form.Control type="time" name="time" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.time} isInvalid={!!errors.time && touched.time} />
+                                {errors.time && touched.time && <Form.Control.Feedback type="invalid">{errors.time}</Form.Control.Feedback>}
                             </Col>
                             </Row>
                             </Form.Group>
