@@ -121,7 +121,7 @@ const POST_FOTO = (path,data,name) => {
         Axios.post(RootPath+path,formdata, {
             headers: {
            'X-API-KEY': `${ApiKey}`
-          },
+          }
           }).then(res=>{
            resolve(res.data.status)
        },(err)=>{

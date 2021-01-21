@@ -36,6 +36,7 @@ componentDidMount = () => {
               id : res.data[0].id,
               name: res.data[0].name,
               email: res.data[0].email,
+              loading: false,
               user: true
           })
       })
@@ -48,6 +49,7 @@ componentDidMount = () => {
                id : res.data[0].id,
                name: res.data[0].name,
                email: res.data[0].email,
+               loading: false,
                admin: true
            })
        })

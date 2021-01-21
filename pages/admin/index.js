@@ -60,19 +60,19 @@ class Index extends Component{
       </Jumbotron>
 
       <Row>
-        <Col>
+        <Col md={4}>
         <Card bg="info" text="light" body>
               <h5>Jumlah Post</h5>
               <h1>{this.state.JumlahBlog}</h1>
             </Card>
         </Col>
-        <Col>
+        <Col md={4}>
         <Card bg="success" text="light" body>
               <h5>Jumlah Kategori</h5>
               <h1>{this.state.JumlahKategori}</h1>
             </Card>
         </Col>
-        <Col>
+        <Col md={4}>
         <Card bg="danger" text="light" body>
               <h5>Jumlah Komentar</h5>
               <h1>{this.state.JumlahKomentar}</h1>

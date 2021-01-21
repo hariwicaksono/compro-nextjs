@@ -18,7 +18,7 @@ import Dialog from 'react-bootstrap-dialog';
 
 var options = {lines: 13,length: 20,width: 10,radius: 30,scale: 0.35,corners: 1,color: '#fff',opacity: 0.25,rotate: 0,direction: 1,speed: 1,trail: 60,fps: 20,zIndex: 2e9,top: '50%',left: '50%',shadow: false,hwaccel: false,position: 'absolute'};
 const validationSchema = yup.object({
-  foto: yup.mixed().required()
+ // foto: yup.mixed().required()
 }); 
 
 class Slideshow extends Component {
@@ -63,7 +63,7 @@ class Slideshow extends Component {
           sortable: true,
           cell: row => <>
           {row.img_slide != null ?
-          <img src={this.state.url+row.img_slide} width="60" alt="" onClick={() => {
+          <img src={'../images/'+row.img_slide} width="60" alt="" onClick={() => {
                 this.dialog.show({
                   title: 'Ganti Gambar Slide',
                   body: [<Formik key={row.id}
@@ -80,89 +80,8 @@ class Slideshow extends Component {
                         ).then(res=>{
                             if (res.status === 1 ) {
                                toast.success("Data berhasil disimpan", {position: "top-center"}); 
-                               window.location.href = '/admin/slideshow';
-                            }  
-                        })
-                        API.PostFoto(values.foto, values.foto.name).then(res => {
-                          console.log('img_ok')
-                          //toast.success("Gambar berhasil disimpan", {position: "top-center"}); 
-                        })
-                        
-                        setTimeout(() => {
-                        actions.setSubmitting(true);
-                        }, 1000);
-                    }}
-                    validationSchema={validationSchema}
-                    >
-                    {({
-                        handleSubmit,
-                        handleChange,
-                        handleBlur,
-                        setFieldValue,
-                        values,
-                        touched,
-                        errors,
-                        isSubmitting
-                    }) => (
-                <Form noValidate onSubmit={handleSubmit}>
-                     
-                     <Form.Group>
-                     <Form.Label>Gambar Slide</Form.Label><br/>
-                    <img src={this.state.url+row.img_slide} className="img-fluid" width="200"/>
-                    </Form.Group>
-
-                    <Form.Group>
-                    <Form.Label htmlFor="foto">Upload Gambar</Form.Label>
-                    
-                    <Form.File className="form-control" name="foto" id="foto" onChange={(event) => 
-                        {
-                        setFieldValue("foto", event.currentTarget.files[0]); 
-                        this.setState({
-                            fotoPreviewUrl: URL.createObjectURL(event.currentTarget.files[0])
-                        })
-                        }
-                        } onBlur={handleBlur} isInvalid={!!errors.foto && touched.foto} />
-                    {errors.foto && touched.foto && <div className="error">{errors.foto}</div>}
-                    {this.state.fotoPreviewUrl ? <img src={this.state.fotoPreviewUrl} width="200" alt="" className="mt-2 img-fluid" /> : ""}
-                    </Form.Group>
-
-                    <Button variant="primary" type="submit" disabled={isSubmitting}><FaUpload/> Upload</Button>
-
-             </Form>
-             )}
-            </Formik>],
-                  bsSize: 'lg',
-                  actions: [
-                    Dialog.CancelAction(() => {
-                      console.log('Cancel was clicked!')
-                    })
-                  ],
-                  onHide: (dialog) => {
-                    dialog.hide()
-                    console.log('closed by clicking background.')
-                  }
-                })
-              }} />
-              :
-              <img src="/images/no-image.png" width="60" alt="" onClick={() => {
-                this.dialog.show({
-                  title: 'Ganti Gambar Slide',
-                  body: [<Formik key={row.id}
-                    initialValues={{ 
-                        id: row.id, 
-                        foto: row.img_slide,
-                    }}
-                    onSubmit={(values, actions) => {
-                        API.PutSlideshowImage(
-                            { 
-                                id: values.id, 
-                                foto: values.foto.name
-                            }
-                        ).then(res=>{
-                            if (res.status === 1 ) {
-                               toast.success("Data berhasil disimpan", {position: "top-center"}); 
-                               setTimeout(() => {
-                               window.location.href = '/admin/slideshow';
+                               setTimeout(() => { 
+                                Router.push('/admin/slideshow');
                               }, 2000);
                             }  
                         })
@@ -187,7 +106,90 @@ class Slideshow extends Component {
                         errors,
                         isSubmitting
                     }) => (
-                <Form noValidate onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}>
+                     
+                     <Form.Group>
+                     <Form.Label>Gambar Slide</Form.Label><br/>
+                    <img src={this.state.url+row.img_slide} className="img-fluid" width="200"/>
+                    </Form.Group>
+
+                    <Form.Group>
+                    <Form.Label htmlFor="foto">Upload Gambar</Form.Label>
+                    
+                    <Form.File className="form-control" name="foto" id="foto" onChange={(event) => 
+                        {
+                        setFieldValue("foto", event.currentTarget.files[0]); 
+                        this.setState({
+                            fotoPreviewUrl: URL.createObjectURL(event.currentTarget.files[0])
+                        })
+                        }
+                        } onBlur={handleBlur} isInvalid={!!errors.foto && touched.foto} required="required" />
+                    {errors.foto && touched.foto && <div className="error">{errors.foto}</div>}
+                    {this.state.fotoPreviewUrl ? <img src={this.state.fotoPreviewUrl} width="200" alt="" className="mt-2 img-fluid" /> : ""}
+                    </Form.Group>
+
+                    <Button variant="primary" type="submit" disabled={isSubmitting}><FaUpload/> Upload</Button>
+
+             </Form>
+             )}
+            </Formik>],
+                  bsSize: 'lg',
+                  actions: [
+                    Dialog.CancelAction(() => {
+                      console.log('Cancel was clicked!')
+                    })
+                  ],
+                  onHide: (dialog) => {
+                    dialog.hide()
+                    console.log('closed by clicking background.')
+                  }
+                })
+              }} />
+              :
+              <img src="../images/no-image.png" width="60" alt="" onClick={() => {
+                this.dialog.show({
+                  title: 'Ganti Gambar Slide',
+                  body: [<Formik key={row.id}
+                    initialValues={{ 
+                        id: row.id, 
+                        foto: row.img_slide,
+                    }}
+                    onSubmit={(values, actions) => {
+                        API.PutSlideshowImage(
+                            { 
+                                id: values.id, 
+                                foto: values.foto.name
+                            }
+                        ).then(res=>{
+                            if (res.status === 1 ) {
+                               toast.success("Data berhasil disimpan", {position: "top-center"}); 
+                                setTimeout(() => { 
+                                    Router.push('/admin/slideshow');
+                                }, 2000);
+                            }  
+                        })
+                        API.PostFoto(values.foto, values.foto.name).then(res => {
+                          console.log('img_ok')
+                          //toast.success("Gambar berhasil disimpan", {position: "top-center"}); 
+                        })
+                        
+                        setTimeout(() => {
+                        actions.setSubmitting(true);
+                        }, 1000);
+                    }}
+                    validationSchema={validationSchema}
+                    >
+                    {({
+                        handleSubmit,
+                        handleChange,
+                        handleBlur,
+                        setFieldValue,
+                        values,
+                        touched,
+                        errors,
+                        isSubmitting
+                    }) => (
+                <Form onSubmit={handleSubmit}>
                      
                      <Form.Group>
                      <Form.Label>Gambar Slide</Form.Label><br/>
@@ -204,7 +206,7 @@ class Slideshow extends Component {
                             fotoPreviewUrl: URL.createObjectURL(event.currentTarget.files[0])
                         })
                         }
-                        } onBlur={handleBlur} isInvalid={!!errors.foto && touched.foto} />
+                        } onBlur={handleBlur} isInvalid={!!errors.foto && touched.foto} required="required" />
                     {errors.foto && touched.foto && <div className="error">{errors.foto}</div>}
                     {this.state.fotoPreviewUrl ? <img src={this.state.fotoPreviewUrl} width="200" alt="" className="mt-2 img-fluid" /> : ""}
                     </Form.Group>
@@ -253,8 +255,10 @@ class Slideshow extends Component {
                     Dialog.OKAction(() => {
                       API.DeleteSlideshow(row.id).then(res => {
                         if (res.status === 1) {
-                            window.location.href = '/admin/slideshow';
                             toast.success("Hapus data berhasil", {position: "top-center"});
+                            setTimeout(() => { 
+                              Router.reload();
+                          }, 2000);
                         } else {
                             console.log('gagal')
                         }
