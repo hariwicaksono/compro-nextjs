@@ -4,5 +4,5 @@ export const SiteUrl = () => {
 }
 
 export const ImagesUrl = () => {
-    return "http://localhost/blogapp-server/public/images/"
+    return "http://localhost/blogapp-nextjs/public/images/"
 }

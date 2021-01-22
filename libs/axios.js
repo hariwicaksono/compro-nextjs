@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-const RootPath = "http://localhost/blogapp-server/api/"
+const RootPath = "http://localhost/blogapp-nextjs/api/"
 
 // Authorization
 // key = blog123
@@ -11,11 +11,7 @@ const config = { headers: { 'X-API-KEY': `${ApiKey}` } };
 
 const GET = (path) => {
     const promise = new Promise((resolve,reject) => {
-        Axios.get(RootPath+path, {
-            headers: {
-           'X-API-KEY': `${ApiKey}`
-          },
-          }).then(res => {
+        Axios.get(RootPath+path, config).then(res => {
             resolve(res.data)
         }).catch(err => {
             reject(err)
@@ -26,11 +22,7 @@ const GET = (path) => {
 
 const GET_ID = (path,id) => {
     const promise = new Promise((resolve,reject) => {
-        Axios.get(RootPath+path+id, {
-            headers: {
-           'X-API-KEY': `${ApiKey}`
-          },
-          }).then(res => {
+        Axios.get(RootPath+path+id, config).then(res => {
             resolve(res.data)
         }).catch(err => {
             reject(err)
@@ -41,11 +33,7 @@ const GET_ID = (path,id) => {
 
 const GET_BY_ID = (path,data) =>{
     const promise = new Promise((resolve,reject)=>{
-         Axios.get(RootPath+path+data, {
-            headers: {
-           'X-API-KEY': `${ApiKey}`
-          },
-          }).then(res=>{
+         Axios.get(RootPath+path+data, config).then(res=>{
              resolve(res.data)
          },err=>{
             console.log(err.response); 
@@ -57,11 +45,7 @@ const GET_BY_ID = (path,data) =>{
 
 const POST = (path,data) => {
     const promise = new Promise((resolve,reject) => {
-        Axios.post(RootPath+path,data, {
-            headers: {
-           'X-API-KEY': `${ApiKey}`
-          },
-          }).then(res => {
+        Axios.post(RootPath+path,data, config).then(res => {
             resolve(res.data)
         }).catch(err => {
             reject(err)
@@ -72,11 +56,7 @@ const POST = (path,data) => {
 
 const PUT = (path,data) => {
     const promise = new Promise((resolve,reject) => {
-        Axios.put(RootPath+path,data, {
-            headers: {
-           'X-API-KEY': `${ApiKey}`
-          },
-          }).then(res => {
+        Axios.put(RootPath+path,data, config).then(res => {
             resolve(res.data)
         }).catch(err => {
             reject(err)
@@ -87,11 +67,7 @@ const PUT = (path,data) => {
 
 const DELETE = (path,data) => {
     const promise = new Promise((resolve,reject) => {
-        Axios.delete(RootPath+path+data, {
-            headers: {
-           'X-API-KEY': `${ApiKey}`
-          },
-          }).then(res => {
+        Axios.delete(RootPath+path+data, config).then(res => {
             resolve(res.data)
         }).catch(err => {
             reject(err)
@@ -102,11 +78,7 @@ const DELETE = (path,data) => {
 
 const SEARCH = (path,data) => {
     const promise = new Promise((resolve,reject) => {
-        Axios.get(RootPath+path+data, {
-            headers: {
-           'X-API-KEY': `${ApiKey}`
-          },
-          }).then(res => {
+        Axios.get(RootPath+path+data, config).then(res => {
             resolve(res.data)
         }).catch(er => {
             reject(er)
@@ -119,8 +91,7 @@ const POST_FOTO = (path,data,name) => {
     const promise = new Promise((resolve,reject)=>{
         const formdata = new FormData()
         formdata.append('foto',data,name)
-        Axios.post(RootPath+path, formdata, { headers: {'X-API-KEY': `${ApiKey}`} }
-        ).then(res=>{
+        Axios.post(RootPath+path, formdata, config).then(res=>{
            resolve(res.data.status)
        },(err)=>{
            reject(err)
