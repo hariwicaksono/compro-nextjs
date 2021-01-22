@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
+import Router from 'next/router';
 import Link from 'next/link';
 import Navbar from './navbar';
+import NavbarA from './navbarA';
 import Sidebar from './sidebar';
 import Footer from './footer';
 import { Container } from 'react-bootstrap';
@@ -31,7 +33,7 @@ class Layout extends Component {
       //console.log('ADMIN')
       this.setState({
         login : true
-    })
+      })
     } else {
         this.setState({
             login : false
@@ -53,17 +55,23 @@ class Layout extends Component {
     <Head>  
     <meta charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <link href="https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600" rel="stylesheet" />
-    <meta name="description" content="" />
+    <meta name="description" content={siteTitle} />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
     </Head>
 
-    <Navbar toggleMenu={this.toggleMenu} setting={this.state.Pengaturan} />
+    {admin ? 
+           <NavbarA toggleMenu={this.toggleMenu} setting={this.state.Pengaturan} />
+    :
+        <Navbar toggleMenu={this.toggleMenu} setting={this.state.Pengaturan} />
+    } 
+
+ 
 
     <div className="wrapper">
     {this.state.login == true && (
         <Sidebar showMenu={this.state.showMenu} />
     )} 
+   
     {!home && !login && !admin ? 
     <div id="content">
       <Container>

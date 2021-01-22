@@ -28,9 +28,7 @@ class MyProfile extends Component {
     }
 
     componentDidMount = () => {
-    if (!isAdmin()) {
-        return( Router.push('/login') )
-        }
+
     const data = JSON.parse(localStorage.getItem('isAdmin'))
     const id = data[0].email
     API.GetUserId(id).then(res=>{

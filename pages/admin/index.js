@@ -18,10 +18,6 @@ class Index extends Component{
     }
 }
   componentDidMount = () => {
-    if (!isAdmin()) {
-      return( Router.push('/login') )
-    }
-
     API.CountBlog().then(res=>{
       setTimeout(() => this.setState({
           JumlahBlog: res.data,

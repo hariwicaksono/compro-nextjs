@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import Head from 'next/head';
-import Router from 'next/router';
 import Link from 'next/link';
 import {Container, Navbar, Nav, NavItem, NavDropdown, Form, FormControl, Button} from 'react-bootstrap';
 import API from '../libs/axios';
@@ -14,19 +13,11 @@ class MyNavbar extends Component{
   constructor(props) {
     super(props)
     this.state = {
-        login:false,
-        id: '',
-        name: '',
-        foto:'',
-        user: false,
-        admin: false,
-        url: ImagesUrl(),
         loading: true
     }
   }
-  Logout = () => {
-    logout();
-}
+
+
 componentDidMount = () => {
   if (isLogin()) {
       const data = JSON.parse(localStorage.getItem('isLogin'))
@@ -37,43 +28,25 @@ componentDidMount = () => {
               name: res.data[0].name,
               email: res.data[0].email,
               loading: false,
-              user: true
           })
       })
           
-  } else if (isAdmin()) {
-       const data = JSON.parse(localStorage.getItem('isAdmin'))
-       const id = data[0].email
-       API.GetUserId(id).then(res=>{
-           this.setState({
-               id : res.data[0].id,
-               name: res.data[0].name,
-               email: res.data[0].email,
-               loading: false,
-               admin: true
-           })
-       })
-           
-   }
+  } 
   else {
     setTimeout(() => this.setState({
-          login: true,
           loading: false
       }), 100);
   }
   
   }
+
   render(){
-        
+
     return(
      
 <Navbar bg="primary" variant="dark" className="shadow border-bottom py-3" expand="lg" sticky="top">
 <Container>
-{this.state.admin && (
-    <Button onClick={this.props.toggleMenu} type="button" className="btn btn-primary text-white btn-sm mr-2">
-      <FaBars />
-    </Button>
-  )}
+
   <Link href="/" passHref><Navbar.Brand>
     { this.state.loading ?
           <>
@@ -98,46 +71,12 @@ componentDidMount = () => {
       </NavDropdown>*/}
     </Nav>
     <SearchForm/>
-
-    {this.state.login ?
-                <>
-                <Form inline>
-                <Link href="/login" passHref>
-                  <Button className="text-light" variant="link"><FaSignInAlt/> Login</Button>
-                  </Link>
-                </Form>
-               
-                </>
-               :
-               <>
-               <Nav>
-               <NavItem>
-               <NavDropdown title=
-               {this.state.foto ? (
-                <>
-                <img
-                    alt="Foto"
-                    width="30"
-                    className="rounded-circle"
-                    src={this.state.url+this.state.foto} />
-                </>
-                    ) : (
-                <>
-                <img
-                    alt="Foto"
-                    width="30"
-                    className="rounded-circle"
-                    src={this.state.url+'no-avatar.png'} />
-                </>
-                )} id="basic-nav-dropdown" alignRight>
-                <NavDropdown.Item>{this.state.email}</NavDropdown.Item>
-                <Link href="/admin/password" passHref><NavDropdown.Item><FaKey/> Ganti Password</NavDropdown.Item></Link>
-                <NavDropdown.Item onClick={this.Logout} href=''><FaSignOutAlt/> Logout</NavDropdown.Item>
-                </NavDropdown>
-                </NavItem>
-                </Nav>
-                </>
-                }
+    
+    <Form inline>
+    <Link href="/login" passHref>
+      <Button className="text-light" variant="link"><FaSignInAlt/> Login</Button>
+      </Link>
+    </Form>
     
   </Navbar.Collapse>
   </Container>

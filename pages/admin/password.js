@@ -30,9 +30,7 @@ class Password extends Component {
     }
 
     componentDidMount = () => {
-    if (!isAdmin()) {
-        return( Router.push('/login') )
-        }
+
     const datas = JSON.parse(localStorage.getItem('isAdmin'))
     const id = datas[0].email
     API.GetUserId(id).then(res=>{

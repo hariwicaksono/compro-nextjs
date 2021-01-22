@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/globals.css';
 import 'spin.js/spin.css';
 import 'react-toastify/dist/ReactToastify.css';

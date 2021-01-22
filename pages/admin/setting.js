@@ -31,9 +31,7 @@ class Setting extends Component {
     }
 
     componentDidMount = () => {
-    if (!isAdmin()) {
-        return( Router.push('/login') )
-        }
+
     API.GetSetting().then(res=>{
         setTimeout(() => this.setState({
             company: res.data[0].company,
