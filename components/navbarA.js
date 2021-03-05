@@ -30,20 +30,10 @@ Logout = () => {
 }
 
 componentDidMount = () => {
-  if (isLogin()) {
-      const data = JSON.parse(localStorage.getItem('isLogin'))
-      const id = data[0].email
-      API.GetUserId(id).then(res=>{
-          this.setState({
-              id : res.data[0].id,
-              name: res.data[0].name,
-              email: res.data[0].email,
-              loading: false,
-              user: true
-          })
-      })
-          
-  } else if (isAdmin()) {
+  if (!isAdmin()) {
+    return( Router.push('/login') )
+  }
+ if (isAdmin()) {
        const data = JSON.parse(localStorage.getItem('isAdmin'))
        const id = data[0].email
        API.GetUserId(id).then(res=>{
@@ -63,10 +53,6 @@ componentDidMount = () => {
           loading: false
       }), 100);
   }
-
-  if (!isAdmin()) {
-    return( Router.push('/login') )
-}
   
   }
 
@@ -95,8 +81,8 @@ componentDidMount = () => {
   <Navbar.Collapse id="basic-navbar-nav">
     <Nav className="mr-auto">
     <Link href="/" passHref><Nav.Link>Home</Nav.Link></Link>
-      <Link href="/blog" passHref><Nav.Link>Blog</Nav.Link></Link>
-      {/*<NavDropdown title="Dropdown" id="basic-nav-dropdown">
+      {/*<Link href="/blog" passHref><Nav.Link>Blog</Nav.Link></Link>
+      <NavDropdown title="Dropdown" id="basic-nav-dropdown">
         <Link href="#" passHref><NavDropdown.Item>Action</NavDropdown.Item></Link>
         <Link href="#" passHref><NavDropdown.Item>Another action</NavDropdown.Item></Link>
         <Link href="#" passHref><NavDropdown.Item>Something</NavDropdown.Item></Link>

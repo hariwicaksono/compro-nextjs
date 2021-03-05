@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
-import Router from 'next/router';
 import Link from 'next/link';
 import Navbar from './navbar';
 import NavbarA from './navbarA';
@@ -31,6 +30,11 @@ class Layout extends Component {
   componentDidMount = () => {
     if(localStorage.getItem('isAdmin')){
       //console.log('ADMIN')
+      this.setState({
+        login : true
+      })
+    } else if(localStorage.getItem('isLogin')){
+      //console.log('USER')
       this.setState({
         login : true
       })

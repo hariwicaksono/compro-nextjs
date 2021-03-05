@@ -22,16 +22,16 @@ class Index extends Component{
 }
     componentDidMount() {
       API.GetSlideshow().then(res => {
-        this.setState({
-            Slideshow: res.data
-        })
-    })
-    API.GetBlog().then(res => {
-      setTimeout(() => this.setState({
-          Posts: res.data,
-          loading: false
-      }), 100);
-  })
+          this.setState({
+              Slideshow: res.data
+          })
+      })
+      API.GetBlog().then(res => {
+        setTimeout(() => this.setState({
+            Posts: res.data,
+            loading: false
+        }), 100);
+      })
   } 
   render(){
         

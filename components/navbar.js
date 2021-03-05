@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import Head from 'next/head';
+import Router from 'next/router';
 import Link from 'next/link';
 import {Container, Navbar, Nav, NavItem, NavDropdown, Form, FormControl, Button} from 'react-bootstrap';
 import API from '../libs/axios';
@@ -19,6 +20,9 @@ class MyNavbar extends Component{
 
 
 componentDidMount = () => {
+  if (localStorage.getItem('isAdmin')) {
+    return( Router.push('/admin') )
+  }
   if (isLogin()) {
       const data = JSON.parse(localStorage.getItem('isLogin'))
       const id = data[0].email

@@ -29,44 +29,52 @@ class LoginController extends REST_Controller
 		$user = $this->post('username');
 		$password = md5($this->post('password'));
 		$query1 = $this->db->query("SELECT status_user FROM users WHERE email LIKE '%$user%' and status_user = 'User' ");
-		$row = $query1->row_array();
-		$isuser = $row['status_user'];
-		$query2 = $this->db->query("SELECT status_user FROM users WHERE email LIKE '%$user%' and status_user = 'Admin' ");
-		$row = $query2->row_array();
-		$isadmin = $row['status_user'];
-
-		if ($isuser == "User") {
-			$cek = $this->Model->cek_login($user,$password);
-			if ($cek) {
-				$this->response([
-					'id' => '1',
-					'data' => $cek
-				],REST_Controller::HTTP_OK);
-			} else {
+		$row1 = $query1->row_array();
+		if (!empty($row1)) {
+			$isuser = $row1['status_user'];
+			if ($isuser == "User") {
+				$cek = $this->Model->cek_login($user,$password);
+				if ($cek) {
 					$this->response([
-					'id'=> '404',
-					'data' => 'Data Not Found 1'
-				],REST_Controller::HTTP_OK);
+						'id' => '1',
+						'data' => $cek
+					],REST_Controller::HTTP_OK);
+				} else {
+						$this->response([
+						'id'=> '404',
+						'data' => 'Data Not Found 1'
+					],REST_Controller::HTTP_OK);
+				}
 			}
-		} else if ($isadmin == "Admin"){
-			$cek = $this->Model->cek_login($user,$password);
-			if ($cek) {
-				$this->response([
-					'id' => '2',
-					'data' => $cek
-				],REST_Controller::HTTP_OK);
-			} else {
+		}
+		
+		$query2 = $this->db->query("SELECT status_user FROM users WHERE email LIKE '%$user%' and status_user = 'Admin' ");
+		$row2 = $query2->row_array();
+		if (!empty($row2)) {
+			$isadmin = $row2['status_user'];
+			if ($isadmin == "Admin"){
+				$cek = $this->Model->cek_login($user,$password);
+				if ($cek) {
 					$this->response([
+						'id' => '2',
+						'data' => $cek
+					],REST_Controller::HTTP_OK);
+				} else {
+						$this->response([
+						'id'=> '404',
+						'data' => 'Data Not Found'
+					],REST_Controller::HTTP_OK);
+				}
+			} else{
+				$this->response([
 					'id'=> '404',
 					'data' => 'Data Not Found'
 				],REST_Controller::HTTP_OK);
 			}
-		} else{
-			$this->response([
-				'id'=> '404',
-				'data' => 'Data Not Found'
-			],REST_Controller::HTTP_OK);
 		}
+	
+
+		
 	}
 
 
