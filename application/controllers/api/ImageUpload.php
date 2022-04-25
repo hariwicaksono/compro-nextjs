@@ -30,7 +30,7 @@ class ImageUpload extends REST_Controller{
 			],REST_Controller::HTTP_BAD_REQUEST);
 		} else {
 			$config['allowed_types'] = "jpeg|jpg|png|gif";
-			$config['upload_path'] = "./public/images";
+			$config['upload_path'] = "./uploads/images";
 			$config['overwrite'] = TRUE;
 			$config['max_size']       = '4000';
 			$config['max_width']      = '4000';
@@ -42,13 +42,13 @@ class ImageUpload extends REST_Controller{
 				$gbr = $this->upload->data();
                 //Compress Image
                 $config['image_library']='gd2';
-                $config['source_image']='./public/images/'.$gbr['file_name'];
+                $config['source_image']='./uploads/images/'.$gbr['file_name'];
                 $config['create_thumb']= FALSE;
                 $config['maintain_ratio']= FALSE;
                 $config['quality']= '80%';
                 $config['width']= 1200;
                 $config['height']= 500;
-                $config['new_image']= './public/images/'.$gbr['file_name'];
+                $config['new_image']= './uploads/images/'.$gbr['file_name'];
                 $this->load->library('image_lib', $config);
                 $this->image_lib->resize();
 				$this->response([

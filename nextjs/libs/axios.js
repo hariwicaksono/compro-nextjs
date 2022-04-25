@@ -1,6 +1,6 @@
 import Axios from 'axios'
 
-const RootPath = "http://localhost/blogapp-nextjs/api/"
+const RootPath = process.env.NEXT_PUBLIC_API_URL+"/api/";
 
 // Authorization
 // key = blog123

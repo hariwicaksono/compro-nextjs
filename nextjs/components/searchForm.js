@@ -49,11 +49,11 @@ class SearchForm extends Component {
 
         return (
            
-                <Form className="mr-3 my-auto w-75" onSubmit={this.handlerSubmit}>
+                <Form className="d-flex" onSubmit={this.handlerSubmit}>
                 <div className="input-group">
-                    <Form.Control className="border py-3" type="text" name="query" placeholder="Cari Blog..." onChange={this.handlerChange} required/>
+                    <Form.Control className="border" type="text" name="query" placeholder="Search..." onChange={this.handlerChange} required/>
                     <span className="input-group-append">
-                    <Button className="border text-secondary py-1" type="submit" variant="light">
+                    <Button className="border text-secondary" type="submit" variant="light">
                     {
                         this.state.loading
                         ?

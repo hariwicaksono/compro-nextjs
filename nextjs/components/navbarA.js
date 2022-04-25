@@ -60,7 +60,7 @@ componentDidMount = () => {
 
     return(
      
-<Navbar bg="primary" variant="dark" className="shadow border-bottom py-3" expand="lg" sticky="top">
+<Navbar bg="light" className="shadow border-bottom py-3" expand="lg" sticky="top">
 <Container>
 {this.state.admin && (
     <Button onClick={this.props.toggleMenu} type="button" className="btn btn-primary text-white btn-sm mr-2">

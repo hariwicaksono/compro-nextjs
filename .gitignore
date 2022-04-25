@@ -33,6 +33,10 @@ yarn-error.log*
 # vercel
 .vercel
 
+nextjs/.next/*
+nextjs/node_modules
+nextjs/out
+
 application/cache/*
 !application/cache/index.html
 

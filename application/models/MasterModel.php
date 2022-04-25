@@ -107,27 +107,27 @@ class MasterModel extends CI_Model {
 	public function get_slideshow($id = null)
 	{
 		if ($id == null) {
-			return $this->db->get('slideshow')->result_array();
+			return $this->db->get('sliders')->result_array();
 		} else { 
-			return $this->db->get_where('slideshow',['id'=>$id])->result_array();
+			return $this->db->get_where('sliders',['id'=>$id])->result_array();
 		}
 	}
 
 	public function post_slideshow($data)
 	{
-		$this->db->insert('slideshow',$data);
+		$this->db->insert('sliders',$data);
 		return $this->db->affected_rows();
 	}
 
 	public function put_slideshow($id,$data)
 	{
-		$this->db->update('slideshow',$data,['id'=>$id]);
+		$this->db->update('sliders',$data,['id'=>$id]);
 		return $this->db->affected_rows();
 	}
 
 	public function delete_slideshow($id = null)
 	{
-		$this->db->delete('slideshow',['id' => $id]);
+		$this->db->delete('sliders',['id' => $id]);
 		return $this->db->affected_rows();
 	}
 

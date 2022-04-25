@@ -9,8 +9,8 @@ import { Container } from 'react-bootstrap';
 import {isLogin, isAdmin} from '../libs/utils';
 import API from '../libs/axios';
 
-export const siteName = 'Blog App'
-export const siteTitle = 'Blog App Dengan Next.js'
+export const siteName = 'Company Profile'
+export const siteTitle = 'Company Profile'
 
 class Layout extends Component {
   constructor(props) {

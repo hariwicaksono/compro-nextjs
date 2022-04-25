@@ -48,7 +48,7 @@ componentDidMount = () => {
 
     return(
      
-<Navbar bg="primary" variant="dark" className="shadow border-bottom py-3" expand="lg" sticky="top">
+<Navbar bg="light" className="shadow-sm border-bottom py-3" expand="lg" sticky="top">
 <Container>
 
   <Link href="/" passHref><Navbar.Brand>
@@ -76,9 +76,9 @@ componentDidMount = () => {
     </Nav>
     <SearchForm/>
     
-    <Form inline>
+    <Form inline="true">
     <Link href="/login" passHref>
-      <Button className="text-light" variant="link"><FaSignInAlt/> Login</Button>
+      <Button variant="link"><FaSignInAlt/> Login</Button>
       </Link>
     </Form>
     

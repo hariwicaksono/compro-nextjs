@@ -10,7 +10,8 @@ class Posts extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			url: ImagesUrl(),
+			url: process.env.NEXT_PUBLIC_API_URL,
+            asset: process.env.NEXT_PUBLIC_ASSET_IMG,
 			offset: 0,
 			perPage: 8,
 			currentPage: 0,
@@ -27,7 +28,7 @@ class Posts extends Component {
 			<Row className="mb-3" key={post.id}>
 				<Col md={4}>
 					<img
-						src={this.state.url + post.post_image}
+						src={this.state.url + this.state.asset + post.post_image}
 						alt={post.title}
 						className="img-fluid"
 					/>
