@@ -2,18 +2,17 @@ import React, { Component } from "react";
 import Link from "next/link";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
-import { ImagesUrl } from "../libs/urls";
+import { ImageUrl } from "../libs/urls";
 import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
 import parse from "html-react-parser";
 
-class Posts extends Component {
+class BlogPosts extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			url: process.env.NEXT_PUBLIC_API_URL,
-            asset: process.env.NEXT_PUBLIC_ASSET_IMG,
+			url: ImageUrl(),
 			offset: 0,
-			perPage: 8,
+			perPage: 4,
 			currentPage: 0,
 		};
 		this.handlePageClick = this.handlePageClick.bind(this);
@@ -25,26 +24,26 @@ class Posts extends Component {
 			this.state.offset + this.state.perPage
 		);
 		const ListPost = slice.map((post, key) => (
-			<Row className="mb-3" key={post.id}>
+			<Row className="mb-5" key={post.id}>
 				<Col md={4}>
 					<img
-						src={this.state.url + this.state.asset + post.post_image}
+						src={this.state.url + post.post_image}
 						alt={post.title}
 						className="img-fluid"
 					/>
 				</Col>
-				<Col md={6}>
-					<small className="text-muted">
+				<Col md={8}>
+					<p className="text-muted">
 						Posted on: {post.created_at} in{" "}
 						<Link href={"/tag/" + post.category} passHref>
 							{post.category}
 						</Link>
-					</small>
-					<h3 className="mb-2">
+					</p>
+					<h2 className="mb-3">
 						<Link href={"/blog/posts/" + post.id} passHref>
 							{post.title}
 						</Link>
-					</h3>
+					</h2>
 					{parse(post.summary, { trim: true })}
 				</Col>
 			</Row>
@@ -78,7 +77,7 @@ class Posts extends Component {
 			<>
 				{this.state.ListPost}
 
-				<div className="py-3">
+				<div>
 					<ReactPaginate
 						containerClassName="pagination"
 						breakClassName="page-item"
@@ -103,4 +102,4 @@ class Posts extends Component {
 	}
 }
 
-export default Posts;
+export default BlogPosts;

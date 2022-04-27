@@ -1,13 +1,12 @@
 import React, { Component } from 'react';
-import {ImagesUrl} from '../libs/urls';
 import {Carousel} from 'react-bootstrap';
 
-const url = ImagesUrl();
 class Slideshow extends Component {
     constructor(props){
         super(props)
         this.state={
-            
+            url: process.env.NEXT_PUBLIC_API_URL,
+            asset: process.env.NEXT_PUBLIC_ASSET_IMG,
         }
     }
     render() {
@@ -15,7 +14,7 @@ class Slideshow extends Component {
             <Carousel.Item key={index} style={{ position: "relative" }} >
                 <img
                 className="rounded d-block w-100"
-                src={url+s.img_slide}
+                src={this.state.url + this.state.asset + s.img_slide}
                 alt={s.txt_slide}
                 />
             </Carousel.Item>

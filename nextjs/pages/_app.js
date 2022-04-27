@@ -5,21 +5,20 @@ import 'spin.js/spin.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import API from '../libs/axios';
+import SSRProvider from 'react-bootstrap/SSRProvider';
 
 class MyApp extends Component {
-  constructor(props){
+  constructor(props) {
     super(props)
     this.state = {
       Pengaturan: []
-        }
     }
-
- 
+  }
 
   componentDidMount = () => {
-    API.GetSetting().then(res=>{
+    API.GetSetting().then(res => {
       this.setState({
-          Pengaturan: res.data[0]
+        Pengaturan: res.data[0]
       })
     })
   }
@@ -27,11 +26,13 @@ class MyApp extends Component {
   render() {
     const { Component, pageProps } = this.props;
 
-    return (   
-    <>
-    <Component {...pageProps} setting={this.state.Pengaturan} />
-    <ToastContainer />
-    </>
+    return (
+      <>
+        <SSRProvider>
+          <Component {...pageProps} setting={this.state.Pengaturan} />
+        </SSRProvider>
+        <ToastContainer />
+      </>
     );
   }
 }

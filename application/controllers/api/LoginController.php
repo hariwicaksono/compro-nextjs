@@ -1,8 +1,9 @@
-<?php  
+<?php
 
 use Restserver\Libraries\REST_Controller;
-defined('BASEPATH') OR exit('No direct script access allowed');
- 
+
+defined('BASEPATH') or exit('No direct script access allowed');
+
 
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
@@ -11,72 +12,68 @@ class LoginController extends REST_Controller
 {
 
 	public function __construct($config = 'rest')
-    {
-        parent::__construct($config);
-        $this->load->model('MasterModel','Model');
-        header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-        $method = $_SERVER['REQUEST_METHOD'];
-        if($method == "OPTIONS") {
-            die();
-        }
-    }
+	{
+		parent::__construct($config);
+		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('', '');
+		$this->load->model('MasterModel', 'Model');
+		header('Access-Control-Allow-Origin: *');
+		header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+		header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+		$method = $_SERVER['REQUEST_METHOD'];
+		if ($method == "OPTIONS") {
+			die();
+		}
+	}
 
+	private function _validasi()
+	{
+		$this->form_validation->set_data($this->post());
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+	}
 
 	public function index_post()
 	{
-		$user = $this->post('username');
-		$password = md5($this->post('password'));
-		$query1 = $this->db->query("SELECT status_user FROM users WHERE email LIKE '%$user%' and status_user = 'User' ");
-		$row1 = $query1->row_array();
-		if (!empty($row1)) {
-			$isuser = $row1['status_user'];
-			if ($isuser == "User") {
-				$cek = $this->Model->cek_login($user,$password);
-				if ($cek) {
-					$this->response([
-						'id' => '1',
-						'data' => $cek
-					],REST_Controller::HTTP_OK);
-				} else {
-						$this->response([
-						'id'=> '404',
-						'data' => 'Data Not Found 1'
-					],REST_Controller::HTTP_OK);
-				}
-			}
-		}
-		
-		$query2 = $this->db->query("SELECT status_user FROM users WHERE email LIKE '%$user%' and status_user = 'Admin' ");
-		$row2 = $query2->row_array();
-		if (!empty($row2)) {
-			$isadmin = $row2['status_user'];
-			if ($isadmin == "Admin"){
-				$cek = $this->Model->cek_login($user,$password);
-				if ($cek) {
-					$this->response([
-						'id' => '2',
-						'data' => $cek
-					],REST_Controller::HTTP_OK);
-				} else {
-						$this->response([
-						'id'=> '404',
-						'data' => 'Data Not Found'
-					],REST_Controller::HTTP_OK);
-				}
-			} else{
+		$this->_validasi();
+		if ($this->form_validation->run() == false) {
+			$this->response([
+				'status' => false,
+				'data' => [
+					'emailError' => form_error('email'),
+					'passwordError' => form_error('password'),
+				],
+				'message' => validation_errors(),
+			], REST_Controller::HTTP_OK);
+		} else {
+			$user = $this->post('email');
+			$password = md5($this->post('password'));
+				
+			$cek = $this->Model->cek_login($user, $password);
+			unset($cek['password']);
+			$user = $cek['status_user'];
+
+			if ($user == "User") {
 				$this->response([
-					'id'=> '404',
-					'data' => 'Data Not Found'
-				],REST_Controller::HTTP_OK);
+					'status' => true,
+					'id' => '1',
+					'message' => 'Login Berhasil',
+					'data' => $cek
+				], REST_Controller::HTTP_OK);
+			} elseif ($user == "Admin") {
+				$this->response([
+					'status' => true,
+					'id' => '2',
+					'message' => 'Login Berhasil',
+					'data' => $cek
+				], REST_Controller::HTTP_OK);
+			} else {
+				$this->response([
+					'status' => false,
+					'message' => 'Data tidak ditemukan',
+					'data' => []
+				], REST_Controller::HTTP_OK);
 			}
 		}
-	
-
-		
 	}
-
-
-
 }

@@ -3,9 +3,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class MasterModel extends CI_Model {
 
-    public function cek_login($user,$password)
+    public function cek_login($email,$password)
 	{
-		return $this->db->get_where('users',['email' => $user , 'password'=>$password])->result_array();
+		return $this->db->get_where('users',['email' => $email , 'password'=>$password])->row_array();
 	}
 	
 	public function get_user($id = null)
@@ -20,7 +20,7 @@ class MasterModel extends CI_Model {
 		$this->db->from('users');
 		$this->db->where('email', $id);
 		$query = $this->db->get();
-		return $query->result_array();
+		return $query->row_array();
 		}
 	}
 
@@ -95,7 +95,7 @@ class MasterModel extends CI_Model {
     
     public function get_setting($id)
 	{ 
-		return $this->db->get_where('settings',['id'=>$id])->result_array();
+		return $this->db->get_where('settings',['id'=>$id])->row_array();
 	}
 
 	public function put_setting($id,$data)
@@ -109,7 +109,7 @@ class MasterModel extends CI_Model {
 		if ($id == null) {
 			return $this->db->get('sliders')->result_array();
 		} else { 
-			return $this->db->get_where('sliders',['id'=>$id])->result_array();
+			return $this->db->get_where('sliders',['id'=>$id])->row_array();
 		}
 	}
 

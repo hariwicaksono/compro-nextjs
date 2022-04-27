@@ -1,8 +1,8 @@
 //import React from 'react';
 export const SiteUrl = () => {
-    return "http://localhost/blogapp/"
+    return process.env.NEXT_PUBLIC_API_URL
 }
 
-export const ImagesUrl = () => {
-    return "http://localhost/blogapp-nextjs/public/images/"
+export const ImageUrl = () => {
+    return process.env.NEXT_PUBLIC_API_URL+process.env.NEXT_PUBLIC_ASSET_IMG
 }

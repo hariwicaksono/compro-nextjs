@@ -5,17 +5,28 @@ import API from '../libs/axios';
 import { Container, Alert, Card, Row, Col, Spinner, Button, Form } from 'react-bootstrap';
 import Slideshow from '../components/slideshow';
 import Loader from 'react-loader';
-import Blog from '../components/posts';
+import BlogPosts from '../components/blogPosts';
 import { FaExclamationTriangle } from 'react-icons/fa';
+import styled from 'styled-components';
 
 var options = { lines: 13, length: 20, width: 10, radius: 30, scale: 0.35, corners: 1, color: '#fff', opacity: 0.25, rotate: 0, direction: 1, speed: 1, trail: 60, fps: 20, zIndex: 2e9, top: '50%', left: '50%', shadow: false, hwaccel: false, position: 'absolute' };
+
+const Hero = styled.div`
+    background-image: url('https://itshop.ukm.id/wp-content/uploads/2022/04/Visual-Studio-Code-fait-ses-debuts-en-tant-quapplication-Web.jpg') !important;
+    background-position: center;
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+`;
 
 class Index extends Component {
   constructor(props) {
     super(props)
     this.state = {
       Slideshow: [],
-      Posts: [],
+      dataBlog: [],
       loading: true
     }
 
@@ -28,7 +39,7 @@ class Index extends Component {
     })
     API.GetBlog().then(res => {
       setTimeout(() => this.setState({
-        Posts: res.data,
+        dataBlog: res.data,
         loading: false
       }), 100);
     })
@@ -41,20 +52,39 @@ class Index extends Component {
           <title>Home - {siteTitle}</title>
         </Head>
 
-        <main className="py-3">
+        <Hero>
+          <Container className="col-xxl-8 px-4 py-5">
+            <Row className="g-5 py-5">
+              {/* <Col md="6">
+              <img src="" className="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy" />
+            </Col> */}
+              <Col md="10">
+                <h1 className="display-5 fw-bold lh-1 mb-3 text-white">Responsive left-aligned hero with image</h1>
+                <p className="lead text-white">Quickly design and customize responsive mobile-first sites with Bootstrap, the world's most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+                <div className="d-grid gap-2 d-md-flex justify-content-md-start">
+                  <button type="button" className="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
+                  <button type="button" className="btn btn-outline-light btn-lg px-4">Default</button>
+                </div>
+              </Col>
+            </Row>
+          </Container>
+        </Hero>
+
+        <main className="py-4">
           <Container>
             {/*         <Alert variant="success">
           <small><h1 className="h5"><FaExclamationTriangle/> Informasi</h1>Selamat Datang di <strong>React Next.js App</strong> {this.props.setting.company}. Informasi lebih lanjut hubungi Telp/WA di {this.props.setting.phone} atau {this.props.setting.email}</small>
           </Alert> */}
-            <Slideshow data={this.state.Slideshow} />
+            {/* <Slideshow data={this.state.Slideshow} /> */}
 
             <Row>
-              <Col md="12">
-                <h1>Blog</h1>
+              <Col md="8">
+                <h1 className="mb-3">Blog</h1>
+                <hr/>
                 {this.state.loading ?
                   <Loader options={options} className="spinner" />
                   :
-                  <Blog data={this.state.Posts} />
+                  <BlogPosts data={this.state.dataBlog} />
                 }
               </Col>
             </Row>

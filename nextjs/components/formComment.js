@@ -5,7 +5,7 @@ import Link from 'next/link';
 import API from '../libs/axios';
 import {toast} from 'react-toastify';
 import {Container, Breadcrumb, Card, Row, Col, Spinner, Button, Form} from 'react-bootstrap';
-import { FaSave} from 'react-icons/fa';
+import { FaLocationArrow } from 'react-icons/fa';
 import Skeleton from 'react-loading-skeleton';
 //import moment from 'moment'
 //import 'moment/locale/id'
@@ -88,25 +88,25 @@ class FormComment extends Component {
                             }) => (
                         <Form noValidate onSubmit={handleSubmit}>
                              
-                            <Form.Group>
+                            <Form.Group className="mb-3">
                                 <Form.Label>Nama</Form.Label>
-                                <Form.Control name="name" placeholder="Nama Anda" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.name} isInvalid={!!errors.name && touched.name} />
+                                <Form.Control name="name" size="lg" placeholder="Nama Anda" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.name} isInvalid={!!errors.name && touched.name} />
                                 {errors.name && touched.name && <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>}
                             </Form.Group>
 
-                            <Form.Group>
+                            <Form.Group className="mb-3">
                                 <Form.Label>Email</Form.Label>
-                                <Form.Control type="text" name="email" placeholder="Email" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.email} isInvalid={!!errors.email && touched.email} />
+                                <Form.Control type="text" size="lg" name="email" placeholder="Email" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.email} isInvalid={!!errors.email && touched.email} />
                                 {errors.email && touched.email && <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>}
                             </Form.Group>
 
-                            <Form.Group>
+                            <Form.Group className="mb-3">
                                 <Form.Label>Komentar</Form.Label>
                                 <Form.Control as="textarea" rows="6" name="body" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.body} isInvalid={!!errors.body && touched.body} />
                                 {errors.body && touched.body && <Form.Control.Feedback type="invalid">{errors.body}</Form.Control.Feedback>}
                             </Form.Group>
                            
-                            <Button variant="primary" type="submit" disabled={isSubmitting}>{isSubmitting ? (
+                            <Button variant="primary" size="lg" type="submit" disabled={isSubmitting}>{isSubmitting ? (
                             <>
                             <Spinner
                             as="span"
@@ -116,7 +116,7 @@ class FormComment extends Component {
                             aria-hidden="true"
                             /> Memuat...
                             </>
-                            ) : ( <><FaSave/> Simpan</> )}</Button>
+                            ) : ( <><FaLocationArrow/> Simpan</> )}</Button>
        
                      </Form>
                      )}

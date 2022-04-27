@@ -6,47 +6,47 @@ import NavbarA from './navbarA';
 import Sidebar from './sidebar';
 import Footer from './footer';
 import { Container } from 'react-bootstrap';
-import {isLogin, isAdmin} from '../libs/utils';
+import { isLogin, isAdmin } from '../libs/utils';
 import API from '../libs/axios';
 
-export const siteName = 'Company Profile'
-export const siteTitle = 'Company Profile'
+export const siteName = process.env.NEXT_PUBLIC_SITENAME;
+export const siteTitle = process.env.NEXT_PUBLIC_SITETITLE;
 
 class Layout extends Component {
   constructor(props) {
     super(props)
     this.state = {
-        showMenu: true,
-        login : false,
-        Pengaturan: []
+      showMenu: true,
+      login: false,
+      Pengaturan: []
     }
     this.toggleMenu = this.toggleMenu.bind(this)
   }
 
-  toggleMenu = function() {
+  toggleMenu = function () {
     this.setState({ showMenu: !this.state.showMenu });
   }
-  
+
   componentDidMount = () => {
-    if(localStorage.getItem('isAdmin')){
+    if (localStorage.getItem('isAdmin')) {
       //console.log('ADMIN')
       this.setState({
-        login : true
+        login: true
       })
-    } else if(localStorage.getItem('isLogin')){
+    } else if (localStorage.getItem('isLogin')) {
       //console.log('USER')
       this.setState({
-        login : true
+        login: true
       })
     } else {
-        this.setState({
-            login : false
-        })
+      this.setState({
+        login: false
+      })
     }
 
-    API.GetSetting().then(res=>{
+    API.GetSetting().then(res => {
       this.setState({
-          Pengaturan: res.data[0]
+        Pengaturan: res.data
       })
     })
   }
@@ -54,49 +54,47 @@ class Layout extends Component {
   render() {
     const { children, home, login, admin, member } = this.props;
 
-  return (
-    <>
-    <Head>  
-    <meta charSet="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-    <meta name="description" content={siteTitle} />
-    <link rel="icon" type="image/x-icon" href="./favicon.ico" />
-    </Head>
+    return (
+      <>
+        <Head>
+          <meta charSet="utf-8" />
+          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+          <meta name="description" content={siteTitle} />
+          <link rel="icon" type="image/x-icon" href="./favicon.ico" />
+        </Head>
 
-    {admin ? 
-           <NavbarA toggleMenu={this.toggleMenu} setting={this.state.Pengaturan} />
-    :
-        <Navbar toggleMenu={this.toggleMenu} setting={this.state.Pengaturan} />
-    } 
+        {admin ?
+          <NavbarA toggleMenu={this.toggleMenu} setting={this.state.Pengaturan} />
+          :
+          <Navbar toggleMenu={this.toggleMenu} setting={this.state.Pengaturan} />
+        }
 
- 
+        <div className="wrapper">
+          {this.state.login == true && (
+            <Sidebar showMenu={this.state.showMenu} />
+          )}
 
-    <div className="wrapper">
-    {this.state.login == true && (
-        <Sidebar showMenu={this.state.showMenu} />
-    )} 
-   
-    {!home && !login && !admin ? 
-    <div id="content">
-      <Container>
-    <div className="pt-3">
-    <Link href="/" passHref>
-            <a>← Kembali</a>
-          </Link>
-    </div> 
-    </Container>
-      {children}
-    </div>
-    :
-    <div id="content">
-      {children}
-    </div>
-    }
-    </div>
+          {!home && !login && !admin ?
+            <div id="content">
+              <Container>
+                <div className="pt-3">
+                  <Link href="/" passHref>
+                    <a>← Kembali</a>
+                  </Link>
+                </div>
+              </Container>
+              {children}
+            </div>
+            :
+            <div id="content">
+              {children}
+            </div>
+          }
+        </div>
 
-    <Footer setting={this.state.Pengaturan}/>
-    </>
-  );
+        <Footer setting={this.state.Pengaturan} />
+      </>
+    );
   }
 }
 export default Layout;

@@ -31,14 +31,16 @@ class UserController extends REST_Controller{
  
 		if ($user) {
 			$this->response([
-				'status' => 1,
+				'status' => true,
+				'message' => '',
 				'data' => $user
 			],REST_Controller::HTTP_OK);
 		} else {
 			$this->response([
-				'status' => 0,
-				'data' => 'NOT FOUND'
-			],REST_Controller::HTTP_NOT_FOUND);
+				'status' => false,
+				'message' => 'Data tidak ditemukan',
+				'data' => []
+			],REST_Controller::HTTP_OK);
 		}
 
 	}

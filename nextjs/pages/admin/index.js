@@ -1,89 +1,89 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
-import {isLogin, isAdmin} from '../../libs/utils';
-import Layout, {siteName, siteTitle} from '../../components/layout';
-import {Container, Row, Col, Card, Jumbotron} from 'react-bootstrap';
+import { isLogin, isAdmin } from '../../libs/utils';
+import Layout, { siteName, siteTitle } from '../../components/layout';
+import { Container, Row, Col, Card } from 'react-bootstrap';
+import { FaFileAlt, FaList, FaComment } from 'react-icons/fa';
 import API from '../../libs/axios';
 import Skeleton from 'react-loading-skeleton';
 
-class Index extends Component{
+class Admin extends Component {
   constructor(props) {
     super(props)
     this.state = {
-        JumlahBlog: '',
-        JumlahKategori: '',
-        JumlahKomentar: '',
-        loading: true
+      JumlahBlog: '',
+      JumlahKategori: '',
+      JumlahKomentar: '',
+      loading: true
     }
-}
+  }
   componentDidMount = () => {
-    API.CountBlog().then(res=>{
+    API.CountBlog().then(res => {
       setTimeout(() => this.setState({
-          JumlahBlog: res.data,
-          loading: false
-        }), 100);
+        JumlahBlog: res.data,
+        loading: false
+      }), 100);
     })
-    API.CountCategory().then(res=>{
+    API.CountCategory().then(res => {
       this.setState({
-          JumlahKategori: res.data
+        JumlahKategori: res.data
       })
     })
-    API.CountComment().then(res=>{
+    API.CountComment().then(res => {
       this.setState({
         JumlahKomentar: res.data
       })
     })
   }
-  render(){
-        
-    return(
+  render() {
+
+    return (
       <Layout admin>
-      <Head>
-        <title>Admin - {siteTitle}</title>
-      </Head>
+        <Head>
+          <title>Admin - {siteTitle}</title>
+        </Head>
 
-      <Container className="my-3">
-      {this.state.loading ?
-      <>
-      <Skeleton count={4} height={40} className="mb-1" />
-      <Skeleton width={100} height={40} />
-      </>
-      :
-      <>
-      <Jumbotron className="mb-3">
-        <h2>Selamat Datang di Admin Panel</h2>
-      </Jumbotron>
+        <Container fluid>
+          {this.state.loading ?
+            <>
+              <Skeleton width={150} height={40} className="mb-4" />
+              <Skeleton count={4} height={40} className="mb-1" />
+            </>
+            :
+            <>
 
-      <Row>
-        <Col md={4}>
-        <Card bg="info" text="light" body>
-              <h5>Jumlah Post</h5>
-              <h1>{this.state.JumlahBlog}</h1>
-            </Card>
-        </Col>
-        <Col md={4}>
-        <Card bg="success" text="light" body>
-              <h5>Jumlah Kategori</h5>
-              <h1>{this.state.JumlahKategori}</h1>
-            </Card>
-        </Col>
-        <Col md={4}>
-        <Card bg="danger" text="light" body>
-              <h5>Jumlah Komentar</h5>
-              <h1>{this.state.JumlahKomentar}</h1>
-            </Card>
-        </Col>
-      </Row>
-      </>
-      }
-      
+              <h1 className="h2 fw-bold mb-4">Dashboard</h1>
 
-      </Container>
-
+              <Row>
+                <Col md={4}>
+                  <Card className="shadow-sm px-3 py-2" body>
+                    <Card.Title className="float-end text-primary"><FaFileAlt size="3em" /></Card.Title>
+                    <h1 className="fw-bold">{this.state.JumlahBlog}</h1>
+                    <h5>Blog</h5>
+                  </Card>
+                </Col>
+                <Col md={4}>
+                  <Card className="shadow-sm px-3 py-2" body>
+                  <Card.Title className="float-end text-info"><FaList size="3em" /></Card.Title>
+                    <h1 className="fw-bold">{this.state.JumlahKategori}</h1>
+                    <h5>Kategori</h5>
+                  </Card>
+                </Col>
+                <Col md={4}>
+                  <Card className="shadow-sm px-3 py-2" body>
+                  <Card.Title className="float-end text-warning"><FaComment size="3em" /></Card.Title>
+                    <h1 className="fw-bold">{this.state.JumlahKomentar}</h1>
+                    <h5>Komentar</h5>
+                  </Card>
+                </Col>
+              </Row>
+            </>
+          }
+        </Container>
       </Layout>
     );
   }
 }
 
-export default Index;
+export default Admin;

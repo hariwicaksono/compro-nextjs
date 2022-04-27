@@ -9,7 +9,7 @@ module.exports = {
     },
     trailingSlash: isProd ? true : false,
     images: {
-      domains: ['localhost'],
+      domains: ['localhost', 'itshop.ukm.id'],
     },
     //assetPrefix: isProd ? 'https://cdn.mydomain.com' : '',
     //assetPrefix: isProd ? 'http://localhost/blogapp-nextjs/out' : '',

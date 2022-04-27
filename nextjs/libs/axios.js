@@ -92,7 +92,7 @@ const POST_FOTO = (path,data,name) => {
         const formdata = new FormData()
         formdata.append('foto',data,name)
         Axios.post(RootPath+path, formdata, config).then(res=>{
-           resolve(res.data.status)
+           resolve(res.data)
        },(err)=>{
            reject(err)
        })
