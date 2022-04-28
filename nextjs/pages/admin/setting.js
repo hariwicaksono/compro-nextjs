@@ -22,6 +22,7 @@ class Setting extends Component {
     constructor(props) {
         super(props)
         this.state = {
+            id: '',
             company: '',
             companyError: '',
             website: '',
@@ -39,6 +40,7 @@ class Setting extends Component {
     componentDidMount = () => {
         API.GetSetting().then(res => {
             setTimeout(() => this.setState({
+                id: res.data.id,
                 company: res.data.company,
                 website: res.data.website,
                 phone: res.data.phone,
@@ -61,8 +63,7 @@ class Setting extends Component {
                         <Breadcrumb.Item active>Pengaturan</Breadcrumb.Item>
                     </Breadcrumb>
 
-                    <Card body>
-
+                    <Card className="p-2" body>
                         {this.state.loading ?
                             <>
                                 <Skeleton count={4} height={40} className="mb-1" />
@@ -71,6 +72,7 @@ class Setting extends Component {
                             :
                             <Formik
                                 initialValues={{
+                                    id: this.state.id,
                                     company: this.state.company,
                                     website: this.state.website,
                                     phone: this.state.phone,
@@ -83,7 +85,12 @@ class Setting extends Component {
                                         //console.log(res)
                                         var data = res.data;
                                         if (res.status == true) {
-                                            toast.success(res.message, { position: "top-center" });
+                                            toast.success(res.message);
+                                            setTimeout(() => {
+                                                Router.reload();
+                                            }, 4000);
+                                        } else if (res.status === 0) {
+                                            toast.warn(res.message);
                                         } else {
                                             this.errorKeys = Object.keys(data);
                                             this.errorKeys.map((el) => {
@@ -98,7 +105,7 @@ class Setting extends Component {
                                                     })
                                                 }), 5000);
                                             }
-                                            toast.dark(res.message, { position: "top-center" });
+                                            toast.error(res.message);
                                         }
 
                                     }).catch(err => {
@@ -125,27 +132,27 @@ class Setting extends Component {
 
                                         <Form.Group className="mb-3">
                                             <Form.Label>Nama Perusahaan *</Form.Label>
-                                            <Form.Control type="text" name="company" placeholder="" className="form-control" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.company} isInvalid={!!errors.company && touched.company} />
-                                            {errors.company && touched.company && <Form.Control.Feedback type="invalid">{errors.company}</Form.Control.Feedback>}
+                                            <Form.Control type="text" name="company" placeholder="" className="form-control" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.company} isInvalid={!!this.state.companyError && touched.company} />
+                                            {this.state.companyError && touched.company && <Form.Control.Feedback type="invalid">{this.state.companyError}</Form.Control.Feedback>}
                                         </Form.Group>
 
                                         <Form.Group className="mb-3">
                                             <Form.Label>Website</Form.Label>
-                                            <Form.Control type="text" name="website" placeholder="" className="form-control" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.website} isInvalid={!!errors.website && touched.website} />
-                                            {errors.website && touched.website && <Form.Control.Feedback type="invalid">{errors.website}</Form.Control.Feedback>}
+                                            <Form.Control type="text" name="website" placeholder="" className="form-control" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.website} isInvalid={!!this.state.websiteError && touched.website} />
+                                            {this.state.websiteError && touched.website && <Form.Control.Feedback type="invalid">{this.state.websiteError}</Form.Control.Feedback>}
                                         </Form.Group>
 
                                         <Form.Group className="mb-3">
                                             <Row>
                                                 <Col>
                                                     <Form.Label>Telepon *</Form.Label>
-                                                    <Form.Control type="text" name="phone" placeholder="" className="form-control" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.phone} isInvalid={!!errors.phone && touched.phone} />
-                                                    {errors.phone && touched.phone && <Form.Control.Feedback type="invalid">{errors.phone}</Form.Control.Feedback>}
+                                                    <Form.Control type="text" name="phone" placeholder="" className="form-control" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.phone} isInvalid={!!this.state.phoneError && touched.phone} />
+                                                    {this.state.phoneError && touched.phone && <Form.Control.Feedback type="invalid">{this.state.phoneError}</Form.Control.Feedback>}
                                                 </Col>
                                                 <Col>
                                                     <Form.Label>Email *</Form.Label>
-                                                    <Form.Control type="text" name="email" placeholder="" className="form-control" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.email} isInvalid={!!errors.email && touched.email} />
-                                                    {errors.email && touched.email && <Form.Control.Feedback type="invalid">{errors.email}</Form.Control.Feedback>}
+                                                    <Form.Control type="text" name="email" placeholder="" className="form-control" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.email} isInvalid={!!this.state.emailError && touched.email} />
+                                                    {this.state.emailError && touched.email && <Form.Control.Feedback type="invalid">{this.state.emailError}</Form.Control.Feedback>}
                                                 </Col>
                                             </Row>
                                         </Form.Group>

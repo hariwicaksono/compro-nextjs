@@ -53,13 +53,13 @@ class Login extends Component {
                     if (res.status == true) {
                       if (res.id === "1") {
                         localStorage.setItem('isLogin', JSON.stringify(data))
-                        toast.success(res.message, { position: "top-center" });
+                        toast.success(res.message);
                         setTimeout(() => {
                           Router.push('/')
                         }, 2000)
                       } else {
                         localStorage.setItem('isAdmin', JSON.stringify(data))
-                        toast.success(res.message, { position: "top-center" });
+                        toast.success(res.message);
                         setTimeout(() => {
                           Router.push('/admin')
                         }, 2000);
@@ -78,7 +78,7 @@ class Login extends Component {
                           })
                         }), 5000);
                       }
-                      toast.warn(res.message, { position: "top-center" });
+                      toast.error(res.message);
                     }
                   })
                   setTimeout(() => {

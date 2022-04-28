@@ -39,12 +39,12 @@ class Slideshow extends Component {
           Slideshow: res.data,
           loading: false
         }), 100);
-        toast.success(res.message, { position: "top-center" });
+        toast.dark(res.message);
       } else {
         this.setState({
           loading: false
         })
-        toast.warning(res.message, { position: "top-center" });
+        toast.warn(res.message);
       }
     }).catch(err => {
       console.log(err)
@@ -80,11 +80,11 @@ class Slideshow extends Component {
                     ).then(res => {
                       var data = res.data;
                       if (res.status == true) {
-                        toast.success(res.message, { position: "top-center" });
+                        toast.success(res.message);
 
                         API.PostFoto(values.foto, values.foto.name).then(res => {
                           console.log('img_ok')
-                          toast.success(res.message, { position: "top-center" });
+                          toast.success(res.message);
                           setTimeout(() => {
                             Router.reload();
                           }, 4000);
@@ -103,7 +103,7 @@ class Slideshow extends Component {
                             })
                           }), 5000);
                         }
-                        toast.warn(res.message, { position: "top-center" });
+                        toast.error(res.message);
                       }
                     })
 
@@ -178,11 +178,11 @@ class Slideshow extends Component {
                       }
                     ).then(res => {
                       if (res.status == true) {
-                        toast.success(res.message, { position: "top-center" });
+                        toast.success(res.message);
 
                         API.PostFoto(values.foto, values.foto.name).then(res => {
                           console.log('img_ok')
-                          toast.success(res.message, { position: "top-center" });
+                          toast.success(res.message);
                           setTimeout(() => {
                             Router.reload();
                           }, 4000);
@@ -201,7 +201,7 @@ class Slideshow extends Component {
                             })
                           }), 5000);
                         }
-                        toast.warn(res.message, { position: "top-center" });
+                        toast.error(res.message);
                       }
                     })
 
@@ -286,12 +286,12 @@ class Slideshow extends Component {
                 Dialog.OKAction(() => {
                   API.DeleteSlideshow(row.id).then(res => {
                     if (res.status == true) {
-                      toast.success(res.message, { position: "top-center" });
+                      toast.success(res.message);
                       setTimeout(() => {
-                        Router.push('/admin/slideshow');
-                      }, 2000);
+                        this.componentDidMount();
+                      }, 4000);
                     } else {
-                      toast.warn(res.message, { position: "top-center" });
+                      toast.error(res.message);
                     }
                   })
                 })

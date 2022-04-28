@@ -47,7 +47,7 @@ class NavbarA extends Component {
             admin: true
           })
         } else {
-          toast.warn(res.message, { position: "top-center" });
+          toast.error(res.message);
         }  
       })
     } else {

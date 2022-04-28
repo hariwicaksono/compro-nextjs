@@ -49,12 +49,12 @@ class Create extends Component {
                 <Container fluid>
                     <h3 className="mb-3">Tambah Slider</h3>
                     <Breadcrumb className="my-3">
-                        <Link href="/admin" passHref><Breadcrumb.Item >Home</Breadcrumb.Item></Link>
+                        <Link href="/admin" passHref><Breadcrumb.Item >Dashboard</Breadcrumb.Item></Link>
                         <Link href="/admin/slideshow" passHref><Breadcrumb.Item >Slideshow</Breadcrumb.Item></Link>
                         <Breadcrumb.Item active>Tambah</Breadcrumb.Item>
                     </Breadcrumb>
 
-                    <Card className="mb-2" body>
+                    <Card className="p-2" body>
                         <Formik
                             initialValues={{
                                 text_slide: '',
@@ -70,14 +70,14 @@ class Create extends Component {
                                     //console.log(res)
                                     var data = res.data;
                                     if (res.status == true) {
-                                        toast.success(res.message, { position: "top-center" });
+                                        toast.success(res.message);
 
                                         API.PostFoto(values.foto, values.foto.name).then(res => {
                                             console.log('img_ok')
-                                            toast.success(res.message, { position: "top-center" })
+                                            toast.success(res.message)
                                             setTimeout(() => {
                                                 Router.push('/admin/slideshow');
-                                            }, 2000);
+                                            }, 4000);
                                         })
                                     } else {
                                         this.errorKeys = Object.keys(data);
@@ -93,7 +93,7 @@ class Create extends Component {
                                                 })
                                             }), 5000);
                                         }
-                                        toast.warn(res.message, { position: "top-center" });
+                                        toast.warn(res.message);
                                     }
                                 })
 

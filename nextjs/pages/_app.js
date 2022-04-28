@@ -31,7 +31,7 @@ class MyApp extends Component {
         <SSRProvider>
           <Component {...pageProps} setting={this.state.Pengaturan} />
         </SSRProvider>
-        <ToastContainer />
+        <ToastContainer position="top-center" hideProgressBar={true} autoClose={3000}/>
       </>
     );
   }

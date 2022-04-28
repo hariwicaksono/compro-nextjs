@@ -46,6 +46,7 @@ class Edit extends Component {
         text_slide: res.data.text_slide,
         loading: false
       }), 100);
+      toast.dark(res.message);
     })
   }
   render() {
@@ -61,6 +62,7 @@ class Edit extends Component {
             <>
               <Skeleton width={150} height={40} className="mb-4" />
               <Skeleton count={4} height={40} className="mb-1" />
+              <Skeleton width={100} height={40} className="mb-1" />
             </>
             :
             <>
@@ -71,7 +73,7 @@ class Edit extends Component {
                 <Breadcrumb.Item active>Edit</Breadcrumb.Item>
               </Breadcrumb>
 
-              <Card className="mb-2" body>
+              <Card className="p-2" body>
                 <Formik
                   initialValues={{
                     id: id,
@@ -84,10 +86,12 @@ class Edit extends Component {
                       //console.log(res)
                       var data = res.data;
                       if (res.status == true) {
-                        toast.success(res.message, { position: "top-center" });
+                        toast.success(res.message);
                         setTimeout(() => {
                           Router.push('/admin/slideshow');
-                        }, 2000);
+                        }, 4000);
+                      } else if (res.status === 0) {
+                        toast.warn(res.message);
                       } else {
                         this.errorKeys = Object.keys(data);
                         this.errorKeys.map((el) => {
@@ -102,7 +106,7 @@ class Edit extends Component {
                             })
                           }), 5000);
                         }
-                        toast.warn(res.message, { position: "top-center" });
+                        toast.error(res.message);
                       }
 
                     }).catch(err => {
@@ -129,8 +133,8 @@ class Edit extends Component {
                   }) => (
                     <Form noValidate onSubmit={handleSubmit}>
                       <Form.Group className="mb-3">
-                        <Form.Label>Gambar</Form.Label><br />
-                        <img src={url + image} width="200" alt="" />
+                        <Form.Label>Gambar Slide</Form.Label><br />
+                        <img src={url + image} width="600" alt={image} />
                       </Form.Group>
 
                       <Form.Group className="mb-3">

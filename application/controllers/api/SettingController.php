@@ -33,7 +33,7 @@ class SettingController extends REST_Controller
 		if ($setting) {
 			$this->response([
 				'status' => true,
-				'message' => '',
+				'message' => 'Berhasil mendapatkan data',
 				'data' => $setting
 			], REST_Controller::HTTP_OK);
 		} else {
@@ -71,6 +71,7 @@ class SettingController extends REST_Controller
 				'website' => $this->put('website'),
 				'phone' => $this->put('phone'),
 				'email' => $this->put('email'),
+				'updated_at' => date('Y-m-d H:i:s')
 			];
 
 			$update = $this->Model->put_setting($id, $data);
@@ -82,8 +83,8 @@ class SettingController extends REST_Controller
 				], REST_Controller::HTTP_OK);
 			} else {
 				$this->response([
-					'status' => false,
-					'message' => 'Tidak ada data yang diperbarui',
+					'status' => 0,
+					'message' => 'Tidak ada update',
 					'data' => []
 				], REST_Controller::HTTP_OK);
 			}

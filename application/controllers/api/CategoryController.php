@@ -10,6 +10,8 @@ class CategoryController extends REST_Controller{
 	public function __construct($config = 'rest')
     {
         parent::__construct($config);
+		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('', '');
         $this->load->model('MasterModel','Model');
         header('Access-Control-Allow-Origin: *');
         header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
@@ -31,14 +33,16 @@ class CategoryController extends REST_Controller{
  
 		if ($cat) {
 			$this->response([
-				'status' => 1,
+				'status' => true,
+				'message' =>  'Berhasil mendapatkan data',
 				'data' => $cat
 			],REST_Controller::HTTP_OK);
 		} else {
 			$this->response([
-				'status' => 0,
-				'data' => 'NOT FOUND'
-			],REST_Controller::HTTP_NOT_FOUND);
+				'status' => false,
+				'message' => 'Data tidak ditemukan',
+				'data' => []
+			],REST_Controller::HTTP_OK);
 		}
 
 	}

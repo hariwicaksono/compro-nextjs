@@ -69,7 +69,9 @@ class SlideshowController extends REST_Controller
 				'text_slide' => $this->post('text_slide')
 			];
 
-			if ($this->Model->post_slideshow($data) > 0) {
+			$save = $this->Model->post_slideshow($data);
+
+			if ($save > 0) {
 				$this->response([
 					'status' => true,
 					'message' => 'Berhasil menyimpan data',
@@ -101,7 +103,8 @@ class SlideshowController extends REST_Controller
 		} else {
 			$id = $this->put('id');
 			$data = [
-				'text_slide' => $this->put('text_slide')
+				'text_slide' => $this->put('text_slide'),
+				'updated_at' => date('Y-m-d H:i:s')
 			];
 
 			$update = $this->Model->put_slideshow($id, $data);
@@ -113,8 +116,8 @@ class SlideshowController extends REST_Controller
 				], REST_Controller::HTTP_OK);
 			} else {
 				$this->response([
-					'status' => false,
-					'message' => 'Tidak ada data yang diperbarui',
+					'status' => 0,
+					'message' => 'Tidak ada update',
 					'data' => []
 				], REST_Controller::HTTP_OK);
 			}
@@ -127,10 +130,12 @@ class SlideshowController extends REST_Controller
 		if ($id == null) {
 			$this->response([
 				'status' => false,
-				'data' => 'ID tidak ditemukan'
+				'message' => 'ID tidak ditemukan',
+				'data' => []
 			], REST_Controller::HTTP_OK);
 		} else {
-			if ($this->Model->delete_slideshow($id) > 0) {
+			$delete = $this->Model->delete_slideshow($id);
+			if ($delete > 0) {
 				$this->response([
 					'status' => true,
 					'message' => 'Data berhasil dihapus',
