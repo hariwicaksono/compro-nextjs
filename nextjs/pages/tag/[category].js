@@ -8,8 +8,8 @@ import { Container, Row, Col, Card } from 'react-bootstrap';
 import { } from 'react-icons/md';
 import parse from 'html-react-parser';
 import Skeleton from 'react-loading-skeleton';
-import FormComment from '../../components/formComment';
-import Blog from '../../components/blogPosts';
+import FormComment from '../../components/form-comment';
+import Blog from '../../components/post-blog';
 
 class Detail extends Component {
   constructor(props) {

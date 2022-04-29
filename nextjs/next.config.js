@@ -1,6 +1,6 @@
 //const isDev = process.env.NODE_ENV === 'development'
 const isProd = process.env.NODE_ENV === 'production'
-const basePath = '/blogapp';
+const basePath = '/compro';
 
 module.exports = {
     basePath: isProd ? basePath : '',
