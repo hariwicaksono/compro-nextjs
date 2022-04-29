@@ -11,19 +11,26 @@ import { toast } from 'react-toastify';
 import Skeleton from 'react-loading-skeleton';
 import { Formik } from 'formik';
 import * as yup from 'yup';
+import { Editor } from "@tinymce/tinymce-react";
 
-const validationSchema = yup.object({
- //text_slide: yup.string().required()
-});
+/* const validationSchema = yup.object({
+  title: yup.string().required(),
+  date: yup.string().required(),
+  time: yup.string().required(),
+  summary: yup.string().required(),
+  body: yup.string().required()
+}); */
 
 class Edit extends Component {
   constructor(props) {
     super(props)
     this.state = {
       id: '',
+      title: '',
+      titleError: '',
+      body: '',
+      bodyError: '',
       image: '',
-      text_slide: '',
-      text_slideError: '',
       url: ImageUrl(),
       loading: true,
       errorKeys: [],
@@ -38,57 +45,58 @@ class Edit extends Component {
 
   componentDidMount = () => {
     const id = this.props.id
-    API.GetSlideshowId(id).then(res => {
-      console.log(res)
+    API.GetServiceId(id).then(res => {
+      //console.log(res)
       setTimeout(() => this.setState({
         id: res.data.id,
-        image: res.data.img_slide,
-        text_slide: res.data.text_slide,
+        title: res.data.title,
+        body: res.data.body,
+        image: res.data.image,
         loading: false
       }), 100);
       toast.dark(res.message);
     })
   }
   render() {
-    const { id, image, text_slide, text_slideError, loading, url } = this.state;
+    //const {title,summary,body,image,date,time,created,category_id,user,user_id,url} = this.state;
     return (
       <Layout admin>
         <Head>
-          <title>Edit Slideshow - {siteTitle}</title>
+          <title>Edit Layanan - {siteTitle}</title>
         </Head>
-
         <Container fluid>
-          {loading ?
+          {this.state.loading ?
             <>
               <Skeleton width={150} height={40} className="mb-4" />
               <Skeleton count={4} height={40} className="mb-1" />
-              <Skeleton width={100} height={40} className="mb-1" />
+              <Skeleton width={100} height={40} />
             </>
             :
             <>
-              <h3 className="mb-3">Edit Slideshow {id}</h3>
+              <h3 className="mb-3">Edit Layanan {this.state.title}</h3>
               <Breadcrumb className="my-3">
-                <Link href="/admin" passHref><Breadcrumb.Item >Home</Breadcrumb.Item></Link>
-                <Link href="/admin/slideshow" passHref><Breadcrumb.Item >Slideshow</Breadcrumb.Item></Link>
+                <Link href="/admin" passHref><Breadcrumb.Item >Dashboard</Breadcrumb.Item></Link>
+                <Link href="/admin/service" passHref><Breadcrumb.Item >Layanan</Breadcrumb.Item></Link>
                 <Breadcrumb.Item active>Edit</Breadcrumb.Item>
               </Breadcrumb>
 
-              <Card className="p-2" body>
+              <Card className="mb-2" body>
+
                 <Formik
                   initialValues={{
-                    id: id,
-                    text_slide: text_slide,
+                    id: this.state.id,
+                    title: this.state.title,
+                    body: this.state.body,
                   }}
                   onSubmit={(values, actions) => {
                     //alert(JSON.stringify(values));
-
-                    API.PutSlideshow(values).then(res => {
+                    API.PutService(values).then(res => {
                       //console.log(res)
                       var data = res.data;
                       if (res.status == true) {
                         toast.success(res.message);
                         setTimeout(() => {
-                          Router.push('/admin/slideshow');
+                          Router.push('/admin/service');
                         }, 3000);
                       } else if (res.status === 0) {
                         toast.warn(res.message);
@@ -111,15 +119,13 @@ class Edit extends Component {
 
                     }).catch(err => {
                       console.log(err)
-
                     })
-
                     setTimeout(() => {
                       actions.setSubmitting(false);
                     }, 1000);
                   }}
-                  //validationSchema={validationSchema}
-                  //enableReinitialize={true}
+                //validationSchema={validationSchema}
+                //enableReinitialize={true}
                 >
                   {({
                     handleSubmit,
@@ -133,14 +139,29 @@ class Edit extends Component {
                   }) => (
                     <Form noValidate onSubmit={handleSubmit}>
                       <Form.Group className="mb-3">
-                        <Form.Label>Gambar Slide</Form.Label><br />
-                        <img src={url + image} width="600" alt={image} />
+                        <Form.Label>Gambar</Form.Label><br />
+                        <img src={this.state.url + this.state.image} width="400" alt={this.state.image} />
                       </Form.Group>
 
                       <Form.Group className="mb-3">
-                        <Form.Label>Teks Slide</Form.Label>
-                        <Form.Control name="text_slide" placeholder="Text Slider" className="form-control" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.text_slide} isInvalid={!!text_slideError && touched.text_slide} />
-                        {text_slideError && touched.text_slide && <Form.Control.Feedback type="invalid">{text_slideError}</Form.Control.Feedback>}
+                        <Form.Label>Judul Layanan</Form.Label>
+                        <Form.Control name="title" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.title} isInvalid={!!this.state.titleError && touched.title} />
+                        {this.state.titleError && touched.title && <Form.Control.Feedback type="invalid">{this.state.titleError}</Form.Control.Feedback>}
+                      </Form.Group>
+
+                      <Form.Group className="mb-3">
+                        <Form.Label>Isi Layanan</Form.Label>
+                        <Editor
+                          apiKey="vffx7rg47lbz69xfs80qajyt04jjsxtihahl5gp1rsek0vnt"
+                          init={{
+                            height: 250,
+                            menubar: false
+                          }}
+                          value={values.body}
+                          onEditorChange={(e) => {
+                            handleChange({ target: { name: 'body', value: e } })
+                          }} id="body" rows="4" name="body" isInvalid={!!this.state.bodyError && touched.body} />
+                        {this.state.bodyError && touched.body && <Form.Control.Feedback type="invalid">{this.state.bodyError}</Form.Control.Feedback>}
                       </Form.Group>
 
                       <Button variant="primary" size="lg" type="submit" disabled={isSubmitting}>{isSubmitting ? (
@@ -153,23 +174,18 @@ class Edit extends Component {
                             aria-hidden="true"
                           /> Memuat...
                         </>
-                      ) : (<><FaSave /> Simpan</>)}</Button>
+                      ) : (<><FaSave /> Update</>)}</Button>
 
                     </Form>
                   )}
                 </Formik>
-
               </Card>
-
             </>
           }
-
-
         </Container>
       </Layout>
     );
   }
 }
-
 
 export default Edit;

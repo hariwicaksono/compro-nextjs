@@ -137,6 +137,12 @@ const PostComment = (data) => POST('CommentController',data);
 const PutComment = (data) => PUT('CommentController',data);
 const CountComment = () => GET('CountCommentController');
 const GetTag = (data) => GET_ID('TagController?category=',data)
+const GetService = () => GET('ServiceController');
+const GetServiceId = (data) => GET_ID('ServiceController?id=',data)
+const PostService = (data) => POST('ServiceController',data);
+const PutService = (data) => PUT('ServiceController',data);
+const DeleteService = (id) => DELETE('ServiceController/index_delete?id=',id);
+const PutServiceImage = (data) => PUT('ServiceImageController',data);
 
 const API = {
     PostLogin,
@@ -175,7 +181,13 @@ const API = {
     PostComment,
     PutComment,
     CountComment,
-    GetTag
+    GetTag,
+    GetService,
+    GetServiceId,
+    PostService,
+    PutService,
+    DeleteService,
+    PutServiceImage,
 }
 
 export default API

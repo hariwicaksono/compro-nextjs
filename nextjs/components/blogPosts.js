@@ -40,7 +40,7 @@ class BlogPosts extends Component {
 						</Link>
 					</p>
 					<h2 className="mb-3">
-						<Link href={"/blog/posts/" + post.id} passHref>
+						<Link href={"/blog/posts/" + post.slug} passHref>
 							{post.title}
 						</Link>
 					</h2>

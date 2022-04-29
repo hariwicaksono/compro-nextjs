@@ -77,7 +77,7 @@ class Create extends Component {
                                             toast.success(res.message)
                                             setTimeout(() => {
                                                 Router.push('/admin/slideshow');
-                                            }, 4000);
+                                            }, 3000);
                                         })
                                     } else {
                                         this.errorKeys = Object.keys(data);
@@ -93,7 +93,7 @@ class Create extends Component {
                                                 })
                                             }), 5000);
                                         }
-                                        toast.warn(res.message);
+                                        toast.error(res.message);
                                     }
                                 })
 

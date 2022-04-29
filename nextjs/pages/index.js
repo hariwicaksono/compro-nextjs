@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 import Layout, { siteName, siteTitle } from '../components/layout';
 import API from '../libs/axios';
 import { Container, Alert, Card, Row, Col, Spinner, Button, Form } from 'react-bootstrap';
@@ -37,11 +38,19 @@ class Index extends Component {
         Slideshow: res.data
       })
     })
+
     API.GetBlog().then(res => {
       setTimeout(() => this.setState({
         dataBlog: res.data,
         loading: false
       }), 100);
+    })
+
+    API.GetSetting().then(res => {
+      this.setState({
+        hero: res.data.hero,
+        lead: res.data.lead
+      })
     })
   }
   render() {
@@ -59,19 +68,17 @@ class Index extends Component {
               <img src="" className="d-block mx-lg-auto img-fluid" alt="Bootstrap Themes" width="700" height="500" loading="lazy" />
             </Col> */}
               <Col md="10">
-                <h1 className="display-5 fw-bold lh-1 mb-3 text-white">Responsive left-aligned hero with image</h1>
-                <p className="lead text-white">Quickly design and customize responsive mobile-first sites with Bootstrap, the world's most popular front-end open source toolkit, featuring Sass variables and mixins, responsive grid system, extensive prebuilt components, and powerful JavaScript plugins.</p>
+                <h1 className="display-5 fw-bold lh-1 mb-3 text-white">{this.state.hero}</h1>
+                <p className="lead text-white">{this.state.lead}</p>
                 <div className="d-grid gap-2 d-md-flex justify-content-md-start">
-                  <button type="button" className="btn btn-primary btn-lg px-4 me-md-2">Primary</button>
-                  <button type="button" className="btn btn-outline-light btn-lg px-4">Default</button>
+                  <Link href="/services" passHref><Button variant="primary" size="lg" type="button" className="px-4 me-md-2">Layanan kami</Button></Link>
                 </div>
               </Col>
             </Row>
           </Container>
         </Hero>
 
-        <main className="py-4">
-          <Container>
+        <Container className="py-4">
             {/*         <Alert variant="success">
           <small><h1 className="h5"><FaExclamationTriangle/> Informasi</h1>Selamat Datang di <strong>React Next.js App</strong> {this.props.setting.company}. Informasi lebih lanjut hubungi Telp/WA di {this.props.setting.phone} atau {this.props.setting.email}</small>
           </Alert> */}
@@ -80,7 +87,7 @@ class Index extends Component {
             <Row>
               <Col md="8">
                 <h1 className="mb-3">Blog</h1>
-                <hr/>
+                <hr />
                 {this.state.loading ?
                   <Loader options={options} className="spinner" />
                   :
@@ -88,9 +95,7 @@ class Index extends Component {
                 }
               </Col>
             </Row>
-
-          </Container>
-        </main>
+        </Container>
       </Layout>
     );
   }

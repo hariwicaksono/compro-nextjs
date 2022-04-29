@@ -6,7 +6,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
-class BlogController extends REST_Controller
+
+class ServiceController extends REST_Controller
 {
 
 	public function __construct($config = 'rest')
@@ -26,12 +27,11 @@ class BlogController extends REST_Controller
 
 	public function index_get()
 	{
-		$count = $this->Model->count_blog();
 		$id = $this->get('id');
 		if ($id == null) {
-			$posts = $this->Model->get_blog();
+			$posts = $this->Model->get_service();
 		} else {
-			$posts = $this->Model->get_blog($id);
+			$posts = $this->Model->get_service($id);
 		}
 
 		if ($posts) {
@@ -39,7 +39,6 @@ class BlogController extends REST_Controller
 				'status' => true,
 				'message' => 'Berhasil mendapatkan data',
 				'data' => $posts,
-				'allCount' => $count
 			], REST_Controller::HTTP_OK);
 		} else {
 			$this->response([
@@ -54,41 +53,28 @@ class BlogController extends REST_Controller
 	{
 		$this->form_validation->set_data($this->post());
 		$this->form_validation->set_rules('title', 'Judul', 'required');
-		$this->form_validation->set_rules('category_id', 'Kategori', 'required');
-		$this->form_validation->set_rules('summary', 'Ringkasan', 'required');
 		$this->form_validation->set_rules('body', 'Isi', 'required');
-		$this->form_validation->set_rules('date', 'Tanggal', 'required');
-		$this->form_validation->set_rules('time', 'Waktu', 'required');
 
 		if ($this->form_validation->run() == false) {
 			$this->response([
 				'status' => false,
 				'data' => [
 					'titleError' => form_error('title'),
-					'category_idError' => form_error('category_id'),
-					'summaryError' => form_error('summary'),
 					'bodyError' => form_error('body'),
-					'dateError' => form_error('date'),
-					'timeError' => form_error('time'),
 				],
 				'message' => validation_errors(),
 			], REST_Controller::HTTP_OK);
 		} else {
 			$title = $this->post('title');
 			$data = [
-				'category_id' => $this->post('category_id'),
-				'user_id' => $this->post('user_id'),
 				'title' => $title,
 				'slug' => str_replace(' ', '-', strtolower($title)),
-				'summary' => $this->post('summary'),
 				'body' => $this->post('body'),
-				'post_image' => $this->post('foto'),
-				'date' => $this->post('date'),
-				'time' => $this->post('time'),
+				'image' => $this->post('foto'),
 				'created_at' => date("Y-m-d H:i:s")
 			];
 
-			$save = $this->Model->post_blog($data);
+			$save = $this->Model->post_service($data);
 			if ($save > 0) {
 				$this->response([
 					'status' => true,
@@ -109,20 +95,14 @@ class BlogController extends REST_Controller
 	{
 		$this->form_validation->set_data($this->put());
 		$this->form_validation->set_rules('title', 'Judul', 'required');
-		$this->form_validation->set_rules('summary', 'Ringkasan', 'required');
 		$this->form_validation->set_rules('body', 'Isi', 'required');
-		$this->form_validation->set_rules('date', 'Tanggal', 'required');
-		$this->form_validation->set_rules('time', 'Waktu', 'required');
 
 		if ($this->form_validation->run() == false) {
 			$this->response([
 				'status' => false,
 				'data' => [
 					'titleError' => form_error('title'),
-					'summaryError' => form_error('summary'),
 					'bodyError' => form_error('body'),
-					'dateError' => form_error('date'),
-					'timeError' => form_error('time'),
 				],
 				'message' => validation_errors(),
 			], REST_Controller::HTTP_OK);
@@ -132,14 +112,11 @@ class BlogController extends REST_Controller
 			$data = [
 				'title' => $title,
 				'slug' => str_replace(' ', '-', strtolower($title)),
-				'summary' => $this->put('summary'),
 				'body' => $this->put('body'),
-				'date' => $this->put('date'),
-				'time' => $this->put('time'),
 				'updated_at' => date("Y-m-d H:i:s")
 			];
 
-			$update = $this->Model->put_blog($id, $data);
+			$update = $this->Model->put_service($id, $data);
 			if ($update > 0) {
 				$this->response([
 					'status' => true,
@@ -166,7 +143,7 @@ class BlogController extends REST_Controller
 				'data' => []
 			], REST_Controller::HTTP_OK);
 		} else {
-			$delete = $this->Model->delete_blog($id);
+			$delete = $this->Model->delete_service($id);
 			if ($delete > 0) {
 				$this->response([
 					'status' => true,

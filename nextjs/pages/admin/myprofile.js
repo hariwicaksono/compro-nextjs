@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
+import Link from 'next/link';
 import { isLogin, isAdmin } from '../../libs/utils';
 import Layout, { siteName, siteTitle } from '../../components/layout';
 import API from '../../libs/axios';
@@ -11,10 +12,10 @@ import * as yup from 'yup';
 import Skeleton from 'react-loading-skeleton';
 import { FaSave } from 'react-icons/fa';
 
-const validationSchema = yup.object({
+//const validationSchema = yup.object({
     //name: yup.string().required('Field harus diisi'),
     //email: yup.string().required('Field harus diisi')
-});
+//});
 
 class MyProfile extends Component {
     constructor(props) {
@@ -53,7 +54,7 @@ class MyProfile extends Component {
                 <Container fluid>
                     <h3 className="mb-3">Profil Saya</h3>
                     <Breadcrumb className="mb-2">
-                        <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+                        <Link href="/admin" passHref><Breadcrumb.Item>Dashboard</Breadcrumb.Item></Link>
                         <Breadcrumb.Item active>Profil Saya</Breadcrumb.Item>
                     </Breadcrumb>
 

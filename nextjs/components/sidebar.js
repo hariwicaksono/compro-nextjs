@@ -1,7 +1,7 @@
 import React, { Component, useState } from 'react';
 import Link from '../libs/link';
 import { Collapse } from 'react-bootstrap';
-import { FaHome, FaFile, FaComment, FaUser, FaImages, FaFileAlt, FaWrench, FaSlidersH, FaSignOutAlt, FaKey } from 'react-icons/fa';
+import { FaHome, FaFile, FaComment, FaUser, FaImages, FaFileAlt, FaWrench, FaSlidersH, FaSignOutAlt, FaKey, FaBriefcase } from 'react-icons/fa';
 import { logout, isLogin } from '../libs/utils';
 
 function SubMenu() {
@@ -14,6 +14,11 @@ function SubMenu() {
       <li>
         <Link href={'/admin'} activeClassName="active" passHref>
           <a><FaHome size="1.4rem" /> <span>Dashboard</span></a>
+        </Link>
+      </li>
+      <li>
+        <Link href={'/admin/service'} activeClassName="active" passHref>
+          <a><FaBriefcase size="1.4rem" /> <span>Layanan</span></a>
         </Link>
       </li>
       <li>
@@ -97,19 +102,14 @@ class Sidebar extends Component {
 
     return (
       <>
-        <nav id="sidebar" className={this.props.showMenu ? 'shadow' : 'shadow active'}>
+        <nav id="sidebar" className={this.props.showMenu ? 'shadow-sm' : 'shadow-sm active'}>
           <ul className="list-unstyled components">
-
             <SubMenu />
-
           </ul>
         </nav>
-
       </>
-
     )
-
   }
 }
 
-export default Sidebar
+export default Sidebar;

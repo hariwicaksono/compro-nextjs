@@ -21,11 +21,11 @@ const validationSchema = yup.object({
   foto: yup.mixed().required()
 });
 
-class Slideshow extends Component {
+class Service extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      Slideshow: [],
+      Service: [],
       url: ImageUrl(),
       loading: true
     }
@@ -33,10 +33,10 @@ class Slideshow extends Component {
   }
 
   componentDidMount = () => {
-    API.GetSlideshow().then(res => {
+    API.GetService().then(res => {
       if (res.status == true) {
         setTimeout(() => this.setState({
-          Slideshow: res.data,
+          Service: res.data,
           loading: false
         }), 100);
         toast.dark(res.message);
@@ -60,21 +60,21 @@ class Slideshow extends Component {
         width: "10%"
       },
       {
-        name: 'Slide',
+        name: 'Gambar',
         sortable: true,
         width: "20%",
         cell: row => <>
-          {row.img_slide != null ?
-            <img src={this.state.url + row.img_slide} className="img-fluid p-2" width="150" alt={row.img_slide} onClick={() => {
+          {row.image != null ?
+            <img src={this.state.url + row.image} className="img-fluid p-2" width="150" alt={row.image} onClick={() => {
               this.dialog.show({
-                title: 'Ganti Gambar Slide',
+                title: 'Ganti Gambar',
                 body: [<Formik key={row.id}
                   initialValues={{
                     id: row.id,
-                    foto: row.img_slide,
+                    foto: row.image,
                   }}
                   onSubmit={(values, actions) => {
-                    API.PutSlideshowImage(
+                    API.PutServiceImage(
                       {
                         id: values.id,
                         foto: values.foto.name
@@ -128,8 +128,8 @@ class Slideshow extends Component {
                     <Form onSubmit={handleSubmit}>
 
                       <Form.Group className="mb-3">
-                        <Form.Label>Gambar Slide</Form.Label><br />
-                        <img src={this.state.url + row.img_slide} className="img-fluid" width="400" />
+                        <Form.Label>Gambar</Form.Label><br />
+                        <img src={this.state.url + row.image} className="img-fluid" width="400" />
                       </Form.Group>
 
                       <Form.Group className="mb-3">
@@ -166,14 +166,14 @@ class Slideshow extends Component {
             :
             <img src={this.state.url + `/no-image.png`} className="img-fluid p-2" width="150" alt="no-image.png" onClick={() => {
               this.dialog.show({
-                title: 'Ganti Gambar Slide',
+                title: 'Ganti Gambar',
                 body: [<Formik key={row.id}
                   initialValues={{
                     id: row.id,
-                    foto: row.img_slide,
+                    foto: row.image,
                   }}
                   onSubmit={(values, actions) => {
-                    API.PutSlideshowImage(
+                    API.PutServiceImage(
                       {
                         id: values.id,
                         foto: values.foto.name
@@ -227,7 +227,7 @@ class Slideshow extends Component {
                     <Form onSubmit={handleSubmit}>
 
                       <Form.Group className="mb-3">
-                        <Form.Label>Gambar Slide</Form.Label><br />
+                        <Form.Label>Gambar</Form.Label><br />
                         <img src={this.state.url+`/no-image.png`} className="img-fluid" width="400" />
                       </Form.Group>
 
@@ -266,17 +266,17 @@ class Slideshow extends Component {
         </>,
       },
       {
-        name: 'Teks',
-        selector: row => row.text_slide,
+        name: 'Judul Layanan',
+        selector: row => row.title,
         sortable: true,
         cell: row => <>
-          {row.text_slide}
+          {row.title}
         </>
       },
       {
         name: 'Aksi',
         sortable: false,
-        cell: row => <><Link href={'/admin/slideshow/edit/' + row.id} passHref><Button size="sm" title="Edit" alt="Edit"><FaPencilAlt /></Button></Link>&nbsp;
+        cell: row => <><Link href={'/admin/service/edit/' + row.id} passHref><Button size="sm" title="Edit" alt="Edit"><FaPencilAlt /></Button></Link>&nbsp;
           <Button onClick={() => {
             this.dialog.show({
               title: 'Konfirmasi Hapus',
@@ -287,7 +287,7 @@ class Slideshow extends Component {
                   console.log('Cancel was clicked!')
                 }),
                 Dialog.OKAction(() => {
-                  API.DeleteSlideshow(row.id).then(res => {
+                  API.DeleteService(row.id).then(res => {
                     if (res.status == true) {
                       toast.success(res.message);
                       setTimeout(() => {
@@ -375,7 +375,7 @@ class Slideshow extends Component {
 
     const FilterComponent = ({ filterText, onFilter, onClear }) => (
       <>
-        <Link href="/admin/slideshow/create" passHref><Button variant="primary" style={{ position: 'absolute', left: '0', marginLeft: '15px' }}><FaPlus /> Tambah</Button></Link>
+        <Link href="/admin/service/create" passHref><Button variant="primary" style={{ position: 'absolute', left: '0', marginLeft: '15px' }}><FaPlus /> Tambah</Button></Link>
         <TextField id="search" type="text" placeholder="Filter By Judul" aria-label="Search Input" value={filterText} onChange={onFilter} />
         <ClearButton variant="secondary" type="button" onClick={onClear}>X</ClearButton>
       </>
@@ -384,7 +384,7 @@ class Slideshow extends Component {
     const BasicTable = () => {
       const [filterText, setFilterText] = useState('');
       const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-      const filteredItems = this.state.Slideshow.filter(item => item.text_slide && item.text_slide.toLowerCase().includes(filterText.toLowerCase())
+      const filteredItems = this.state.Service.filter(item => item.title && item.title.toLowerCase().includes(filterText.toLowerCase())
       );
 
       const subHeaderComponentMemo = useMemo(() => {
@@ -401,7 +401,7 @@ class Slideshow extends Component {
 
       return (
         <DataTable
-          //title="Slideshow"
+          //title="Service"
           columns={columns}
           data={filteredItems}
           pagination
@@ -423,13 +423,13 @@ class Slideshow extends Component {
 
       <Layout admin>
         <Head>
-          <title>Slideshow - {siteTitle}</title>
+          <title>Layanan - {siteTitle}</title>
         </Head>
         <Container fluid>
-          <h3 className="mb-3">Slideshow</h3>
+          <h3 className="mb-3">Layanan</h3>
           <Breadcrumb className="my-3">
             <Link href="/admin" passHref><Breadcrumb.Item>Dashboard</Breadcrumb.Item></Link>
-            <Breadcrumb.Item active>Slideshow</Breadcrumb.Item>
+            <Breadcrumb.Item active>Layanan</Breadcrumb.Item>
           </Breadcrumb>
 
           <Card body>
@@ -450,4 +450,4 @@ class Slideshow extends Component {
 
 
 
-export default Slideshow;
+export default Service;

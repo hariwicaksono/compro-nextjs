@@ -27,14 +27,16 @@ class CountBlogController extends REST_Controller{
  
 		if ($count) {
 			$this->response([
-				'status' => 1,
+				'status' => true,
+				'message' => 'Berhasil mendapatkan data',
 				'data' => $count
 			],REST_Controller::HTTP_OK);
 		} else {
 			$this->response([
-				'status' => 0,
-				'data' => 'NOT FOUND'
-			],REST_Controller::HTTP_NOT_FOUND);
+				'status' => false,
+				'message' => 'Data tidak ditemukan',
+				'data' => []
+			], REST_Controller::HTTP_OK);
 		}
 
 	}

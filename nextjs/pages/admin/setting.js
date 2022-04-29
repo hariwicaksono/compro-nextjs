@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
+import Link from 'next/link';
 import { isLogin, isAdmin } from '../../libs/utils';
 import Layout, { siteName, siteTitle } from '../../components/layout';
 import API from '../../libs/axios';
@@ -25,12 +26,19 @@ class Setting extends Component {
             id: '',
             company: '',
             companyError: '',
+            address: '',
+            addressError: '',
             website: '',
             websiteError: '',
             phone: '',
             phoneError: '',
             email: '',
             emailError: '',
+            maps: '',
+            hero: '',
+            heroError: '',
+            lead: '',
+            leadError: '',
             loading: true,
             errorKeys: []
         }
@@ -42,9 +50,13 @@ class Setting extends Component {
             setTimeout(() => this.setState({
                 id: res.data.id,
                 company: res.data.company,
+                address: res.data.address,
                 website: res.data.website,
                 phone: res.data.phone,
                 email: res.data.email,
+                maps: res.data.maps,
+                hero: res.data.hero,
+                lead: res.data.lead,
                 loading: false
             }), 100);
         })
@@ -59,7 +71,7 @@ class Setting extends Component {
                 <Container fluid>
                     <h3 className="mb-3">Pengaturan</h3>
                     <Breadcrumb className="mb-2">
-                        <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+                        <Link href="/admin" passHref><Breadcrumb.Item>Dashboard</Breadcrumb.Item></Link>
                         <Breadcrumb.Item active>Pengaturan</Breadcrumb.Item>
                     </Breadcrumb>
 
@@ -74,13 +86,16 @@ class Setting extends Component {
                                 initialValues={{
                                     id: this.state.id,
                                     company: this.state.company,
+                                    address: this.state.address,
                                     website: this.state.website,
                                     phone: this.state.phone,
-                                    email: this.state.email
+                                    email: this.state.email,
+                                    maps: this.state.maps,
+                                    hero: this.state.hero,
+                                    lead: this.state.lead
                                 }}
                                 onSubmit={(values, actions) => {
                                     //alert(JSON.stringify(values));
-
                                     API.PutSetting(values).then(res => {
                                         //console.log(res)
                                         var data = res.data;
@@ -137,6 +152,12 @@ class Setting extends Component {
                                         </Form.Group>
 
                                         <Form.Group className="mb-3">
+                                            <Form.Label>Alamat</Form.Label>
+                                            <Form.Control type="text" name="address" placeholder="" className="form-control" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.address} isInvalid={!!this.state.addressError && touched.address} />
+                                            {this.state.addressError && touched.address && <Form.Control.Feedback type="invalid">{this.state.addressError}</Form.Control.Feedback>}
+                                        </Form.Group>
+
+                                        <Form.Group className="mb-3">
                                             <Form.Label>Website</Form.Label>
                                             <Form.Control type="text" name="website" placeholder="" className="form-control" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.website} isInvalid={!!this.state.websiteError && touched.website} />
                                             {this.state.websiteError && touched.website && <Form.Control.Feedback type="invalid">{this.state.websiteError}</Form.Control.Feedback>}
@@ -155,6 +176,24 @@ class Setting extends Component {
                                                     {this.state.emailError && touched.email && <Form.Control.Feedback type="invalid">{this.state.emailError}</Form.Control.Feedback>}
                                                 </Col>
                                             </Row>
+                                        </Form.Group>
+
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Google Maps (IFrame)</Form.Label>
+                                            <Form.Control as="textarea" rows={3} name="maps" placeholder="" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.maps} isInvalid={!!this.state.mapsError && touched.maps} />
+                                            {this.state.mapsError && touched.maps && <Form.Control.Feedback type="invalid">{this.state.mapsError}</Form.Control.Feedback>}
+                                        </Form.Group>
+
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Hero</Form.Label>
+                                            <Form.Control type="text" name="hero" placeholder="" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.hero} isInvalid={!!this.state.heroError && touched.hero} />
+                                            {this.state.heroError && touched.hero && <Form.Control.Feedback type="invalid">{this.state.heroError}</Form.Control.Feedback>}
+                                        </Form.Group>
+
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Lead</Form.Label>
+                                            <Form.Control as="textarea" rows={3} name="lead" placeholder="" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.lead} isInvalid={!!this.state.leadError && touched.lead} />
+                                            {this.state.leadError && touched.lead && <Form.Control.Feedback type="invalid">{this.state.leadError}</Form.Control.Feedback>}
                                         </Form.Group>
 
                                         <Button variant="primary" size="lg" type="submit" disabled={isSubmitting}>{isSubmitting ? (

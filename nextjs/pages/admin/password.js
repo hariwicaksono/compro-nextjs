@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
+import Link from 'next/link';
 import { isLogin, isAdmin } from '../../libs/utils';
 import Layout, { siteName, siteTitle } from '../../components/layout';
 import API from '../../libs/axios';
@@ -53,7 +54,7 @@ class Password extends Component {
                 <Container fluid>
                     <h3 className="mb-3">Ganti Password</h3>
                     <Breadcrumb className="my-3">
-                        <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+                        <Link href="/admin" passHref><Breadcrumb.Item>Dashboard</Breadcrumb.Item></Link>
                         <Breadcrumb.Item active>Ganti Password</Breadcrumb.Item>
                     </Breadcrumb>
 

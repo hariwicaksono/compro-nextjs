@@ -33,8 +33,9 @@ class Detail extends Component {
 
     }
   }
+
   static async getInitialProps({ query }) {
-    const id = query.id
+    const id = query.slug
     return {
       id: id
     }
@@ -45,19 +46,21 @@ class Detail extends Component {
     this.setState({
       post_id: id,
     })
+
     API.GetBlogId(id).then(res => {
       //console.log(res)
       setTimeout(() => this.setState({
-        id: res.data[0].id,
-        title: res.data[0].title,
-        body: res.data[0].body,
-        image: res.data[0].post_image,
-        date: res.data[0].created_at,
-        category: res.data[0].category,
-        user: res.data[0].user,
+        id: res.data.id,
+        title: res.data.title,
+        body: res.data.body,
+        image: res.data.post_image,
+        date: res.data.created_at,
+        category: res.data.category,
+        user: res.data.user,
         loading: false
       }), 100);
     })
+
     API.GetCommentId(id).then(res => {
       if (res.data.length > 0) {
         this.setState({
@@ -74,7 +77,7 @@ class Detail extends Component {
 
   }
   render() {
-    const { title, body, image, date, category, user, url, asset } = this.state;
+    const { id, title, body, image, date, category, user, url, asset } = this.state;
     const ListComment = this.state.Comments.map((c, i) => (
       <Card className="mb-1" key={i} body>
         <h6 className="mb-0">{c.body} [by <strong>{c.name}</strong>]</h6>
@@ -87,8 +90,7 @@ class Detail extends Component {
           <title>{title} - {siteTitle}</title>
         </Head>
 
-        <Container>
-          <main className="py-4">
+        <Container className="py-4">
             <Row>
               <Col md={12}>
                 {this.state.loading ?
@@ -109,15 +111,13 @@ class Detail extends Component {
                     <hr />
                     <Row>
                       <Col md={8}>
-                      <FormComment postID={this.state.post_id} />
+                        <FormComment postID={id} />
                       </Col>
                     </Row>
                   </>
                 }
               </Col>
             </Row>
-
-          </main>
         </Container>
       </Layout>
     );

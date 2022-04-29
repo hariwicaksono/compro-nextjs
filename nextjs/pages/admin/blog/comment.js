@@ -243,7 +243,7 @@ class Comment extends Component {
         <Container fluid>
           <h3 className="mb-3">Komentar</h3>
           <Breadcrumb className="my-3">
-            <Breadcrumb.Item>Dashboard</Breadcrumb.Item>
+            <Link href="/admin" passHref><Breadcrumb.Item>Dashboard</Breadcrumb.Item></Link>
             <Breadcrumb.Item active>Komentar</Breadcrumb.Item>
           </Breadcrumb>
           <Card body>

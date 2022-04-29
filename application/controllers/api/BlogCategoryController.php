@@ -1,23 +1,28 @@
-<?php  
+<?php
+
 use Restserver\Libraries\REST_Controller;
-defined('BASEPATH') OR exit('No direct script access allowed');
+
+defined('BASEPATH') or exit('No direct script access allowed');
 
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
-class BlogCategoryController extends REST_Controller{
+class BlogCategoryController extends REST_Controller
+{
 
 	public function __construct($config = 'rest')
-    {
-        parent::__construct($config);
-        $this->load->model('MasterModel','Model');
-        header('Access-Control-Allow-Origin: *');
-       header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
-       header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT ,DELETE");
-        $method = $_SERVER['REQUEST_METHOD'];
-        if($method == "OPTIONS") {
-            die();
-        }
-    }
+	{
+		parent::__construct($config);
+		$this->load->library('form_validation');
+		$this->form_validation->set_error_delimiters('', '');
+		$this->load->model('MasterModel', 'Model');
+		header('Access-Control-Allow-Origin: *');
+		header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+		header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT ,DELETE");
+		$method = $_SERVER['REQUEST_METHOD'];
+		if ($method == "OPTIONS") {
+			die();
+		}
+	}
 
 	public function index_put()
 	{
@@ -26,18 +31,19 @@ class BlogCategoryController extends REST_Controller{
 			'category_id' => $this->put('category_id')
 		];
 
-		if ($this->Model->put_blog($id,$data) > 0) {
+		$update = $this->Model->put_blog($id, $data);
+		if ($update > 0) {
 			$this->response([
-				'status' => 1,
-				'data' => 'Succes Update data'
-			],REST_Controller::HTTP_OK);
+				'status' => true,
+				'message' => 'Data berhasil diperbarui',
+				'data' => []
+			], REST_Controller::HTTP_OK);
 		} else {
 			$this->response([
 				'status' => 0,
-				'data' => 'Failed Update Data'
-			],REST_Controller::HTTP_NOT_FOUND);
+				'message' => 'Tidak ada update',
+				'data' => []
+			], REST_Controller::HTTP_OK);
 		}
-
 	}
-
 }

@@ -35,7 +35,7 @@ a {text-decoration: none;}
 
 #content {
     width: 100%;
-    padding: 20px 10px;
+    padding: 0;
     transition: all 0.3s;
 }
 
@@ -60,7 +60,7 @@ a {text-decoration: none;}
     color: #495057;
     transition: all 0.3s;
     padding: 20px 0px;
-    height: 80vh;
+    min-height: 80vh;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -241,7 +241,7 @@ a {text-decoration: none;}
 .error {
     color: #DF3B50;
     margin-top: 4px;
-    font-size: 80%;
+    font-size: 90%;
     display: block;
 }
 
@@ -253,7 +253,7 @@ input.error {
 .error span {
     color: #DF3B50;
     margin-top: 4px;
-    font-size: 80%;
+    font-size: 90%;
     display: block;
 }
 
@@ -266,4 +266,19 @@ svg{margin: 0 auto !important;}
 #searchResult{
     position: absolute;
     z-index: 9999
+}
+
+.google-maps {
+    position: relative;
+    padding-bottom: 75%;
+    height: 0;
+    overflow: hidden;
+}
+
+.google-maps iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
 }

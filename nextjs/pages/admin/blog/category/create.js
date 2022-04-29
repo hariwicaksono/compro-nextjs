@@ -24,7 +24,9 @@ class Create extends Component {
         this.state = {
             user_id: '',
             name: '',
-            loading: true
+            nameError: '',
+            loading: true,
+            errorKeys: [],
         }
     }
 
@@ -69,25 +71,37 @@ class Create extends Component {
                                     }}
                                     onSubmit={(values, actions) => {
                                         //alert(JSON.stringify(values));
-
                                         API.PostCategory(values).then(res => {
                                             //console.log(res)
-                                            if (res.status === 1) {
-                                                toast.success("Data berhasil disimpan", { position: "top-center" });
+                                            var data = res.data;
+                                            if (res.status == true) {
+                                                toast.success(res.message);
                                                 setTimeout(() => {
                                                     Router.push('/admin/blog/category');
-                                                }, 2000);
+                                                }, 4000);
                                             } else {
-                                                toast.warn("Gagal, periksa kembali", { position: "top-center" });
+                                                this.errorKeys = Object.keys(data);
+                                                this.errorKeys.map((el) => {
+                                                    this.setState({
+                                                        [`${el}`]: data[el]
+                                                    })
+                                                })
+                                                if (this.errorKeys.length > 0) {
+                                                    setTimeout(() => this.errorKeys.map((el) => {
+                                                        this.setState({
+                                                            [`${el}`]: ""
+                                                        })
+                                                    }), 5000);
+                                                }
+                                                toast.error(res.message);
                                             }
                                         })
-
                                         setTimeout(() => {
                                             actions.setSubmitting(false);
                                         }, 1000);
                                     }}
-                                    validationSchema={validationSchema}
-                                    enableReinitialize={true}
+                                //validationSchema={validationSchema}
+                                //enableReinitialize={true}
                                 >
                                     {({
                                         handleSubmit,
@@ -100,14 +114,13 @@ class Create extends Component {
                                         isSubmitting
                                     }) => (
                                         <Form noValidate onSubmit={handleSubmit}>
-
-                                            <Form.Group>
+                                            <Form.Group className="mb-3">
                                                 <Form.Label>Nama</Form.Label>
-                                                <Form.Control name="name" placeholder="" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.name} isInvalid={!!errors.name && touched.name} />
-                                                {errors.name && touched.name && <Form.Control.Feedback type="invalid">{errors.name}</Form.Control.Feedback>}
+                                                <Form.Control name="name" placeholder="" className="form-control" size="lg" onChange={handleChange} onBlur={handleBlur} value={values.name} isInvalid={!!this.state.nameError && touched.name} />
+                                                {this.state.nameError && touched.name && <Form.Control.Feedback type="invalid">{this.state.nameError}</Form.Control.Feedback>}
                                             </Form.Group>
 
-                                            <Button variant="primary" type="submit" disabled={isSubmitting}>{isSubmitting ? (
+                                            <Button variant="primary" size="lg" type="submit" disabled={isSubmitting}>{isSubmitting ? (
                                                 <>
                                                     <Spinner
                                                         as="span"
@@ -122,13 +135,9 @@ class Create extends Component {
                                         </Form>
                                     )}
                                 </Formik>
-
                             </Card>
-
                         </>
                     }
-
-
                 </Container>
             </Layout>
         )

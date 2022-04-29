@@ -8,7 +8,7 @@ import Layout, { siteName, siteTitle } from '../../../../components/layout';
 import API from '../../../../libs/axios';
 import { toast } from 'react-toastify';
 import { Container, Breadcrumb, Card, Row, Col, Button, Form } from 'react-bootstrap';
-import { FaTrash, FaPencilAlt } from 'react-icons/fa';
+import { FaTrash, FaPencilAlt, FaPlus } from 'react-icons/fa';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import Loader from 'react-loader';
@@ -68,7 +68,7 @@ class Category extends Component {
             this.dialog.show({
               title: 'Konfirmasi',
               body: 'Apakah anda yakin akan menghapus data ini?',
-              bsSize: 'lg',
+              bsSize: 'md',
               actions: [
                 Dialog.CancelAction(() => {
                   console.log('Cancel was clicked!')
@@ -78,8 +78,8 @@ class Category extends Component {
                     if (res.status == true) {
                       toast.success(res.message);
                       setTimeout(() => {
-                        Router.push('/admin/blog/category');
-                      }, 4000);
+                        this.componentDidMount();
+                      }, 3000);
                     } else {
                       toast.error(res.message);
                     }
@@ -162,7 +162,7 @@ class Category extends Component {
 
     const FilterComponent = ({ filterText, onFilter, onClear }) => (
       <>
-        <Link href="/admin/blog/category/create" passHref><Button variant="primary" style={{ position: 'absolute', left: '0', marginLeft: '15px' }}>Tambah Kategori</Button></Link>
+        <Link href="/admin/blog/category/create" passHref><Button variant="primary" size="lg" style={{ position: 'absolute', left: '0', marginLeft: '15px' }}><FaPlus /> Tambah</Button></Link>
         <TextField id="search" type="text" placeholder="Filter By Judul" aria-label="Search Input" value={filterText} onChange={onFilter} />
         <ClearButton variant="secondary" type="button" onClick={onClear}>X</ClearButton>
       </>

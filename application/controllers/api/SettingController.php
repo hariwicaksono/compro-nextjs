@@ -49,18 +49,24 @@ class SettingController extends REST_Controller
 	{
 		$this->form_validation->set_data($this->put());
 		$this->form_validation->set_rules('company', 'Nama Perusahaan', 'required');
+		$this->form_validation->set_rules('address', 'Alamat', 'required');
 		$this->form_validation->set_rules('website', 'Website', 'required');
 		$this->form_validation->set_rules('phone', 'Telepon', 'required');
 		$this->form_validation->set_rules('email', 'Email Perusahaan', 'required');
+		$this->form_validation->set_rules('hero', 'Hero', 'required');
+		$this->form_validation->set_rules('lead', 'Lead', 'required');
 
 		if ($this->form_validation->run() == false) {
 			$this->response([
 				'status' => false,
 				'data' => [
 					'companyError' => form_error('company'),
+					'addressError' => form_error('address'),
 					'websiteError' => form_error('website'),
 					'phoneError' => form_error('phone'),
 					'emailError' => form_error('email'),
+					'heroError' => form_error('hero'),
+					'leadError' => form_error('lead'),
 				],
 				'message' => validation_errors(),
 			], REST_Controller::HTTP_OK);
@@ -68,9 +74,13 @@ class SettingController extends REST_Controller
 			$id = $this->put('id');
 			$data = [
 				'company' => $this->put('company'),
+				'address' => $this->put('address'),
 				'website' => $this->put('website'),
 				'phone' => $this->put('phone'),
 				'email' => $this->put('email'),
+				'maps' => $this->put('maps'),
+				'hero' => $this->put('hero'),
+				'lead' => $this->put('lead'),
 				'updated_at' => date('Y-m-d H:i:s')
 			];
 
