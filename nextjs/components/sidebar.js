@@ -1,8 +1,8 @@
 import React, { Component, useState } from 'react';
-import Link from '../libs/link';
+import Link from '../lib/link';
 import { Collapse } from 'react-bootstrap';
 import { FaHome, FaFile, FaComment, FaUser, FaImages, FaFileAlt, FaWrench, FaSlidersH, FaSignOutAlt, FaKey, FaBriefcase } from 'react-icons/fa';
-import { logout, isLogin } from '../libs/utils';
+import { logout, isLogin } from '../lib/utils';
 
 function SubMenu() {
   const [open1, setOpen1] = useState(false);

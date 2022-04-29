@@ -229,7 +229,13 @@ class MasterModel extends CI_Model
 		if ($id == null) {
 			return $this->db->get('services')->result_array();
 		} else {
-			return $this->db->get_where('services', ['id' => $id])->row_array();
+			$this->db->select('*');
+			$this->db->from('services s');
+			$this->db->where('s.id', $id);
+			$this->db->or_where('s.slug', $id);
+			$this->db->order_by('s.id', 'DESC');
+			$query = $this->db->get();
+			return $query->row_array();
 		}
 	}
 
@@ -250,4 +256,10 @@ class MasterModel extends CI_Model
 		$this->db->delete('services', ['id' => $id]);
 		return $this->db->affected_rows();
 	}
+
+	public function count_service()
+	{
+		return $this->db->count_all('services');
+	}
+
 }

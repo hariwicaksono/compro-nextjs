@@ -4,8 +4,8 @@ import Router from 'next/router';
 import Link from 'next/link';
 import Layout, { siteName, siteTitle } from '../components/layout';
 import { Container, Card, Row, Col, Spinner, Button, Form, FloatingLabel, Modal } from 'react-bootstrap';
-import API from '../libs/axios';
-import { ImageUrl } from '../libs/urls';
+import API from '../lib/axios';
+import { ImageUrl } from '../lib/urls';
 import { toast } from 'react-toastify';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -18,8 +18,10 @@ class Login extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      emailError: "",
-      passwordError: "",
+      email: '',
+      emailError: '',
+      password: '',
+      passwordError: '',
       errorKeys: [],
     }
 
@@ -47,19 +49,18 @@ class Login extends Component {
                 initialValues={{ email: '', password: '' }}
                 onSubmit={(values, actions) => {
                   //alert(JSON.stringify(values)); 
-
                   API.PostLogin(values).then(res => {
                     var data = res.data;
                     if (res.status == true) {
                       if (res.id === "1") {
                         localStorage.setItem('isLogin', JSON.stringify(data))
-                        toast.success(res.message);
+                        toast.dark(res.message);
                         setTimeout(() => {
                           Router.push('/')
                         }, 2000)
                       } else {
                         localStorage.setItem('isAdmin', JSON.stringify(data))
-                        toast.success(res.message);
+                        toast.dark(res.message);
                         setTimeout(() => {
                           Router.push('/admin')
                         }, 2000);
@@ -103,7 +104,7 @@ class Login extends Component {
                       label="Password"
                       className="mb-3"
                     >
-                      <Form.Control type="password" size="lg" name="password" placeholder="Password" className="form-control" onChange={handleChange} onBlur={handleBlur} isInvalid={!!this.state.passwordError && touched.password} />
+                      <Form.Control type="password" size="lg" name="password" placeholder="Password" className="form-control" onChange={handleChange} onBlur={handleBlur} value={values.password} isInvalid={!!this.state.passwordError && touched.password} />
                       {this.state.passwordError && touched.password && <Form.Control.Feedback type="invalid">{this.state.passwordError}</Form.Control.Feedback>}
                     </FloatingLabel>
 

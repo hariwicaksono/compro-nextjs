@@ -2,17 +2,17 @@ import React, { Component } from "react";
 import Link from "next/link";
 import { Container, Row, Col, Card } from "react-bootstrap";
 import ReactPaginate from "react-paginate";
-import { ImageUrl } from "../libs/urls";
+import { ImageUrl } from "../lib/urls";
 import { FiChevronsLeft, FiChevronsRight } from "react-icons/fi";
 import parse from "html-react-parser";
 
-class BlogPosts extends Component {
+class PostHome extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			url: ImageUrl(),
 			offset: 0,
-			perPage: 4,
+			perPage: 2,
 			currentPage: 0,
 		};
 		this.handlePageClick = this.handlePageClick.bind(this);
@@ -102,4 +102,4 @@ class BlogPosts extends Component {
 	}
 }
 
-export default BlogPosts;
+export default PostHome;

@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Navbar from './navbar';
-import NavbarA from './navbarA';
+import NavbarAdmin from './navbar-admin';
 import Sidebar from './sidebar';
 import Footer from './footer';
 import { Container } from 'react-bootstrap';
-import { isLogin, isAdmin } from '../libs/utils';
-import API from '../libs/axios';
+import { isLogin, isAdmin } from '../lib/utils';
+import API from '../lib/axios';
 
 export const siteName = process.env.NEXT_PUBLIC_SITENAME;
 export const siteTitle = process.env.NEXT_PUBLIC_SITETITLE;
@@ -64,7 +64,7 @@ class Layout extends Component {
         </Head>
 
         {admin ?
-          <NavbarA toggleMenu={this.toggleMenu} setting={this.state.Pengaturan} />
+          <NavbarAdmin toggleMenu={this.toggleMenu} setting={this.state.Pengaturan} />
           :
           <Navbar toggleMenu={this.toggleMenu} setting={this.state.Pengaturan} />
         }

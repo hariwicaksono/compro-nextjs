@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout, { siteTitle } from '../../../components/layout';
-import API from '../../../libs/axios';
-import { ImageUrl } from '../../../libs/urls';
+import API from '../../../lib/axios';
+import { ImageUrl } from '../../../lib/urls';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 import { } from 'react-icons/md';
 import parse from 'html-react-parser';
 import Skeleton from 'react-loading-skeleton';
-import FormComment from '../../../components/formComment';
+import FormComment from '../../../components/form-comment';
 import styled from 'styled-components';
 
 const Post = styled.div`

@@ -35,9 +35,9 @@ class ImageUpload extends REST_Controller
 			$config['allowed_types'] = "jpeg|jpg|png|gif";
 			$config['upload_path'] = "uploads/images";
 			$config['overwrite'] = TRUE;
-			$config['max_size']       = '4000';
-			$config['max_width']      = '4000';
-			$config['max_height']     = '4000';
+			$config['max_size']       = '20000';
+			$config['max_width']      = '20000';
+			$config['max_height']     = '20000';
 			$config['remove_spaces']  = false;
 			$this->load->library('upload', $config);
 			$this->upload->initialize($config);
@@ -48,9 +48,9 @@ class ImageUpload extends REST_Controller
 				$config['source_image'] = 'uploads/images/' . $gbr['file_name'];
 				$config['create_thumb'] = FALSE;
 				$config['maintain_ratio'] = FALSE;
-				$config['quality'] = '80%';
+				$config['quality'] = '95%';
 				$config['width'] = 1200;
-				$config['height'] = 500;
+				$config['height'] = 800;
 				$config['new_image'] = 'uploads/images/' . $gbr['file_name'];
 				$this->load->library('image_lib', $config);
 				$this->image_lib->resize();

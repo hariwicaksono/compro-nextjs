@@ -3,9 +3,9 @@ import Axios from 'axios'
 const RootPath = process.env.NEXT_PUBLIC_API_URL+"/api/";
 
 // Authorization
-// key = blog123
+// key = 7YC5R9X7
 // Gunakan https://www.base64decode.org untuk melakukan encode key diatas menjadi format base64
-var key = new Buffer.from('YmxvZzEyMw==', 'base64')
+var key = new Buffer.from('N1lDNVI5WDc=', 'base64')
 const ApiKey = key.toString();
 const config = { headers: { 'X-API-KEY': `${ApiKey}` } };
 
@@ -143,6 +143,7 @@ const PostService = (data) => POST('ServiceController',data);
 const PutService = (data) => PUT('ServiceController',data);
 const DeleteService = (id) => DELETE('ServiceController/index_delete?id=',id);
 const PutServiceImage = (data) => PUT('ServiceImageController',data);
+const CountService = () => GET('CountServiceController');
 
 const API = {
     PostLogin,
@@ -188,6 +189,7 @@ const API = {
     PutService,
     DeleteService,
     PutServiceImage,
+    CountService,
 }
 
 export default API

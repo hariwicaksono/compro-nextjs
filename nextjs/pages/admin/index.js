@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
-import { isLogin, isAdmin } from '../../libs/utils';
+import { isLogin, isAdmin } from '../../lib/utils';
 import Layout, { siteName, siteTitle } from '../../components/layout';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import { FaFileAlt, FaList, FaComment } from 'react-icons/fa';
-import API from '../../libs/axios';
+import { FaFileAlt, FaList, FaComment, FaBriefcase } from 'react-icons/fa';
+import API from '../../lib/axios';
 import Skeleton from 'react-loading-skeleton';
 
 class Admin extends Component {
@@ -13,6 +13,7 @@ class Admin extends Component {
     super(props)
     this.state = {
       JumlahBlog: '',
+      JumlahLayanan: '',
       JumlahKategori: '',
       JumlahKomentar: '',
       loading: true
@@ -25,11 +26,19 @@ class Admin extends Component {
         loading: false
       }), 100);
     })
+
+    API.CountService().then(res => {
+      this.setState({
+        JumlahLayanan: res.data
+      })
+    })
+
     API.CountCategory().then(res => {
       this.setState({
         JumlahKategori: res.data
       })
     })
+
     API.CountComment().then(res => {
       this.setState({
         JumlahKomentar: res.data
@@ -55,24 +64,34 @@ class Admin extends Component {
 
               <h1 className="h2 fw-bold mb-4">Dashboard</h1>
 
-              <Row>
-                <Col md={4}>
+              <Row className="mb-3">
+                <Col md={6}>
                   <Card className="shadow-sm px-3 py-2" body>
                     <Card.Title className="float-end text-primary"><FaFileAlt size="3em" /></Card.Title>
                     <h1 className="fw-bold">{this.state.JumlahBlog}</h1>
                     <h5>Blog</h5>
                   </Card>
                 </Col>
-                <Col md={4}>
+                <Col md={6}>
                   <Card className="shadow-sm px-3 py-2" body>
-                  <Card.Title className="float-end text-info"><FaList size="3em" /></Card.Title>
+                    <Card.Title className="float-end text-success"><FaBriefcase size="3em" /></Card.Title>
+                    <h1 className="fw-bold">{this.state.JumlahLayanan}</h1>
+                    <h5>Layanan</h5>
+                  </Card>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col md={6}>
+                  <Card className="shadow-sm px-3 py-2" body>
+                    <Card.Title className="float-end text-info"><FaList size="3em" /></Card.Title>
                     <h1 className="fw-bold">{this.state.JumlahKategori}</h1>
                     <h5>Kategori</h5>
                   </Card>
                 </Col>
-                <Col md={4}>
+                <Col md={6}>
                   <Card className="shadow-sm px-3 py-2" body>
-                  <Card.Title className="float-end text-warning"><FaComment size="3em" /></Card.Title>
+                    <Card.Title className="float-end text-warning"><FaComment size="3em" /></Card.Title>
                     <h1 className="fw-bold">{this.state.JumlahKomentar}</h1>
                     <h5>Komentar</h5>
                   </Card>

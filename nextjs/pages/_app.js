@@ -4,7 +4,7 @@ import '../styles/globals.css';
 import 'spin.js/spin.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-import API from '../libs/axios';
+import API from '../lib/axios';
 import SSRProvider from 'react-bootstrap/SSRProvider';
 
 class MyApp extends Component {

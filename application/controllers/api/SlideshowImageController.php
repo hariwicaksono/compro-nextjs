@@ -27,6 +27,7 @@ class SlideshowImageController extends REST_Controller
 		$id = $this->put('id');
 		$data = [
 			'img_slide' => $this->put('foto'),
+			'updated_at' => date('Y-m-d H:i:s')
 		];
 
 		$update = $this->Model->put_slideshow($id, $data);

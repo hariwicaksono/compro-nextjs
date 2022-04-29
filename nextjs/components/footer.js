@@ -11,7 +11,7 @@ class Footer extends Component {
     render() {
 
         return (
-            <Section className="py-5">
+            <Section className="py-4">
                 <Container>
                     <Row>
                         <Col md={8}>

@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 import Layout, { siteName, siteTitle } from '../components/layout';
-import API from '../libs/axios';
+import API from '../lib/axios';
 import { Container, Alert, Card, Row, Col, Spinner, Button, Form } from 'react-bootstrap';
 import Slideshow from '../components/slideshow';
 import Loader from 'react-loader';
-import BlogPosts from '../components/blogPosts';
+import PostHome from '../components/post-home';
 import { FaExclamationTriangle } from 'react-icons/fa';
 import styled from 'styled-components';
 
@@ -85,13 +85,13 @@ class Index extends Component {
             {/* <Slideshow data={this.state.Slideshow} /> */}
 
             <Row>
-              <Col md="8">
+              <Col md="12">
                 <h1 className="mb-3">Blog</h1>
                 <hr />
                 {this.state.loading ?
                   <Loader options={options} className="spinner" />
                   :
-                  <BlogPosts data={this.state.dataBlog} />
+                  <PostHome data={this.state.dataBlog} />
                 }
               </Col>
             </Row>

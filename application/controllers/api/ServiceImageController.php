@@ -6,7 +6,8 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 require APPPATH . 'libraries/REST_Controller.php';
 require APPPATH . 'libraries/Format.php';
-class BlogImageController extends REST_Controller
+
+class ServiceImageController extends REST_Controller
 {
 
 	public function __construct($config = 'rest')
@@ -26,11 +27,11 @@ class BlogImageController extends REST_Controller
 	{
 		$id = $this->put('id');
 		$data = [
-			'post_image' => $this->put('foto'),
+			'image' => $this->put('foto'),
 			'updated_at' => date('Y-m-d H:i:s')
 		];
 
-		$update = $this->Model->put_blog($id, $data);
+		$update = $this->Model->put_service($id, $data);
 		if ($update > 0) {
 			$this->response([
 				'status' => true,

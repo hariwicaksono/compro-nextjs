@@ -3,15 +3,15 @@ import Head from 'next/head';
 import Router from 'next/router';
 import Link from 'next/link';
 import { Container, Navbar, Nav, NavItem, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
-import API from '../libs/axios';
-import { logout, isLogin, isAdmin } from '../libs/utils';
-import { ImagesUrl } from '../libs/urls';
-import SearchForm from './searchForm';
+import API from '../lib/axios';
+import { logout, isLogin, isAdmin } from '../lib/utils';
+import { ImagesUrl } from '../lib/urls';
+import FormSearch from './form-search';
 import { FaBars, FaSignInAlt, FaSignOutAlt, FaKey } from 'react-icons/fa';
 import Skeleton from 'react-loading-skeleton';
 import styled from 'styled-components';
 
-class NavigationBar extends Component {
+class NavbarHome extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -69,7 +69,7 @@ class NavigationBar extends Component {
               <Link href="/contact" passHref><Nav.Link>Kontak</Nav.Link></Link>
             </Nav>
 
-            <SearchForm />
+            <FormSearch />
 
             <Form inline="true">
               <Link href="/login" passHref>
@@ -84,4 +84,4 @@ class NavigationBar extends Component {
   }
 }
 
-export default NavigationBar;
+export default NavbarHome;

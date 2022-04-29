@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
-import API from '../libs/axios';
+import API from '../lib/axios';
 //import { NotificationManager } from 'react-notifications'
 import { Form, Button, Spinner, Modal } from 'react-bootstrap';
 import { FaSearch } from 'react-icons/fa';
@@ -11,7 +11,7 @@ import { FaSearch } from 'react-icons/fa';
     //query: yup.string().required(),
   //}); 
 
-class SearchForm extends Component {
+class FormSearch extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -102,4 +102,4 @@ class SearchForm extends Component {
 
 }
 
-export default SearchForm;
+export default FormSearch;
