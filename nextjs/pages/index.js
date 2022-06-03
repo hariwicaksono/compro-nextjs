@@ -13,7 +13,7 @@ import styled from 'styled-components';
 var options = { lines: 13, length: 20, width: 10, radius: 30, scale: 0.35, corners: 1, color: '#fff', opacity: 0.25, rotate: 0, direction: 1, speed: 1, trail: 60, fps: 20, zIndex: 2e9, top: '50%', left: '50%', shadow: false, hwaccel: false, position: 'absolute' };
 
 const Hero = styled.div`
-    background-image: url('https://itshop.ukm.id/wp-content/uploads/2022/04/Visual-Studio-Code-fait-ses-debuts-en-tant-quapplication-Web.jpg') !important;
+    background-image: url('./hero.jpg') !important;
     background-position: center;
     background-repeat: no-repeat;
     -webkit-background-size: cover;
@@ -39,19 +39,20 @@ class Index extends Component {
       })
     })
 
-    API.GetBlog().then(res => {
-      setTimeout(() => this.setState({
-        dataBlog: res.data,
-        loading: false
-      }), 100);
-    })
-
     API.GetSetting().then(res => {
       this.setState({
         hero: res.data.hero,
         lead: res.data.lead
       })
     })
+
+    API.GetBlog().then(res => {
+      setTimeout(() => this.setState({
+        dataBlog: res.data,
+        loading: false
+      }), 100);
+    })
+    
   }
   render() {
 
